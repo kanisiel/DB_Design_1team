@@ -28,7 +28,7 @@
 </head>
 <body onKeypress="hitEnter(event)">
 <div align="center">
-<h1>학사관리 시스템</h1>
+<h1>프람트 소프트</h1>
 
 <P>  현재시간은 ${serverTime} 입니다. </P>
 

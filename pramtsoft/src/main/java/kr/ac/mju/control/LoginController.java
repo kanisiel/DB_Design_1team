@@ -6,8 +6,6 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 
 import kr.ac.mju.Conf.Configuration;
-import kr.ac.mju.model.CollegeInfo;
-import kr.ac.mju.model.DepartmentInfo;
 import kr.ac.mju.model.LoginInfo;
 import kr.ac.mju.model.UserInfo;
 import kr.ac.mju.service.LoginService;
@@ -65,22 +63,6 @@ public class LoginController {
 			return modelAndView;
 		}
 	}
-	@RequestMapping(value = "/loginController/registerAccount", method = RequestMethod.POST)
-	public ModelAndView register(@ModelAttribute("loginInfo") LoginInfo loginInfo, HttpServletRequest request) throws UnsupportedEncodingException, ClassNotFoundException, SQLException {
-		modelAndView = new ModelAndView();
-		request.setCharacterEncoding("UTF-8");
-		String userID = request.getParameter("userID");
-		String userPassword = request.getParameter("userPassword");
-		loginInfo.setUserId(userID);
-		loginInfo.setUserPassword(userPassword);
-		DepartmentInfo departmentInfo = loginService.getDList();
-		CollegeInfo collegeInfo = loginService.getCList();
-		modelAndView.addObject("loginInfo", loginInfo);
-		modelAndView.addObject("departments", departmentInfo);
-		modelAndView.addObject("colleges", collegeInfo);
-		modelAndView.setViewName("registerAccount");
-		return modelAndView;
-	}
 	
 	@RequestMapping(value = "/loginController/login.do", method = RequestMethod.POST)
 	public ModelAndView login(@ModelAttribute("loginInfo") LoginInfo loginInfo, HttpServletRequest request, RedirectAttributes redir) throws UnsupportedEncodingException, ClassNotFoundException, SQLException {
@@ -98,7 +80,7 @@ public class LoginController {
 		if(userInfo.getErrorCode().equals("Success")){
 			modelAndView.setViewName("logged");
 		} else {
-			return register(loginInfo, request);
+			modelAndView.setViewName("home");
 		}
 		return modelAndView;
 	}
