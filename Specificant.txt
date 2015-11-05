@@ -1,0 +1,2 @@
+1. Development Environment
+	- DB : Mysql (Relational Data Base)
