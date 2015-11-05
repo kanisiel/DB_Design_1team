@@ -1,0 +1,5 @@
+@CHARSET "UTF-8";
+
+.inputTable { border-width:1px; border-style:solid; border-color:RoyalBlue }
+.titleTD { border-spacing:0px; padding:0px; background-color:LightSkyBlue }
+.inputTD { border-spacing:0px; padding:0px; background-color:#FFFFFF }
