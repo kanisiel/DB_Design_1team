@@ -1,4 +1,4 @@
-package kr.ac.mju.Dao;
+package dao;
 
 public interface Dao {
 

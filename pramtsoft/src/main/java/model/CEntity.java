@@ -1,4 +1,4 @@
-package kr.ac.mju.model;
+package model;
 
 import java.io.Serializable;
 

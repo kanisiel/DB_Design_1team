@@ -1,4 +1,4 @@
-package kr.ac.mju.model;
+package model;
 
 public class User implements CEntity {
 

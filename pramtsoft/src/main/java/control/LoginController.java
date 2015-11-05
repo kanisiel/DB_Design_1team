@@ -1,14 +1,13 @@
-package kr.ac.mju.control;
+package control;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import kr.ac.mju.Conf.Configuration;
-import kr.ac.mju.model.LoginInfo;
-import kr.ac.mju.model.UserInfo;
-import kr.ac.mju.service.LoginService;
+import model.LoginInfo;
+import model.UserInfo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import service.LoginService;
+import conf.Configuration;
 
 @Controller
 @SessionAttributes("userInfo")

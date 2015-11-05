@@ -1,4 +1,4 @@
-package kr.ac.mju.control;
+package control;
 
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
