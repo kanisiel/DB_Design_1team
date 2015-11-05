@@ -1,4 +1,4 @@
-package conf;
+package kr.ac.mju.conf;
 
 public class Configuration {
 	public enum Files {

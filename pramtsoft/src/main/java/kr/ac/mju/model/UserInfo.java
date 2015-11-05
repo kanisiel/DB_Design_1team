@@ -1,4 +1,4 @@
-package model;
+package kr.ac.mju.model;
 
 public class UserInfo implements Info {
 	

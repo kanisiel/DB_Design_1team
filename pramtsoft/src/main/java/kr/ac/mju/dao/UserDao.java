@@ -1,16 +1,15 @@
-package dao;
+package kr.ac.mju.dao;
 
 import java.sql.SQLException;
 
-import mapper.UserMapper;
-import model.LoginInfo;
-import model.UserInfo;
+import kr.ac.mju.conf.*;
+import kr.ac.mju.mapper.UserMapper;
+import kr.ac.mju.model.LoginInfo;
+import kr.ac.mju.model.UserInfo;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import conf.*;
 
 @Repository
 public class UserDao implements Dao {

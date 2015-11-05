@@ -1,15 +1,14 @@
-package service;
+package kr.ac.mju.service;
 
 import java.sql.SQLException;
 
 import javax.annotation.Resource;
 
-import model.LoginInfo;
-import model.UserInfo;
+import kr.ac.mju.dao.UserDao;
+import kr.ac.mju.model.LoginInfo;
+import kr.ac.mju.model.UserInfo;
 
 import org.springframework.stereotype.Service;
-
-import dao.UserDao;
 
 @Service
 public class LoginService {

@@ -1,9 +1,9 @@
-package mapper;
+package kr.ac.mju.mapper;
 
 import java.sql.SQLException;
 
-import model.LoginInfo;
-import model.UserInfo;
+import kr.ac.mju.model.LoginInfo;
+import kr.ac.mju.model.UserInfo;
 
 public interface UserMapper {
 //	 public List<User> selectAllUsers();  
