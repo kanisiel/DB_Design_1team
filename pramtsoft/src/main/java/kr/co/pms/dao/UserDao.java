@@ -1,11 +1,11 @@
-package kr.ac.mju.dao;
+package kr.co.pms.dao;
 
 import java.sql.SQLException;
 
-import kr.ac.mju.conf.*;
-import kr.ac.mju.mapper.UserMapper;
-import kr.ac.mju.model.LoginInfo;
-import kr.ac.mju.model.UserInfo;
+import kr.co.pms.conf.*;
+import kr.co.pms.mapper.UserMapper;
+import kr.co.pms.model.LoginInfo;
+import kr.co.pms.model.UserInfo;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

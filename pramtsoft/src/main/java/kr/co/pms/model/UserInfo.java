@@ -1,4 +1,4 @@
-package kr.ac.mju.model;
+package kr.co.pms.model;
 
 public class UserInfo implements Info {
 	

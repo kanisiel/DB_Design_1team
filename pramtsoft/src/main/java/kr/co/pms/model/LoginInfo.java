@@ -1,4 +1,4 @@
-package kr.ac.mju.model;
+package kr.co.pms.model;
 
 import org.springframework.stereotype.Repository;
 

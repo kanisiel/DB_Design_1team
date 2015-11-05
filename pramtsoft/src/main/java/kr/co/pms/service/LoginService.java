@@ -1,12 +1,12 @@
-package kr.ac.mju.service;
+package kr.co.pms.service;
 
 import java.sql.SQLException;
 
 import javax.annotation.Resource;
 
-import kr.ac.mju.dao.UserDao;
-import kr.ac.mju.model.LoginInfo;
-import kr.ac.mju.model.UserInfo;
+import kr.co.pms.dao.UserDao;
+import kr.co.pms.model.LoginInfo;
+import kr.co.pms.model.UserInfo;
 
 import org.springframework.stereotype.Service;
 

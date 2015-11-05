@@ -1,14 +1,14 @@
-package kr.ac.mju.control;
+package kr.co.pms.control;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import kr.ac.mju.conf.Configuration;
-import kr.ac.mju.model.LoginInfo;
-import kr.ac.mju.model.UserInfo;
-import kr.ac.mju.service.LoginService;
+import kr.co.pms.conf.Configuration;
+import kr.co.pms.model.LoginInfo;
+import kr.co.pms.model.UserInfo;
+import kr.co.pms.service.LoginService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
