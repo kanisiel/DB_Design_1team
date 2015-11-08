@@ -47,7 +47,7 @@
 			<p class="text-center"><font style="font-size:13px;color:#FF3333;">${userInfo.getSubscribe_kor()}</font><p class="text-center">
 		</div>
 		<div class="col-md-10 col-md-offset-1">
-			<form action="loginController/login.do" method="post">
+			<form id="loginform" action="loginController/login.do" method="post">
 				<div class="form-group">
 					<label for="userID">아이디</label>
 					<input type="text" class="form-control" name="userID" placeholder="아이디를 입력하세요">
@@ -58,13 +58,13 @@
 				</div>
 				<div class="btn-group btn-group-justified" role="group" aria-label="CLR">
   					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-primary" onclick="register(document.form)">계정 생성</button>
+						<button type="button" class="btn btn-primary" onclick="register(loginform)">계정 생성</button>
 					</div>
 					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-success" onclick="login(document.form)">로그인</button>
+						<button type="button" class="btn btn-success" onclick="login(loginform)">로그인</button>
 					</div>
 					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-warning" onclick="reset(document.form)">리셋</button>
+						<button type="button" class="btn btn-warning" onclick="reset(loginform)">리셋</button>
 					</div>
 				</div>
 			</form>

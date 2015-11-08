@@ -16,24 +16,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
   </head>
 <body>
-<div align="center">
-<h1>학사관리 시스템</h1>
-
-<h2>${userInfo.getUserName()}씨, 반갑습니다.</h2>
-<c:choose>
-	<c:when test="${userInfo.getUserType()==1 }">
-		<a href="${pageContext.request.contextPath}/sugangController/register">수강신청</a>
-		<a href="${pageContext.request.contextPath}/sugangController/grade">성적조회</a>
-	</c:when>
-	<c:when test="${userInfo.getUserType()==2 }">
-		<a href="${pageContext.request.contextPath}/profController/subjectList">강좌개설</a>
-		<a href="${pageContext.request.contextPath}/profController/courseList">성적입력</a>
-	</c:when>
-	<c:when test="${userInfo.getUserType()==3 }">
-		<a href="${pageContext.request.contextPath}/adminController/subjectList">과목리스트</a>
-	</c:when>
-</c:choose>
-<a href="${pageContext.request.contextPath}/loginController/logout">로그아웃</a>
+<div class="container">
+	<div class="row">
+        <div class="col-md-10 col-md-offset-1">
+			<p class="text-center"><font style="font-size:34px"><Strong>프람트소프트 관리 시스템</Strong></font></p>
+		</div>
+		<div class="col-md-10 col-md-offset-1">
+			<p class="text-right"><strong>${userInfo.getUserName()}</strong>씨, 반갑습니다.<a class="btn btn-default btn-xs" href="${pageContext.request.contextPath}/loginController/logout" role="button">로그아웃</a></p>
+		</div>
+	</div>
 </div>
 </body>
 </html>
