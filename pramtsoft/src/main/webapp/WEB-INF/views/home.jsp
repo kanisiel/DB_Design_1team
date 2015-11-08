@@ -38,34 +38,38 @@
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/form.css"/>'>
 </head>
 <body onKeypress="hitEnter(event)">
-<div align="center">
-<h1>프람트소프트 관리 시스템</h1>
-
-	<form action="loginController/login.do" method="post">
-		<table>
-			<tr height="40px">
-				<td class="titleTD">유저 아이디</td>
-				<td><input type="text" name="userID" ></td>
-			</tr>
-			<tr height="40px">
-				<td>패스워드</td>
-				<td><input type="password" name="userPassword"></td>
-			</tr>
-		</table>
-		<table>
-			<tr>
-				<td>
-					<font style="font-size:13px;color:#FF3333;">${userInfo.getSubscribe_kor()}</font>
-				</td>
-			</tr>
-		</table>
-		<table>
-			<tr height="40px">
-				<td><button onclick="register(document.form)">계정 생성</button></td>
-				<td><button onclick="login(document.form)">로그인</button></td>
-				<td><button onclick="reset(document.form)">리셋</button></td>
-		</table>
-	</form>
+<div class="container">
+	<div class="row">
+        <div class="col-md-10 col-md-offset-1">
+			<p class="text-center"><font style="font-size:34px"><Strong>프람트소프트 관리 시스템</Strong></font></p>
+		</div>
+		<div class="col-md-10 col-md-offset-1">
+			<p class="text-center"><font style="font-size:13px;color:#FF3333;">${userInfo.getSubscribe_kor()}</font><p class="text-center">
+		</div>
+		<div class="col-md-10 col-md-offset-1">
+			<form id="loginform" action="loginController/login.do" method="post">
+				<div class="form-group">
+					<label for="userID">아이디</label>
+					<input type="text" class="form-control" name="userID" placeholder="아이디를 입력하세요">
+				</div>
+				<div class="form-group">
+					<label for="userPassword">패스워드</label>
+					<input type="password" class="form-control" name="userPassword" placeholder="패스워드를 입력하세요">
+				</div>
+				<div class="btn-group btn-group-justified" role="group" aria-label="CLR">
+  					<div class="btn-group" role="group">
+						<button type="button" class="btn btn-primary" onclick="register(loginform)">계정 생성</button>
+					</div>
+					<div class="btn-group" role="group">
+						<button type="button" class="btn btn-success" onclick="login(loginform)">로그인</button>
+					</div>
+					<div class="btn-group" role="group">
+						<button type="button" class="btn btn-warning" onclick="reset(loginform)">리셋</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 </body>
 </html>
