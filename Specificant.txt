@@ -1,2 +1,27 @@
 1. Development Environment
-	- DB : Mysql (Relational Data Base)
+	- DB : ORACLE 11g (Relational Data Base) with iBatis
+	- System Framework : Spring Framework
+	- Language : Java (include JavaScript)
+	- Additional : JQuery, Bootstrap
+	- ERD Drawing Tools : DA#
+
+2. Task Distributions
+	- Lee Junsoo : Main Developer. / DBA.
+				   System Core Implementation and System Integration.
+				   Administrating ORACLE DB Servers.
+	- Kim Hocheol : Project Manager.
+				   Please input here
+	- Lee Minkyeong : Front-End Developer.
+				   UI/UX and Create Page Views.
+	- Lim Hyunjun : Front-End Developer.
+				   UI/UX and Create Page Views.
+
+3. Project Progress plan
+	- Using Agile Process with V-Model
+	- Progress by Functional Milestones
+	- Final Milestones are about non-Functional Qualities.
+	- Each versions will be released each weeks.
+
+4. Milestones
+	- Show Requirement Define Docs.
+	- Show Database Define Docs.
