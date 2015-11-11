@@ -117,12 +117,20 @@
 				$('#'+span2).html("(error)");
 				return false;
 			}
-			if(!check_password()&&check.test(form.elements["userPassword"].value)){
-				$('#pw2Warning').html("비밀번호가 다르게 입력되었습니다!");
-				$('#Password').parent().removeClass("has-error").removeClass("has-warning").removeClass("has-success").addClass("has-error");
-				$('#glyphicon2').removeClass("glyphicon-remove").removeClass("glyphicon-ok").addClass("glyphicon-remove");
-				$('#PasswordStatus').html("(error)");
-				return false;
+			if(check.test(form.elements["userPassword"].value)){
+				if(!check_password()){
+					$('#pw2Warning').html("비밀번호가 다르게 입력되었습니다!");
+					$('#userPassword,#Password').parent().removeClass("has-error").removeClass("has-warning").removeClass("has-success").addClass("has-error");
+					$('#glyphicon1,#glyphicon2').removeClass("glyphicon-remove").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+					$('#userPasswordStatus,#PasswordStatus').html("(error)");
+					return false;
+				}else if(check_password()){
+					$('#pw2Warning, #pwWarning').html("");
+					$('#userPassword,#Password').parent().removeClass("has-success").removeClass("has-warning").removeClass("has-error").addClass("has-success");
+					$('#glyphicon1,#glyphicon2').removeClass("glyphicon-ok").removeClass("glyphicon-remove").addClass("glyphicon-ok");
+					$('#userPasswordStatus,#PasswordStatus').html("(success)");
+					return true;
+				}
 			}
 			$('#'+id).html("");
 			$('#'+input.id).parent().removeClass("has-success").removeClass("has-warning").removeClass("has-error").addClass("has-success");
@@ -170,7 +178,7 @@
 							<div class="col-md-8">
 								<div class="form-group has-feedback">
 									<label for="userPassword">비밀번호</label>
-									<input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="비밀번호를 입력하세요" onkeyup="javascript:password_chk(this);" aria-describedby="userPasswordStatus">
+									<input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="비밀번호를 입력하세요" onblur="javascript:password_chk(this);" onkeyup="javascript:password_chk(this);" aria-describedby="userPasswordStatus">
 									<span id="glyphicon1" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 									<span id="userPasswordStatus" class="sr-only">(success)</span>
 								</div>
@@ -181,7 +189,7 @@
 							<div class="col-md-8">
 								<div class="form-group has-feedback">
 									<label for="PASSWORD">비밀번호확인</label>
-									<input type="password" class="form-control" id="PASSWORD" name="PASSWORD" placeholder="비밀번호를 다시 입력하세요" onkeyup="javascript:password_chk(this);" aria-describedby="PasswordStatus">
+									<input type="password" class="form-control" id="PASSWORD" name="PASSWORD" placeholder="비밀번호를 다시 입력하세요" onblur="javascript:password_chk(this);" onkeyup="javascript:password_chk(this);" aria-describedby="PasswordStatus">
 									<span id="glyphicon2" class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
 									<span id="PasswordStatus" class="sr-only">(success)</span>
 								</div>

@@ -5,27 +5,36 @@ public class UserInfo implements Info {
 	private static final long serialVersionUID = 1L;
 	private String errorCode;
 	private String subscribe_kor;
-	private String userID;
-	private String userPassword;
-	private String userName;
+	private String id;
+	private String password;
+	private String name;
 	
-	public String getUserID() {
-		return userID;
+	public UserInfo(){}
+	
+	public UserInfo(String id, String password, String name) {
+		super();
+		this.id = id;
+		this.password = password;
+		this.name = name;
 	}
-	public void setUserID(String userId) {
-		this.userID = userId;
+
+	public String getId() {
+		return id;
 	}
-	public String getUserPassword() {
-		return userPassword;
+	public void setId(String id) {
+		this.id = id;
 	}
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
+	public String getPassword() {
+		return password;
 	}
-	public String getUserName() {
-		return userName;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	public void setUserName(String user_Name) {
-		this.userName = user_Name;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getErrorCode() {
 		return errorCode;

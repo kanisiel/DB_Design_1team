@@ -22,7 +22,7 @@
 			<p class="text-center"><font style="font-size:34px"><Strong>프람트소프트 관리 시스템</Strong></font></p>
 		</div>
 		<div class="col-md-10 col-md-offset-1">
-			<p class="text-right"><strong>${userInfo.getUserName()}</strong>씨, 반갑습니다.<a class="btn btn-default btn-xs" href="${pageContext.request.contextPath}/loginController/logout" role="button">로그아웃</a></p>
+			<p class="text-right"><strong>${userInfo.getName()}</strong>씨, 반갑습니다.<a class="btn btn-default btn-xs" href="${pageContext.request.contextPath}/loginController/logout" role="button">로그아웃</a></p>
 		</div>
 	</div>
 </div>

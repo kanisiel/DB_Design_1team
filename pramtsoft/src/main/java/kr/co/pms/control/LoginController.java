@@ -65,7 +65,7 @@ public class LoginController {
 			level = "EMPLOYEE";
 		}
 		UserInfo2 userInfo2 = new UserInfo2(userId, userPassword, userName, level, birthDate, serialNum, schooling, entryDate);
-		int uidx = Integer.parseInt(Integer.toString(levels)+"0"+request.getParameter("birthDate").substring(2, 4))*10000;
+		int uidx = Integer.parseInt(Integer.toString(levels)+"0"+request.getParameter("entryDate").substring(2, 4))*10000;
 		int seq=loginService.getSequence();
 		if(seq>0){
 			uidx+=seq;

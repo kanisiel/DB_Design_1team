@@ -1,7 +1,5 @@
 package kr.co.pms.model;
 
-import java.sql.Timestamp;
-import java.util.Date;
 
 
 public class UserInfo2 implements Info {
@@ -9,14 +7,16 @@ public class UserInfo2 implements Info {
 	private String errorCode;
 	private String subscribe_kor;
 	private int uidx;
-	private String userId;
-	private String userPassword;
-	private String userName;
+	private String id;
+	private String password;
+	private String name;
 	private String levels;
-	private String birthDate;
-	private int serialNum;
+	private String birth_Date;
+	private int serial_Num;
 	private String schooling;
-	private String entryDate;
+	private String entry_Date;
+	private String reg_Date;
+	private String up_Date;
 	
 	public UserInfo2(){}
 	
@@ -24,14 +24,14 @@ public class UserInfo2 implements Info {
 			String levels, String birthDate, int serialNum, String schooling,
 			String entryDate) {
 		super();
-		this.userId = userId;
-		this.userPassword = userPassword;
-		this.userName = userName;
+		this.id = userId;
+		this.password = userPassword;
+		this.name = userName;
 		this.levels = levels;
-		this.birthDate = birthDate;
-		this.serialNum = serialNum;
+		this.birth_Date = birthDate;
+		this.serial_Num = serialNum;
 		this.schooling = schooling;
-		this.entryDate = entryDate;
+		this.entry_Date = entryDate;
 	}
 	
 	public String getErrorCode() {
@@ -53,22 +53,22 @@ public class UserInfo2 implements Info {
 		this.uidx = uidx;
 	}
 	public String getUserId() {
-		return userId;
+		return id;
 	}
 	public void setUserId(String userId) {
-		this.userId = userId;
+		this.id = userId;
 	}
 	public String getUserPassword() {
-		return userPassword;
+		return password;
 	}
 	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
+		this.password = userPassword;
 	}
 	public String getUserName() {
-		return userName;
+		return name;
 	}
 	public void setUserName(String userName) {
-		this.userName = userName;
+		this.name = userName;
 	}
 	public String getLevels() {
 		return levels;
@@ -77,16 +77,16 @@ public class UserInfo2 implements Info {
 		this.levels = levels;
 	}
 	public String getBirthDate() {
-		return birthDate;
+		return birth_Date;
 	}
 	public void setBirthDate(String birthDate) {
-		this.birthDate = birthDate;
+		this.birth_Date = birthDate;
 	}
 	public int getSerialNum() {
-		return serialNum;
+		return serial_Num;
 	}
 	public void setSerialNum(int serialNum) {
-		this.serialNum = serialNum;
+		this.serial_Num = serialNum;
 	}
 	public String getSchooling() {
 		return schooling;
@@ -95,10 +95,26 @@ public class UserInfo2 implements Info {
 		this.schooling = schooling;
 	}
 	public String getEntryDate() {
-		return entryDate;
+		return entry_Date;
 	}
 	public void setEntryDate(String entryDate) {
-		this.entryDate = entryDate;
+		this.entry_Date = entryDate;
+	}
+
+	public String getReg_Date() {
+		return reg_Date;
+	}
+
+	public void setReg_Date(String reg_Date) {
+		this.reg_Date = reg_Date;
+	}
+
+	public String getUp_Date() {
+		return up_Date;
+	}
+
+	public void setUp_Date(String up_Date) {
+		this.up_Date = up_Date;
 	}
 		
 	

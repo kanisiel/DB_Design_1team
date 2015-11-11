@@ -42,26 +42,26 @@ public class UserDao implements Dao {
 		}
 		
 	}
-	public UserInfo getUser(int uidx) throws SQLException{
-		UserInfo userInfo;
+	public UserInfo2 getUser(int uidx) throws SQLException{
+		UserInfo2 userInfo2;
 		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 		if(userMapper!=null){
-			userInfo = userMapper.getUser(uidx);
-			if(userInfo == null){
-				userInfo = new UserInfo();
-				userInfo.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
-				userInfo.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
-				return userInfo;
+			userInfo2 = userMapper.getUser(uidx);
+			if(userInfo2 == null){
+				userInfo2 = new UserInfo2();
+				userInfo2.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				userInfo2.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return userInfo2;
 			} else {
-				userInfo.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
-				userInfo.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
-				return userInfo;
+				userInfo2.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				userInfo2.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return userInfo2;
 			}
 		} else {
-			userInfo = new UserInfo();
-			userInfo.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
-			userInfo.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
-			return userInfo;
+			userInfo2 = new UserInfo2();
+			userInfo2.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			userInfo2.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return userInfo2;
 		}
 		
 	}

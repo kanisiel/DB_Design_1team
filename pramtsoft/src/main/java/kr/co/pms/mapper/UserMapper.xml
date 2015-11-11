@@ -6,11 +6,11 @@
     
     <select id="getData" parameterType="kr.co.pms.model.LoginInfo" resultType="kr.co.pms.model.UserInfo">
     
-    SELECT USERID, USERPASSWORD, USERNAME FROM MEMBER WHERE USERID = #{userID} AND USERPASSWORD = #{userPassword}
+    SELECT ID, PASSWORD, NAME FROM MEMBER WHERE ID = #{userID} AND PASSWORD = #{userPassword}
             
     </select>
     
-    <select id="getUser" parameterType="int" resultType="kr.co.pms.model.UserInfo">
+    <select id="getUser" parameterType="int" resultType="kr.co.pms.model.UserInfo2">
     
     SELECT * FROM MEMBER WHERE UIDX = #{uidx}
             

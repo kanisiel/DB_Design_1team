@@ -2,7 +2,7 @@
 <%@ page session="false" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<html id="home" lang="en">
+<html id="home" lang="ko">
   <head>
     <meta charset=utf-8 />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,21 +16,15 @@
     <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
-		function login(form){
-			form.action = "/pms/loginController/login.do";
-			form.submit();
+		function login(){
+			$('#loginform').attr('action', '/pms/loginController/login.do').submit();
 		}
-		
-		function register(form){
-			form.action = "/pms/loginController/register.do";
-			form.submit();
-		}
-		function register(form){
-			form.reset();
+		function register(){
+			$('#loginform').reset();
 		}
 		function hitEnter(e){
 			if(e.keyCode==13){
-				login(document.form);
+				login();
 			}
 		}
 	</script>
@@ -61,10 +55,10 @@
 							<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/loginController/register.do'">계정 생성</button>
 						</div>
 						<div class="btn-group" role="group">
-							<button type="button" class="btn btn-success" onclick="login(loginform)">로그인</button>
+							<button type="button" class="btn btn-success" onclick="login()">로그인</button>
 						</div>
 						<div class="btn-group" role="group">
-							<button type="button" class="btn btn-warning" onclick="reset(loginform)">리셋</button>
+							<button type="button" class="btn btn-warning" onclick="reset()">리셋</button>
 						</div>
 					</div>
 				</form>
