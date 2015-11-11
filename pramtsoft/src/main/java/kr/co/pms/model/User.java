@@ -3,17 +3,15 @@ package kr.co.pms.model;
 public class User implements CEntity {
 
 	private static final long serialVersionUID = 1L;
-	private String UID;
-	private String userId;
+	private String userID;
 	private String userPassword;
-	private String user_Name;
-	private int user_Type;
+	private String userName;
 	
 	public String getUserId() {
-		return userId;
+		return userID;
 	}
 	public void setUserId(String userId) {
-		this.userId = userId;
+		this.userID = userId;
 	}
 	public String getUserPassword() {
 		return userPassword;
@@ -21,23 +19,11 @@ public class User implements CEntity {
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
-	public String getUID() {
-		return UID;
+	public String getUserName() {
+		return userName;
 	}
-	public void setUID(String UID) {
-		this.UID = UID;
-	}
-	public String getUser_Name() {
-		return user_Name;
-	}
-	public void setUser_Name(String user_Name) {
-		this.user_Name = user_Name;
-	}
-	public int getUser_Type() {
-		return user_Type;
-	}
-	public void setUser_Type(int user_Type) {
-		this.user_Type = user_Type;
+	public void setUserName(String user_Name) {
+		this.userName = user_Name;
 	}
 	
 }

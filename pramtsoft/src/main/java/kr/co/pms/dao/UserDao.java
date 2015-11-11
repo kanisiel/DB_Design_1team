@@ -6,6 +6,7 @@ import kr.co.pms.conf.*;
 import kr.co.pms.mapper.UserMapper;
 import kr.co.pms.model.LoginInfo;
 import kr.co.pms.model.UserInfo;
+import kr.co.pms.model.UserInfo2;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,12 +65,12 @@ public class UserDao implements Dao {
 		}
 		
 	}
-	public boolean createAccount(UserInfo userInfo) {
+	public boolean createAccount(UserInfo2 userInfo2) {
 		
 		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 		if(userMapper!=null){
 			try{
-				userMapper.createAccount(userInfo);
+				userMapper.createAccount(userInfo2);
 				sqlSession.commit();
 				return true;
 			}catch(Exception e){
@@ -77,5 +78,17 @@ public class UserDao implements Dao {
 			}
 		}
 		return false;
+	}
+	public int getSequence(){
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		if(userMapper!=null){
+			try{
+				int seq = userMapper.getSequence();
+				return seq;
+			}catch(Exception e){
+				return -999;
+			}
+		}
+		return -999;
 	}
 }

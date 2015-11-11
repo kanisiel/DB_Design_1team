@@ -2,14 +2,21 @@ package kr.co.pms.control;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
 import kr.co.pms.conf.Configuration;
 import kr.co.pms.model.LoginInfo;
 import kr.co.pms.model.UserInfo;
+import kr.co.pms.model.UserInfo2;
 import kr.co.pms.service.LoginService;
+import oracle.sql.DATE;
+import oracle.sql.TIMESTAMP;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,7 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @SessionAttributes("userInfo")
 public class LoginController {
-	//private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+	private static final Log LOG = LogFactory.getLog(LoginController.class);
 	
 	@Autowired
 	LoginService loginService;
@@ -36,30 +43,45 @@ public class LoginController {
 	ModelAndView modelAndView;
 	
 	@RequestMapping(value = "/loginController/createAccount.do", method = RequestMethod.POST)
-	public ModelAndView createAccount( HttpServletRequest request) throws UnsupportedEncodingException, ClassNotFoundException, SQLException {
+	public ModelAndView createAccount(HttpServletRequest request) throws UnsupportedEncodingException, ClassNotFoundException, SQLException {
 		this.modelAndView = new ModelAndView();
 		request.setCharacterEncoding("UTF-8");
-		int uIdx = Integer.parseInt(request.getParameter("UIDX"));
-		String userID = request.getParameter("USERID");
-		String userPassword = request.getParameter("USERPASSWORD");
-		String userName = request.getParameter("USERNAME");
-		String ut = request.getParameter("USERTYPE");
-		String dt = request.getParameter("DEPT");
-		String col = request.getParameter("COLLEGE");
-		int userType = Integer.parseInt(ut);
-		int dept = Integer.parseInt(dt);
-		int college = Integer.parseInt(col);
-		UserInfo userInfo = new UserInfo(uIdx, userID, userPassword, userName, userType, dept, college);
-		if(loginService.createAccount(userInfo)==false){
-			userInfo = new UserInfo();
-			userInfo.setErrorCode(Configuration.ErrorCodes.ER8000.getCodeName());
-			userInfo.setSubscribe_kor(Configuration.ErrorCodes.ER8000.getSubtitleKor());
-			modelAndView.addObject("userInfo", userInfo);
+		String userId = request.getParameter("userId");
+		String userPassword = request.getParameter("userPassword");
+		String userName = request.getParameter("userName");
+		String birthDate = request.getParameter("birthDate");
+		int serialNum = Integer.parseInt(request.getParameter("serialNum"));
+		String schooling = request.getParameter("schooling");
+		int levels = Integer.parseInt(request.getParameter("levels"));
+		String level;
+		String entryDate = request.getParameter("entryDate")+" 00:00:00.000000";
+		switch(levels){
+		case 1:
+			level = "EMPLOYEE";
+			break;
+		case 6:
+			level = "EXECUTIVE";
+		default:
+			level = "EMPLOYEE";
+		}
+		UserInfo2 userInfo2 = new UserInfo2(userId, userPassword, userName, level, birthDate, serialNum, schooling, entryDate);
+		int uidx = Integer.parseInt(Integer.toString(levels)+"0"+request.getParameter("birthDate").substring(2, 4))*10000;
+		int seq=loginService.getSequence();
+		if(seq>0){
+			uidx+=seq;
+		}
+		userInfo2.setUidx(uidx);
+		userInfo2.setLevels(level);
+		if(loginService.createAccount(userInfo2)==false){
+			userInfo2 = new UserInfo2();
+			userInfo2.setErrorCode(Configuration.ErrorCodes.ER8000.getCodeName());
+			userInfo2.setSubscribe_kor(Configuration.ErrorCodes.ER8000.getSubtitleKor());
+			modelAndView.addObject("userInfo", userInfo2);
 			modelAndView.setViewName("redirect:/");
 			return modelAndView;
 		}else {
-			userInfo.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
-			userInfo.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+			userInfo2.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+			userInfo2.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
 			modelAndView.setViewName("redirect:/");
 			return modelAndView;
 		}
@@ -73,7 +95,7 @@ public class LoginController {
 		String userID = request.getParameter("userID");
 		String userPassword = request.getParameter("userPassword");
 		
-		loginInfo.setUserId(userID);
+		loginInfo.setUserID(userID);
 		loginInfo.setUserPassword(userPassword);
 		userInfo = this.loginService.login(loginInfo);
 		modelAndView.addObject("userInfo", userInfo);
@@ -91,4 +113,9 @@ public class LoginController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping(value = "/loginController/register.do", method = RequestMethod.GET)
+	public ModelAndView register( RedirectAttributes redir ) throws UnsupportedEncodingException {
+		modelAndView = new ModelAndView("register");
+		return modelAndView;
+	}
 }

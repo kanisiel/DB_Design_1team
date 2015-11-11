@@ -6,21 +6,24 @@
     
     <select id="getData" parameterType="kr.co.pms.model.LoginInfo" resultType="kr.co.pms.model.UserInfo">
     
-    SELECT * FROM USERS WHERE USERID = #{userId} AND USERPASSWORD = #{userPassword}
+    SELECT USERID, USERPASSWORD, USERNAME FROM MEMBER WHERE USERID = #{userID} AND USERPASSWORD = #{userPassword}
             
     </select>
     
     <select id="getUser" parameterType="int" resultType="kr.co.pms.model.UserInfo">
     
-    SELECT * FROM USERS WHERE UIDX = #{uidx}
+    SELECT * FROM MEMBER WHERE UIDX = #{uidx}
             
     </select>
     
-    <insert id="createAccount" parameterType="kr.co.pms.model.UserInfo">
-        INSERT INTO USERS (UIDX, USERID, USERPASSWORD, USERNAME, USERTYPE, DEPT, COLLEGE) 
-        VALUES ( #{uIdx}, #{userId}, #{userPassword}, #{userName}, #{userType}, #{dept}, #{college} )
+    <insert id="createAccount" parameterType="kr.co.pms.model.UserInfo2">
+        INSERT INTO REG_QUEUE (UIDX, ID, PASSWORD, NAME, BIRTH_DATE, SERIAL_NUM, SCHOOLING, LEVELS, ENTRY_DATE, REG_DATE, UP_DATE) 
+        VALUES (#{uidx}, #{userId}, #{userPassword}, #{userName}, to_date(#{birthDate}), #{serialNum}, #{schooling}, #{levels}, to_timestamp(#{entryDate}), SYSDATE, SYSDATE)
     </insert>
     
+    <select id='getSequence' resultType="int">
+        SELECT SEQ_UID.NEXTVAL from dual
+    </select>
     
 </mapper>
 
