@@ -6,7 +6,7 @@
     
     <select id="getData" parameterType="kr.co.pms.model.LoginInfo" resultType="kr.co.pms.model.UserInfo">
     
-    SELECT ID, PASSWORD, NAME FROM MEMBER WHERE ID = #{userID} AND PASSWORD = #{userPassword}
+    SELECT * FROM MEMBER WHERE ID = #{userID} AND PASSWORD = #{userPassword}
             
     </select>
     
@@ -16,7 +16,7 @@
             
     </select>
     
-    <insert id="createAccount" parameterType="kr.co.pms.model.UserInfo2">
+    <insert id="createAccount" parameterType="kr.co.pms.model.UserInfo">
         INSERT INTO REG_QUEUE (UIDX, ID, PASSWORD, NAME, BIRTH_DATE, SERIAL_NUM, SCHOOLING, LEVELS, ENTRY_DATE, REG_DATE, UP_DATE) 
         VALUES (#{uidx}, #{userId}, #{userPassword}, #{userName}, to_date(#{birthDate}), #{serialNum}, #{schooling}, #{levels}, to_timestamp(#{entryDate}), SYSDATE, SYSDATE)
     </insert>

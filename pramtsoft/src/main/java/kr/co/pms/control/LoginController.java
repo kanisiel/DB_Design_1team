@@ -64,24 +64,24 @@ public class LoginController {
 		default:
 			level = "EMPLOYEE";
 		}
-		UserInfo2 userInfo2 = new UserInfo2(userId, userPassword, userName, level, birthDate, serialNum, schooling, entryDate);
+		UserInfo userInfo = new UserInfo(userId, userPassword, userName, level, birthDate, serialNum, schooling, entryDate);
 		int uidx = Integer.parseInt(Integer.toString(levels)+"0"+request.getParameter("entryDate").substring(2, 4))*10000;
 		int seq=loginService.getSequence();
 		if(seq>0){
 			uidx+=seq;
 		}
-		userInfo2.setUidx(uidx);
-		userInfo2.setLevels(level);
-		if(loginService.createAccount(userInfo2)==false){
-			userInfo2 = new UserInfo2();
-			userInfo2.setErrorCode(Configuration.ErrorCodes.ER8000.getCodeName());
-			userInfo2.setSubscribe_kor(Configuration.ErrorCodes.ER8000.getSubtitleKor());
-			modelAndView.addObject("userInfo", userInfo2);
+		userInfo.setUidx(uidx);
+		userInfo.setLevels(level);
+		if(loginService.createAccount(userInfo)==false){
+			userInfo = new UserInfo();
+			userInfo.setErrorCode(Configuration.ErrorCodes.ER8000.getCodeName());
+			userInfo.setSubscribe_kor(Configuration.ErrorCodes.ER8000.getSubtitleKor());
+			modelAndView.addObject("userInfo", userInfo);
 			modelAndView.setViewName("redirect:/");
 			return modelAndView;
 		}else {
-			userInfo2.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
-			userInfo2.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+			userInfo.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+			userInfo.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
 			modelAndView.setViewName("redirect:/");
 			return modelAndView;
 		}

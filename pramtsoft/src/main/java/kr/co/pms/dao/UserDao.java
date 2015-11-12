@@ -65,12 +65,12 @@ public class UserDao implements Dao {
 		}
 		
 	}
-	public boolean createAccount(UserInfo2 userInfo2) {
+	public boolean createAccount(UserInfo userInfo) {
 		
 		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 		if(userMapper!=null){
 			try{
-				userMapper.createAccount(userInfo2);
+				userMapper.createAccount(userInfo);
 				sqlSession.commit();
 				return true;
 			}catch(Exception e){

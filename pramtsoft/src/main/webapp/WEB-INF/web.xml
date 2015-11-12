@@ -20,6 +20,10 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>/WEB-INF/spring/root-context.xml</param-value>
   </context-param>
+   <error-page>
+      <error-code>500</error-code>
+      <location>/error/500.jsp</location>
+  </error-page>
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>

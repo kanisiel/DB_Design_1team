@@ -9,6 +9,6 @@ import kr.co.pms.model.UserInfo2;
 public interface UserMapper {
 	 public UserInfo getData(LoginInfo loginInfo) throws SQLException;
 	 public UserInfo2 getUser(int uidx) throws SQLException;
-	 public void createAccount(UserInfo2 userInfo2) throws SQLException;
+	 public void createAccount(UserInfo userInfo) throws SQLException;
 	 public int getSequence() throws SQLException;
 }

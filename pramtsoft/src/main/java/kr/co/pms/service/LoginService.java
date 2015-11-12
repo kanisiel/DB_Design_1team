@@ -21,8 +21,8 @@ public class LoginService {
 	public UserInfo login(LoginInfo loginInfo) throws SQLException{
 		return userDao.login(loginInfo);
 	}
-	public boolean createAccount(UserInfo2 userInfo2) throws SQLException {
-		return userDao.createAccount(userInfo2);
+	public boolean createAccount(UserInfo userInfo) throws SQLException {
+		return userDao.createAccount(userInfo);
 	}
 	public int getSequence(){
 		return userDao.getSequence();
