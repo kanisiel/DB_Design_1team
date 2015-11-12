@@ -2,7 +2,7 @@ package kr.co.pms.model;
 
 public class UserInfo implements Info {
 
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
 	private String errorCode;
 	private String subscribe_kor;
 	private int uidx;

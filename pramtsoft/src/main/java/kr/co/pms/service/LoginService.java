@@ -7,10 +7,8 @@ import javax.annotation.Resource;
 import kr.co.pms.dao.UserDao;
 import kr.co.pms.model.LoginInfo;
 import kr.co.pms.model.UserInfo;
-import kr.co.pms.model.UserInfo2;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LoginService {

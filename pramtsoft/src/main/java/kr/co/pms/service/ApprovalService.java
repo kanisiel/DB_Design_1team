@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import javax.annotation.Resource;
 
 import kr.co.pms.dao.UserDao;
-import kr.co.pms.model.UserInfo;
 import kr.co.pms.model.UserInfo2;
 
 import org.springframework.stereotype.Service;
