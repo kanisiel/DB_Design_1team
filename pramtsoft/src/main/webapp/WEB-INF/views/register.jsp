@@ -75,6 +75,10 @@
 		function check_password(){
 			var form = document.getElementById("register");
 			if(form.elements["userPassword"].value != form.elements["PASSWORD"].value){
+				$('#pw2Warning').html("비밀번호가 다르게 입력되었습니다!");
+				$('#userPassword,#Password').parent().removeClass("has-error").removeClass("has-warning").removeClass("has-success").addClass("has-error");
+				$('#glyphicon1,#glyphicon2').removeClass("glyphicon-remove").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+				$('#userPasswordStatus,#PasswordStatus').html("(error)");
 				return false;
 			}
 			return true;
@@ -87,55 +91,24 @@
 		function password_chk(input){
 			var check = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,}$/;
 			var pw = input.value;
-			var id;
-			var span1, span2;
-			switch(input.name){
-			default:
-			case "userPassword":
-				id = "pwWarning";
-				span1 = "glyphicon1";
-				span2 = "userPasswordStatus";
-				break;
-			case "PASSWORD":
-				id = "pw2Warning";
-				span1 = "glyphicon2";
-				span2 = "PasswordStatus";
-				break;
-			}
-			warning = document.getElementById(id);
 			if (!check.test(pw)){
-				$('#'+id).html("비밀번호는 문자, 숫자, 특수문자의 조합으로 입력해주세요.");
+				$('#'+input.id+'Warning').html("비밀번호는 문자, 숫자, 특수문자의 조합으로 입력해주세요.");
 				$('#'+input.id).parent().removeClass("has-error").removeClass("has-warning").removeClass("has-success").addClass("has-error");
-				$('#'+span1).removeClass("glyphicon-remove").removeClass("glyphicon-ok").addClass("glyphicon-remove");
-				$('#'+span2).html("(error)");
+				$('#'+input.id).parent().children().eq(3).removeClass("glyphicon-remove").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+				$('#'+input.id).parent().children().eq(4).html("(error)");
 				return false;
 			}     
 			if (pw.length < 6 || pw.length > 16) {
-				$('#'+id).html("비밀번호는 6 ~ 16 자리로 입력해주세요.");
+				$('#'+input.id+'Warning').html("비밀번호는 6 ~ 16 자리로 입력해주세요.");
 				$('#'+input.id).parent().removeClass("has-error").removeClass("has-warning").removeClass("has-success").addClass("has-error");
-				$('#'+span1).removeClass("glyphicon-remove").removeClass("glyphicon-ok").addClass("glyphicon-remove");
-				$('#'+span2).html("(error)");
+				$('#'+input.id).parent().children().eq(3).removeClass("glyphicon-remove").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+				$('#'+input.id).parent().children().eq(4).html("(error)");
 				return false;
 			}
-			if(check.test(form.elements["userPassword"].value)){
-				if(!check_password()){
-					$('#pw2Warning').html("비밀번호가 다르게 입력되었습니다!");
-					$('#userPassword,#Password').parent().removeClass("has-error").removeClass("has-warning").removeClass("has-success").addClass("has-error");
-					$('#glyphicon1,#glyphicon2').removeClass("glyphicon-remove").removeClass("glyphicon-ok").addClass("glyphicon-remove");
-					$('#userPasswordStatus,#PasswordStatus').html("(error)");
-					return false;
-				}else if(check_password()){
-					$('#pw2Warning, #pwWarning').html("");
-					$('#userPassword,#Password').parent().removeClass("has-success").removeClass("has-warning").removeClass("has-error").addClass("has-success");
-					$('#glyphicon1,#glyphicon2').removeClass("glyphicon-ok").removeClass("glyphicon-remove").addClass("glyphicon-ok");
-					$('#userPasswordStatus,#PasswordStatus').html("(success)");
-					return true;
-				}
-			}
-			$('#'+id).html("");
-			$('#'+input.id).parent().removeClass("has-success").removeClass("has-warning").removeClass("has-error").addClass("has-success");
-			$('#'+span1).removeClass("glyphicon-ok").removeClass("glyphicon-remove").addClass("glyphicon-ok");
-			$('#'+span2).html("(success)");
+			$('#userPasswordWarning, #PASSWORDWarning').html("");
+			$('#userPassword,#Password').parent().removeClass("has-success").removeClass("has-warning").removeClass("has-error").addClass("has-success");
+			$('#glyphicon1,#glyphicon2').removeClass("glyphicon-ok").removeClass("glyphicon-remove").addClass("glyphicon-ok");
+			$('#userPasswordStatus,#PasswordStatus').html("(success)");
 			return true;
 		}
 		function check_form(){
@@ -153,9 +126,15 @@
 				document.getElementById("register").submit();
 			}
 		}
+		function checking(){
+			if(document.getElementById("userPassword").val != '' && document.getElementByID("Password").val != ''){
+				password_chk(document.getElementById("userPassword"));
+				password_chk(document.getElementByID("Password"));
+			}
+		}
 		</script>
 	</head>
-	<body>
+	<body onKeypress="checking();">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
@@ -184,7 +163,7 @@
 								</div>
 							</div>							
 							<div class="col-md-4">
-								<p id="pwWarning" class="text-danger"></p>
+								<p id="userPasswordWarning" class="text-danger"></p>
 							</div>
 							<div class="col-md-8">
 								<div class="form-group has-feedback">
@@ -195,7 +174,7 @@
 								</div>
 							</div>							
 							<div class="col-md-4">
-								<p id="pw2Warning" class="text-danger"></p>
+								<p id="PASSWORDWarning" class="text-danger"></p>
 							</div>
 							<div class="col-md-8">
 								<div class="form-group">
