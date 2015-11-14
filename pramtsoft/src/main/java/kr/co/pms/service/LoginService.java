@@ -20,6 +20,7 @@ public class LoginService {
 		return userDao.login(loginInfo);
 	}
 	public boolean createAccount(UserInfo userInfo) throws SQLException {
+		System.out.println(userInfo.getUidx());
 		return userDao.createAccount(userInfo);
 	}
 	public int getSequence(){

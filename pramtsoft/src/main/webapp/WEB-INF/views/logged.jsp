@@ -37,7 +37,7 @@
 						<c:choose>
 							<c:when test="${userInfo.getLevels() =='EXECUTIVE' }">
 								<div class="btn-group" role="group">
-									<button id="approveRequest" type="button" class="btn btn-primary" onClick="javascript:addText('가입승인');">가입승인</button>
+									<button id="approveRequest" type="button" class="btn btn-primary" onClick="location.href='${pageContext.request.contextPath}/executiveController/approveRegRequest';">가입승인</button>
 								</div>
 								<div class="btn-group" role="group">
 									<button id="approveRequest" type="button" class="btn btn-danger" onClick="javascript:addText('결재시스템');">결재시스템</button>

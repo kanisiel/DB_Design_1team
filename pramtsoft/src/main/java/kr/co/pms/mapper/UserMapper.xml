@@ -10,15 +10,36 @@
             
     </select>
     
+    <select id="getRequest" resultType="kr.co.pms.model.UserInfo">
+    
+    SELECT * FROM REG_QUEUE
+            
+    </select>
+    
+     <insert id="approveRequest" parameterType="int">
+        INSERT INTO MEMBER
+        SELECT * FROM REG_QUEUE WHERE UIDX = #{uidx}
+    </insert>
+    
+    <delete id="deleteRequest" parameterType="int">
+        DELETE FROM REG_QUEUE
+        WHERE UIDX = #{uidx}
+    </delete>
+    
+    <update id="updateUpdate" parameterType="int">
+        UPDATE MEMBER SET UP_DATE=SYSDATE
+        WHERE UIDX = #{uidx}
+    </update>
+    
     <select id="getUser" parameterType="int" resultType="kr.co.pms.model.UserInfo2">
     
-    SELECT * FROM MEMBER WHERE UIDX = #{uidx}
+    	SELECT * FROM MEMBER WHERE UIDX = #{uidx}
             
     </select>
     
     <insert id="createAccount" parameterType="kr.co.pms.model.UserInfo">
         INSERT INTO REG_QUEUE (UIDX, ID, PASSWORD, NAME, BIRTH_DATE, SERIAL_NUM, SCHOOLING, LEVELS, ENTRY_DATE, REG_DATE, UP_DATE) 
-        VALUES (#{uidx}, #{userId}, #{userPassword}, #{userName}, to_date(#{birthDate}), #{serialNum}, #{schooling}, #{levels}, to_timestamp(#{entryDate}), SYSDATE, SYSDATE)
+        VALUES (#{uidx}, #{id}, #{password}, #{name}, to_date(#{birth_Date}), #{serial_Num}, #{schooling}, #{levels}, to_timestamp(#{entry_Date}), SYSDATE, SYSDATE)
     </insert>
     
     <select id='getSequence' resultType="int">

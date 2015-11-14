@@ -1,12 +1,14 @@
 package kr.co.pms.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import kr.co.pms.conf.*;
 import kr.co.pms.mapper.UserMapper;
 import kr.co.pms.model.LoginInfo;
 import kr.co.pms.model.UserInfo;
 import kr.co.pms.model.UserInfo2;
+import kr.co.pms.model.UserList;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,5 +92,58 @@ public class UserDao implements Dao {
 			}
 		}
 		return -999;
+	}
+	public UserList getRegList() throws SQLException{
+		UserList userList;
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		if(userMapper != null){
+			List<UserInfo> reqList = userMapper.getRequest();
+			if(reqList == null){
+				userList = new UserList();
+				userList.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				userList.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return userList;
+			} else {
+				userList = new UserList();
+				userList.setReqList(reqList);
+				userList.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				userList.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return userList;
+			}
+		} else {
+			userList = new UserList();
+			userList.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			userList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return userList;
+		}
+	}
+	public boolean approveReq(int uidx) {
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		if(userMapper!=null){
+			try{
+				userMapper.approveRequest(uidx);
+				userMapper.updateUpdate(uidx);
+				userMapper.deleteRequest(uidx);
+				return true;
+			}catch(Exception e){
+				e.toString();
+				return false;
+			}
+		}else {
+			return false;
+		}
+	}
+	public boolean deleteReq(int uidx) {
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		if(userMapper!=null){
+			try{
+				userMapper.deleteRequest(uidx);
+				sqlSession.commit();
+				return true;
+			}catch(Exception e){
+				return false;
+			}
+		}
+		return false;
 	}
 }
