@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javax.annotation.Resource;
 
 import kr.co.pms.dao.UserDao;
+import kr.co.pms.model.Pagination;
 import kr.co.pms.model.UserInfo;
 import kr.co.pms.model.UserList;
 
@@ -26,6 +27,12 @@ public class ExecutiveService {
 	}
 	public UserList getUserList() throws SQLException {
 		return userDao.getUserList();
+	}
+	public UserList getUserListP(Pagination pagination) throws SQLException {
+		return userDao.userListP(pagination);
+	}
+	public int getAllRownum() throws SQLException {
+		return userDao.getAllRownum();
 	}
 	/*
 	 * for Encrypt password

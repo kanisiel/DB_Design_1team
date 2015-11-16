@@ -43,7 +43,7 @@
 									<button id="approveRequest" type="button" class="btn btn-danger" onClick="javascript:addText('결재시스템');">결재시스템</button>
 								</div>
 								<div class="btn-group" role="group">
-									<button id="approveRequest" type="button" class="btn btn-info" onClick="javascript:addText('직원');">직원</button>
+									<button id="approveRequest" type="button" class="btn btn-info" onClick="location.href='${pageContext.request.contextPath}/executiveController/memberList';">직원</button>
 								</div>
 								<div class="btn-group" role="group">
 									<button id="approveRequest" type="button" class="btn btn-success" onClick="javascript:addText('프로젝트');">프로젝트</button>

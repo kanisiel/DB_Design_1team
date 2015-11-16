@@ -6,6 +6,7 @@ import java.util.List;
 import kr.co.pms.conf.*;
 import kr.co.pms.mapper.UserMapper;
 import kr.co.pms.model.LoginInfo;
+import kr.co.pms.model.Pagination;
 import kr.co.pms.model.UserInfo;
 import kr.co.pms.model.UserInfo2;
 import kr.co.pms.model.UserList;
@@ -117,6 +118,30 @@ public class UserDao implements Dao {
 			return userList;
 		}
 	}
+	public UserList userListP(Pagination pagination) throws SQLException{
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		UserList userList;
+		if(userMapper != null){
+			List<UserInfo> userListP = userMapper.getUserListP(pagination);
+			if(userListP == null){
+				userList = new UserList();
+				userList.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				userList.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return userList;
+			} else {
+				userList = new UserList();
+				userList.setReqList(userListP);
+				userList.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				userList.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return userList;
+			}
+		} else {
+			userList = new UserList();
+			userList.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			userList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return userList;
+		}
+	}
 	public boolean approveReq(int uidx) {
 		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 		if(userMapper!=null){
@@ -186,5 +211,17 @@ public class UserDao implements Dao {
 			userList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
 			return userList;
 		}
+	}
+	public int getAllRownum(){
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		if(userMapper!=null){
+			try{
+				int num = userMapper.getAllRownum();
+				return num;
+			}catch(Exception e){
+				return -999;
+			}
+		}
+		return -999;
 	}
 }

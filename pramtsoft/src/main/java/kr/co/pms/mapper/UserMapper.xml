@@ -23,6 +23,21 @@
             
     </select>
     
+    <select id="getUserListP" parameterType="kr.co.pms.model.Pagination" resultType="kr.co.pms.model.UserInfo">
+        SELECT *
+		FROM 
+		    (SELECT  /*+ index_desc(t PK_USERS) */ t.*, rownum as rnum
+		    FROM member t)
+		WHERE rnum BETWEEN #{start} AND #{end}
+    </select>
+    
+    <select id="getAllRownum" resultType="int">
+        
+        Select COUNT(*) AS total
+        From Member
+        
+    </select>
+    
     <select id="getRequest" resultType="kr.co.pms.model.UserInfo">
     
     SELECT * FROM REG_QUEUE

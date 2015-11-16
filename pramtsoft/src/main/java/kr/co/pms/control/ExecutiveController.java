@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import kr.co.pms.conf.Sha512Encrypter;
 import kr.co.pms.conf.Configuration.*;
+import kr.co.pms.model.Pagination;
 import kr.co.pms.model.UserInfo;
 import kr.co.pms.model.UserList;
 import kr.co.pms.service.ExecutiveService;
@@ -94,7 +95,7 @@ public class ExecutiveController {
 				userData.setPassword(encrypter.getPassword());
 				//System.out.println(userData.getName()+"'s Password : "+userData.getPassword());
 				if(executiveService.encryptSha512(userData)){
-					System.out.println(userData.getName()+"'s Password : "+userData.getPassword());
+					
 				}
 			} catch (Exception e) {
 				String errorCode = ErrorCodes.ER0001.getSubtitleKor();
@@ -105,4 +106,38 @@ public class ExecutiveController {
 		}
 		return modelAndView;
 	}
+	@RequestMapping(value = "/executiveController/memberList", method = RequestMethod.GET)
+	public ModelAndView memberList(@ModelAttribute("userInfo") UserInfo userInfo, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
+		modelAndView = new ModelAndView();
+		String p = request.getParameter("p");
+		int page;
+		modelAndView.addObject("userInfo", userInfo);
+		if(p != null){
+			page = Integer.parseInt(p);	
+		} else {
+			page = 1;
+		}
+		modelAndView.addObject("page", page);
+		Pagination pagination = new Pagination((page-1)*10, page*10);
+		int max = executiveService.getAllRownum();
+		if(max < 0){
+			String errorCode = ErrorCodes.ER0001.getSubtitleKor();
+			modelAndView.addObject("errorCode", errorCode);
+			modelAndView.setViewName("error/500");
+			return modelAndView;
+		} else {
+			modelAndView.addObject("max", Math.ceil(max/10));
+		}
+		UserList userList = executiveService.getUserListP(pagination);
+		if(userList.getErrorCode().equals("Success")){
+			modelAndView.addObject("userList", userList);
+			modelAndView.setViewName("executive/userList");
+			return modelAndView;
+		} else {
+			ErrorCodes errorCodes = ErrorCodes.valueOf(userList.getErrorCode());
+			modelAndView.addObject("errorCode", errorCodes);
+			modelAndView.setViewName("error/500");
+			return modelAndView;
+		}
+	}	
 }
