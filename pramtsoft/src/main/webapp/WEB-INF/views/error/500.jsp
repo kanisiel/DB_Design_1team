@@ -7,17 +7,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<%
-     //200정보를 응답객체에 새팅
-    response.setStatus(HttpServletResponse.SC_OK);
-%>
 <title>알림 </title>
 </head>
 <body>
 
-<h1><%=exception.getMessage() %></h1>
-<%
-    out.write("<h1>"+exception.getMessage()+"</h1>");
-%>
+<h1>${ errorCode }</h1>
 </body>
 </html>

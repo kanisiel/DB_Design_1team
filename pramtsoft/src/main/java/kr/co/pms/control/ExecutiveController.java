@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import kr.co.pms.conf.Sha512Encrypter;
 import kr.co.pms.conf.Configuration.*;
 import kr.co.pms.model.UserInfo;
 import kr.co.pms.model.UserList;
@@ -76,5 +77,32 @@ public class ExecutiveController {
 		String errorCode = ErrorCodes.ER0001.getSubtitleKor();
 		modelAndView.addObject("errorCode", errorCode);
 		return reqList(userInfo, request, modelAndView);
+	}
+	
+	/*
+	 * for Encrypt passwords.
+	 * if necessary for encrypt another column, change encryption funtion's parameter.
+	 */
+	@RequestMapping(value = "/executiveController/encryption.do", method = RequestMethod.GET)
+	public ModelAndView encryption(@ModelAttribute("userInfo") UserInfo userInfo, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
+		modelAndView = new ModelAndView();
+		Sha512Encrypter encrypter = new Sha512Encrypter();
+		UserList userList = executiveService.getUserList();
+		for(UserInfo userData : userList.getReqList()){
+			try{
+				encrypter.encryption(userData.getPassword());
+				userData.setPassword(encrypter.getPassword());
+				//System.out.println(userData.getName()+"'s Password : "+userData.getPassword());
+				if(executiveService.encryptSha512(userData)){
+					System.out.println(userData.getName()+"'s Password : "+userData.getPassword());
+				}
+			} catch (Exception e) {
+				String errorCode = ErrorCodes.ER0001.getSubtitleKor();
+				modelAndView.addObject("errorCode", errorCode);
+				modelAndView.setViewName("error/500");
+				return modelAndView;
+			}
+		}
+		return modelAndView;
 	}
 }

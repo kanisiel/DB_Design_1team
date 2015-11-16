@@ -146,4 +146,45 @@ public class UserDao implements Dao {
 		}
 		return false;
 	}
+	/*
+	 * for Encrypt password
+	 */
+	public boolean encryptPassword(UserInfo userInfo) {
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		if(userMapper!=null){
+			try{
+				userMapper.encryptSha512(userInfo);
+				return true;
+			}catch(Exception e){
+				e.toString();
+				return false;
+			}
+		}else {
+			return false;
+		}
+	}
+	public UserList getUserList() throws SQLException{
+		UserList userList;
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		if(userMapper != null){
+			List<UserInfo> userLists = userMapper.getUserList();
+			if(userLists == null){
+				userList = new UserList();
+				userList.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				userList.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return userList;
+			} else {
+				userList = new UserList();
+				userList.setReqList(userLists);
+				userList.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				userList.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return userList;
+			}
+		} else {
+			userList = new UserList();
+			userList.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			userList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return userList;
+		}
+	}
 }

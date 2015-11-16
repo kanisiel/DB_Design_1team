@@ -10,6 +10,19 @@
             
     </select>
     
+    <update id="encryptSha512" parameterType="kr.co.pms.model.UserInfo">
+        
+        UPDATE MEMBER SET PASSWORD = #{ password }
+        WHERE UIDX = #{ uidx }
+        
+    </update>
+    
+    <select id="getUserList" resultType="kr.co.pms.model.UserInfo">
+    
+    SELECT * FROM MEMBER
+            
+    </select>
+    
     <select id="getRequest" resultType="kr.co.pms.model.UserInfo">
     
     SELECT * FROM REG_QUEUE

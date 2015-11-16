@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javax.annotation.Resource;
 
 import kr.co.pms.dao.UserDao;
+import kr.co.pms.model.UserInfo;
 import kr.co.pms.model.UserList;
 
 import org.springframework.stereotype.Service;
@@ -22,5 +23,14 @@ public class ExecutiveService {
 	}
 	public boolean deleteReq(int uidx) throws SQLException{
 		return userDao.deleteReq(uidx);
+	}
+	public UserList getUserList() throws SQLException {
+		return userDao.getUserList();
+	}
+	/*
+	 * for Encrypt password
+	 */
+	public boolean encryptSha512(UserInfo userInfo) throws SQLException {
+		return userDao.encryptPassword(userInfo);
 	}
 }
