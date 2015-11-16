@@ -6,9 +6,11 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 
 import kr.co.pms.conf.Configuration;
+import kr.co.pms.conf.Sha512Encrypter;
 import kr.co.pms.model.LoginInfo;
 import kr.co.pms.model.UserInfo;
 import kr.co.pms.service.LoginService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,6 +39,7 @@ public class LoginController {
 	@RequestMapping(value = "/loginController/createAccount.do", method = RequestMethod.POST)
 	public ModelAndView createAccount(HttpServletRequest request) throws UnsupportedEncodingException, ClassNotFoundException, SQLException {
 		this.modelAndView = new ModelAndView();
+		Sha512Encrypter encrypter = new Sha512Encrypter();
 		request.setCharacterEncoding("UTF-8");
 		String userId = request.getParameter("userId");
 		String userPassword = request.getParameter("userPassword");
@@ -55,6 +58,9 @@ public class LoginController {
 			level = "EXECUTIVE";
 		default:
 			level = "EMPLOYEE";
+		}
+		if(encrypter.encryption(userPassword)){
+			userPassword = encrypter.getPassword();
 		}
 		UserInfo userInfo = new UserInfo(userId, userPassword, userName, level, birthDate, serialNum, schooling, entryDate);
 		int uidx = Integer.parseInt(Integer.toString(levels)+"0"+request.getParameter("entryDate").substring(2, 4))*10000;
@@ -82,11 +88,14 @@ public class LoginController {
 	@RequestMapping(value = "/loginController/login.do", method = RequestMethod.POST)
 	public ModelAndView login(@ModelAttribute("loginInfo") LoginInfo loginInfo, HttpServletRequest request, RedirectAttributes redir) throws UnsupportedEncodingException, ClassNotFoundException, SQLException {
 		UserInfo userInfo = null;
+		Sha512Encrypter encrypter = new Sha512Encrypter();
 		modelAndView = new ModelAndView();
 		request.setCharacterEncoding("UTF-8");
 		String userID = request.getParameter("userID");
 		String userPassword = request.getParameter("userPassword");
-		
+		if(encrypter.encryption(userPassword)){
+			userPassword = encrypter.getPassword();
+		}
 		loginInfo.setUserID(userID);
 		loginInfo.setUserPassword(userPassword);
 		userInfo = this.loginService.login(loginInfo);
