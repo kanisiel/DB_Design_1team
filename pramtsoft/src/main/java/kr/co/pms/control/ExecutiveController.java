@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import kr.co.pms.conf.Sha512Encrypter;
 import kr.co.pms.conf.Configuration.*;
@@ -22,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @SessionAttributes("userInfo")
-public class ExecutiveController {
+public class ExecutiveController extends CController {
 
 	@Autowired
 	ExecutiveService executiveService;
@@ -38,15 +39,18 @@ public class ExecutiveController {
 	ModelAndView modelAndView;
 	
 	@RequestMapping(value = "/executiveController/approveRegRequest", method = RequestMethod.GET)
-	public ModelAndView reqList(@ModelAttribute("userInfo") UserInfo userInfo, HttpServletRequest request, ModelAndView modelAndView)  throws UnsupportedEncodingException, SQLException {
+	public ModelAndView reqList(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, ModelAndView modelAndView)  throws UnsupportedEncodingException, SQLException {
 		if(modelAndView == null){
-			modelAndView = new ModelAndView("executive/regApprove");
+			modelAndView = new ModelAndView();
 		}
 		modelAndView.addObject("userInfo", userInfo);
 		UserList userList = executiveService.getRegList();
 		if(userList.getErrorCode().equals("Success")){
-			modelAndView.addObject("userList", userList);
-			modelAndView.setViewName("executive/regApprove");
+			flushSessionAttribute(session);
+			session.setAttribute("userList", userList);
+//			modelAndView.addObject("userList", userList);
+			modelAndView.addObject("url", "executive/regApprove.jsp");
+			modelAndView.setViewName("template");
 			return modelAndView;
 		} else {
 			ErrorCodes errorCodes = ErrorCodes.valueOf(userList.getErrorCode());
@@ -56,7 +60,7 @@ public class ExecutiveController {
 		}
 	}
 	@RequestMapping(value = "/executiveController/approveRegRequest.do", method = RequestMethod.POST)
-	public ModelAndView approve(@ModelAttribute("userInfo") UserInfo userInfo, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
+	public ModelAndView approve(@ModelAttribute("userInfo") UserInfo userInfo, HttpServletRequest request, HttpSession session)  throws UnsupportedEncodingException, SQLException {
 		modelAndView = new ModelAndView("executive/regApprove");
 		String appUidx = request.getParameter("appUidx");
 		String mode = request.getParameter("actions");
@@ -66,18 +70,18 @@ public class ExecutiveController {
 			if(executiveService.approveReq(uidx)){
 				String errorCode = ErrorCodes.Success.getSubtitleKor();
 				modelAndView.addObject("errorCode", errorCode);
-				return reqList(userInfo, request, modelAndView);
+				return reqList(userInfo, session, modelAndView);
 			}
 		} else if(mode.equals("delete")){
 			if(executiveService.deleteReq(uidx)){
 				String errorCode = ErrorCodes.Success.getSubtitleKor();
 				modelAndView.addObject("errorCode", errorCode);
-				return reqList(userInfo, request, modelAndView);
+				return reqList(userInfo, session, modelAndView);
 			}
 		}
 		String errorCode = ErrorCodes.ER0001.getSubtitleKor();
 		modelAndView.addObject("errorCode", errorCode);
-		return reqList(userInfo, request, modelAndView);
+		return reqList(userInfo, session, modelAndView);
 	}
 	
 	/*
@@ -107,7 +111,7 @@ public class ExecutiveController {
 		return modelAndView;
 	}
 	@RequestMapping(value = "/executiveController/memberList", method = RequestMethod.GET)
-	public ModelAndView memberList(@ModelAttribute("userInfo") UserInfo userInfo, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
+	public ModelAndView memberList(@ModelAttribute("userInfo") UserInfo userInfo, HttpServletRequest request, HttpSession session)  throws UnsupportedEncodingException, SQLException {
 		modelAndView = new ModelAndView();
 		String p = request.getParameter("p");
 		int page;
@@ -117,21 +121,26 @@ public class ExecutiveController {
 		} else {
 			page = 1;
 		}
-		modelAndView.addObject("page", page);
 		Pagination pagination = new Pagination((page-1)*10, page*10);
 		int max = executiveService.getAllRownum();
+		int maxpage = 1;
 		if(max < 0){
 			String errorCode = ErrorCodes.ER0001.getSubtitleKor();
 			modelAndView.addObject("errorCode", errorCode);
 			modelAndView.setViewName("error/500");
 			return modelAndView;
 		} else {
-			modelAndView.addObject("max", Math.ceil(max/10));
+			Double d = (Math.ceil(max/10));
+			maxpage = d.intValue();
 		}
 		UserList userList = executiveService.getUserListP(pagination);
 		if(userList.getErrorCode().equals("Success")){
-			modelAndView.addObject("userList", userList);
-			modelAndView.setViewName("executive/userList");
+			flushSessionAttribute(session);
+			session.setAttribute("max",maxpage);
+			session.setAttribute("page",page);
+			session.setAttribute("userList", userList.getReqList());
+			modelAndView.addObject("url", "executive/userList.jsp");
+			modelAndView.setViewName("template");
 			return modelAndView;
 		} else {
 			ErrorCodes errorCodes = ErrorCodes.valueOf(userList.getErrorCode());

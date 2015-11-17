@@ -29,6 +29,11 @@
 		}
 	</script>
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/form.css"/>'>
+<c:if test="${ userInfo != null }">
+	<script>
+		document.location.href="${pageContext.request.contextPath}/";
+	</script>
+</c:if>
 </head>
 <body onKeypress="hitEnter(event)">
 <div class="container">

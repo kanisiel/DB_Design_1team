@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="kr.co.pms.model.UserInfo" %>
 <fmt:setLocale value="ko" scope="session"/>
 <html id="home" lang="ko">
   <head>
@@ -37,18 +38,16 @@
 		}
 		
 	</script>
-	<script>
-		.center{
-		    display : table-cell;
-		    vertical-align : middle;
-		}
-	</script>
+	<%
+		UserInfo userInfo = (UserInfo)session.getAttribute("userInfo");
+	%>
 </head>
 <body>
 	<div class="container">
 		<div class="row">
-			<c:set var="userInfo" value="${ userInfo }" scope="request"></c:set>
-			<c:import url="../template/header.jsp" />
+			<jsp:include page="../template/header.jsp">
+				<jsp:param value="<%=userInfo %>" name="userInfo"/>
+			</jsp:include>
 		</div>
 	</div>
 </body>

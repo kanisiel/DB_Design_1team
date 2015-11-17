@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import kr.co.pms.conf.Configuration;
 import kr.co.pms.conf.Sha512Encrypter;
@@ -17,8 +18,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @SessionAttributes("userInfo")
@@ -86,7 +90,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/loginController/login.do", method = RequestMethod.POST)
-	public ModelAndView login(@ModelAttribute("loginInfo") LoginInfo loginInfo, HttpServletRequest request, RedirectAttributes redir) throws UnsupportedEncodingException, ClassNotFoundException, SQLException {
+	public ModelAndView login(@ModelAttribute("loginInfo") LoginInfo loginInfo, HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException, ClassNotFoundException, SQLException {
 		UserInfo userInfo = null;
 		Sha512Encrypter encrypter = new Sha512Encrypter();
 		modelAndView = new ModelAndView();
@@ -99,19 +103,24 @@ public class LoginController {
 		loginInfo.setUserID(userID);
 		loginInfo.setUserPassword(userPassword);
 		userInfo = this.loginService.login(loginInfo);
-		modelAndView.addObject("userInfo", userInfo);
+//		modelAndView.addObject("userInfo", userInfo);
 		
 		if(userInfo.getErrorCode().equals("Success")){
-			modelAndView.setViewName("logged");
+			modelAndView.addObject("userInfo", userInfo);
+			modelAndView.setViewName("template");
 		} else {
 			modelAndView.setViewName("home");
 		}
 		return modelAndView;
 	}
 	@RequestMapping(value = "/loginController/logout", method = RequestMethod.GET)
-	public String logout( RedirectAttributes redir ) throws UnsupportedEncodingException {
-		redir.addFlashAttribute("userInfo", null);
-		return "redirect:/";
+	public RedirectView logout( WebRequest request, SessionStatus status ) throws UnsupportedEncodingException {
+		status.setComplete();
+	    request.removeAttribute("user", WebRequest.SCOPE_SESSION);
+//		session.removeAttribute("userInfo");
+//		session.setAttribute("userInfo", new UserInfo());
+		
+		return new RedirectView("/", true);
 	}
 	
 	@RequestMapping(value = "/loginController/register.do", method = RequestMethod.GET)

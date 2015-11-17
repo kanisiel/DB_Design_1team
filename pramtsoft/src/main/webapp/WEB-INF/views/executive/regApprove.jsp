@@ -4,51 +4,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <fmt:setLocale value="ko" scope="session"/>
-<html id="home" lang="ko">
-  <head>
-    <meta charset=utf-8 />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>프람트소프트 관리시스템</title>
-    <!-- 합쳐지고 최소화된 최신 CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <!-- 부가적인 테마 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-    <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-	<script type="text/javascript">
-		$( ".sortable" ).sortable({
-		  items       : 'div:not(.unsortable)',
-		  placeholder : 'sortable-placeholder'
-		});
-		$( ".sortable" ).disableSelection();
-
-		function appUser(id){
-			$("input[name=appUidx][value="+id+"]").attr("checked", true);
-			$("input[name=actions][value=approve]").attr("checked", true);
-			$('#register').submit();
-		}
-		
-		function delUser(id){
-			$("input[name=appUidx][value="+id+"]").attr("checked", true);
-			$("input[name=actions][value=delete]").attr("checked", true);
-			$('#register').submit();
-		}
-		
-	</script>
-	<script>
-		.center{
-		    display : table-cell;
-		    vertical-align : middle;
-		}
-	</script>
-</head>
-<body>
-	<div class="container">
-		<div class="row">
-	        <c:set var="userInfo" value="${ userInfo }" scope="request"></c:set>
-			<c:import url="../template/header.jsp" />
 			<div class="col-md-8 col-md-offset-2">
 			<form  id=register method="POST" action="${pageContext.request.contextPath}/executiveController/approveRegRequest.do">						
 				<div class="row">
@@ -59,7 +14,7 @@
 				            </div>
 				            <div class="row sortable">
 								<div id="forList" class="col-md-12">
-								 	<c:forEach var="user" items="${ userList.getReqList() }" varStatus="status">
+								 	<c:forEach var="user" items="${ sessionScope.userList.getReqList() }" varStatus="status">
 								 		<div id="user${status.count}" class="col-md-12">
 								 			<div class="btn-group" role="group">
 												<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -108,7 +63,7 @@
 															</p></td>
 														</tr>
 													</table>
-													<div class="panel-footer">
+													<div class="panel-footer hidden">
 														<p id="buttonrow" class="text-center">
 															<button id="approve${status.count}" type="button" class="btn btn-success" onclick="appUser('${user.getUidx()}');">승인</button>
 															<button id="delete${status.count}" type="button" class="btn btn-warning" onclick="delUser('${user.getUidx()}');">삭제</button>
@@ -129,7 +84,4 @@
 				</div>
 				</form>
 			</div>
-		</div>
-	</div>
-</body>
-</html>
+

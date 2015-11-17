@@ -24,7 +24,7 @@
 <body>
 	<div class="container">
 		<div class="row">
-	        <c:set var="userInfo" value="${ userInfo }" scope="request"></c:set>
+	        <c:set var="userInfo" value="${ sessionScope.userInfo }" scope="request"></c:set>
 			<c:import url="template/header.jsp" />
 			<div class="col-md-8 md-offset-2">
 				<div class="row">

@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import kr.co.pms.model.UserInfo;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,10 +27,14 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model, HttpServletRequest request) {
+	public String home(Locale locale, Model model, HttpServletRequest request, HttpSession session) {
 		//logger.info("Welcome home! The client locale is {}.", locale);
 		//logger.info("userinfo", userinfo);
 		
+		if(session.getAttribute("userInfo") != null){
+			UserInfo userInfo = (UserInfo) session.getAttribute("userInfo");
+			System.out.println(userInfo.getName());
+		}
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		

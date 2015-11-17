@@ -3,7 +3,7 @@ package kr.co.pms.control;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import kr.co.pms.model.UserInfo;
 
@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @SessionAttributes("userInfo")
-public class ApprovalController {
+public class ApprovalController extends CController {
 	
 //	@Autowired
 //	ApprovalService approvalService;
@@ -46,10 +46,11 @@ public class ApprovalController {
 //		}
 //	}
 	@RequestMapping(value = "/approvalController/request", method = RequestMethod.GET)
-	public ModelAndView request(@ModelAttribute("userInfo") UserInfo userInfo, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
+	public ModelAndView request(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session)  throws UnsupportedEncodingException, SQLException {
 		modelAndView = new ModelAndView();
+		session.setAttribute("userInfo2", userInfo);
 		modelAndView.addObject("userInfo", userInfo);
-		modelAndView.setViewName("employee/request");
+		modelAndView.setViewName("template");
 		return modelAndView;
 	}
 
