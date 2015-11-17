@@ -1,21 +1,30 @@
 package kr.co.pms.control;
 
+import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
+
+import javax.servlet.http.HttpServletRequest;
+
+import kr.co.pms.model.UserInfo;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
+@SessionAttributes("userInfo")
 public class ApprovalController {
 	
 //	@Autowired
 //	ApprovalService approvalService;
 //	
-//	@ModelAttribute("userInfo")  
-//    public UserInfo userInfo() {  
-//        return new UserInfo();  
-//    } 
+	@ModelAttribute("userInfo")  
+    public UserInfo userInfo() {  
+        return new UserInfo();  
+    } 
 	
 	ModelAndView modelAndView;
 
@@ -36,12 +45,12 @@ public class ApprovalController {
 //			return modelAndView;
 //		}
 //	}
-//	@RequestMapping(value = "/approvalController/request.do", method = RequestMethod.POST)
-//	public ModelAndView request(@ModelAttribute("userInfo") UserInfo userInfo, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
-//		modelAndView = new ModelAndView();
-//		modelAndView.addObject("userInfo", userInfo);
-//		modelAndView.setViewName("approval/request");
-//		return modelAndView;
-//	}
+	@RequestMapping(value = "/approvalController/request", method = RequestMethod.GET)
+	public ModelAndView request(@ModelAttribute("userInfo") UserInfo userInfo, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
+		modelAndView = new ModelAndView();
+		modelAndView.addObject("userInfo", userInfo);
+		modelAndView.setViewName("employee/request");
+		return modelAndView;
+	}
 
 }

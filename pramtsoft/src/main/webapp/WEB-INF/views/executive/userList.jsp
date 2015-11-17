@@ -41,53 +41,8 @@
 <body>
 	<div class="container">
 		<div class="row">
-	        <div class="col-md-8 col-md-offset-2">
-				<p class="text-center"><font style="font-size:34px"><Strong>프람트소프트 관리 시스템</Strong></font></p>
-			</div>
-			<div class="col-md-8 col-md-offset-2">
-				<p class="text-right"><strong>${userInfo.getName()}</strong>씨, 반갑습니다.<a class="btn btn-default btn-xs" href="${pageContext.request.contextPath}/loginController/logout" role="button">로그아웃</a></p>
-			</div>
-			<div class="col-md-8 col-md-offset-2">
-				<p class="text-center"><font style="font-size:13px;color:#FF3333;">${errorCode}</font><p class="text-center">
-			</div>
-			<div class="col-md-8 col-md-offset-2">
-				<div class="row">
-					<div class="col-md-8 col-md-offset-2">
-						<div class="btn-group btn-group-justified" role="group" aria-label="CLR">
-							<c:choose>
-								<c:when test="${userInfo.getLevels() =='EXECUTIVE' }">
-									<div class="btn-group" role="group">
-										<button id="approveRequest" type="button" class="btn btn-primary" onClick="location.href='${pageContext.request.contextPath}/executiveController/approveRegRequest';">가입승인</button>
-									</div>
-									<div class="btn-group" role="group">
-										<button id="approveRequest" type="button" class="btn btn-danger" onClick="javascript:addText('결재시스템');">결재시스템</button>
-									</div>
-									<div class="btn-group" role="group">
-										<button id="approveRequest" type="button" class="btn btn-info" onClick="location.href='${pageContext.request.contextPath}/executiveController/memberList';">직원</button>
-									</div>
-									<div class="btn-group" role="group">
-										<button id="approveRequest" type="button" class="btn btn-success" onClick="javascript:addText('프로젝트');">프로젝트</button>
-									</div>
-									<div class="btn-group" role="group">
-										<button id="approveRequest" type="button" class="btn btn-warning" onClick="javascript:addText('마이페이지');">마이페이지</button>
-									</div>
-								</c:when>
-								<c:when test="${userInfo.getLevels() == 'EMPLOYEE' }">
-									<div class="btn-group" role="group">
-										<button id="approveRequest" type="button" class="btn btn-success" onClick="javascript:addText('프로젝트');">프로젝트</button>
-									</div>
-									<div class="btn-group" role="group">
-										<button id="approveRequest" type="button" class="btn btn-warning" onClick="javascript:addText('마이페이지');">마이페이지</button>
-									</div>
-								</c:when>
-							</c:choose>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-8 col-md-offset-2">
-				
-			</div>
+	        <c:set var="userInfo" value="${ userInfo }" scope="request"></c:set>
+			<c:import url="../template/header.jsp" />
 			<div class="col-md-8 col-md-offset-2">
 				<div class="panel panel-default">
 					<div class="panel-heading">
