@@ -32,8 +32,7 @@ public class HomeController {
 		//logger.info("userinfo", userinfo);
 		
 		if(session.getAttribute("userInfo") != null){
-			UserInfo userInfo = (UserInfo) session.getAttribute("userInfo");
-			System.out.println(userInfo.getName());
+			return "template";
 		}
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
