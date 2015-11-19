@@ -123,6 +123,7 @@ public class ExecutiveController extends CController {
 		}
 		Pagination pagination = new Pagination((page-1)*10, page*10);
 		int max = executiveService.getAllRownum();
+		Double md = (double) (max);
 		int maxpage = 1;
 		if(max < 0){
 			String errorCode = ErrorCodes.ER0001.getSubtitleKor();
@@ -130,7 +131,7 @@ public class ExecutiveController extends CController {
 			modelAndView.setViewName("error/500");
 			return modelAndView;
 		} else {
-			Double d = (Math.ceil(max/10));
+			Double d = Math.ceil(md/10);
 			maxpage = d.intValue();
 		}
 		UserList userList = executiveService.getUserListP(pagination);

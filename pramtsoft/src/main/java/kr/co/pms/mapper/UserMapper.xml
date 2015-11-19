@@ -23,6 +23,12 @@
             
     </select>
     
+    <select id="getLevelList" parameterType="String" resultType="kr.co.pms.model.UserInfo">
+    
+    SELECT * FROM MEMBER WHERE LEVELS=#{levels}
+            
+    </select>
+    
     <select id="getUserListP" parameterType="kr.co.pms.model.Pagination" resultType="kr.co.pms.model.UserInfo">
         SELECT *
 		FROM 

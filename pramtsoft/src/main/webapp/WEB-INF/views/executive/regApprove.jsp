@@ -3,6 +3,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<script type="text/javascript">
+		$( ".sortable" ).sortable({
+		  items       : 'div:not(.unsortable)',
+		  placeholder : 'sortable-placeholder'
+		});
+		$( ".sortable" ).disableSelection();
+</script>		
 <fmt:setLocale value="ko" scope="session"/>
 			<div class="col-md-8 col-md-offset-2">
 			<form  id=register method="POST" action="${pageContext.request.contextPath}/executiveController/approveRegRequest.do">						
@@ -63,7 +70,7 @@
 															</p></td>
 														</tr>
 													</table>
-													<div class="panel-footer hidden">
+													<div class="panel-footer">
 														<p id="buttonrow" class="text-center">
 															<button id="approve${status.count}" type="button" class="btn btn-success" onclick="appUser('${user.getUidx()}');">승인</button>
 															<button id="delete${status.count}" type="button" class="btn btn-warning" onclick="delUser('${user.getUidx()}');">삭제</button>

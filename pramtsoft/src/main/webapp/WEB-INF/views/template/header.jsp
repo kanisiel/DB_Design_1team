@@ -25,6 +25,7 @@
 		
 	</script>
 	
+	
 	<%-- <c:set value="${sessionScope.userInfo}" var="userInfo" /> --%>			
 	<div class="col-md-8 col-md-offset-2">
 		<p class="text-center" onclick="location.href='${pageContext.request.contextPath}/'"><font style="font-size:34px"><Strong>프람트소프트 관리 시스템</Strong></font></p>
@@ -62,7 +63,7 @@
 						</div>
 						<div class="btn-group dropdown">
 							<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-							결제요청 <span class="caret"></span>
+							결재시스템 <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="${pageContext.request.contextPath}/approvalController/request">결제요청</a></li>

@@ -212,6 +212,30 @@ public class UserDao implements Dao {
 			return userList;
 		}
 	}
+	public UserList getLevelList(String levels) throws SQLException{
+		UserList userList;
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		if(userMapper != null){
+			List<UserInfo> userLists = userMapper.getLevelList(levels);
+			if(userLists == null){
+				userList = new UserList();
+				userList.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				userList.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return userList;
+			} else {
+				userList = new UserList();
+				userList.setReqList(userLists);
+				userList.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				userList.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return userList;
+			}
+		} else {
+			userList = new UserList();
+			userList.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			userList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return userList;
+		}
+	}
 	public int getAllRownum(){
 		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 		if(userMapper!=null){

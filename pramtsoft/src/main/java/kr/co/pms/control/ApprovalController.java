@@ -5,8 +5,12 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpSession;
 
+import kr.co.pms.conf.Configuration.ErrorCodes;
 import kr.co.pms.model.UserInfo;
+import kr.co.pms.model.UserList;
+import kr.co.pms.service.ApprovalService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,9 +22,9 @@ import org.springframework.web.servlet.ModelAndView;
 @SessionAttributes("userInfo")
 public class ApprovalController extends CController {
 	
-//	@Autowired
-//	ApprovalService approvalService;
-//	
+	@Autowired
+	ApprovalService approvalService;
+	
 	@ModelAttribute("userInfo")  
     public UserInfo userInfo() {  
         return new UserInfo();  
@@ -48,10 +52,21 @@ public class ApprovalController extends CController {
 	@RequestMapping(value = "/approvalController/request", method = RequestMethod.GET)
 	public ModelAndView request(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session)  throws UnsupportedEncodingException, SQLException {
 		modelAndView = new ModelAndView();
-		session.setAttribute("userInfo2", userInfo);
-		modelAndView.addObject("userInfo", userInfo);
-		modelAndView.setViewName("template");
-		return modelAndView;
+		UserList empList = approvalService.getLevelList("EMPLOYEE");
+		UserList exeList = approvalService.getLevelList("EXECUTIVE");
+		if(empList.getErrorCode().equals("Success")&&exeList.getErrorCode().equals("Success")){
+			flushSessionAttribute(session);
+			session.setAttribute("empList", empList.getReqList());
+			session.setAttribute("exeList", exeList.getReqList());
+			modelAndView.addObject("url", "employee/request.jsp");
+			modelAndView.setViewName("template");
+			return modelAndView;
+		} else {
+			String errorCode = ErrorCodes.ER0001.getSubtitleKor();
+			modelAndView.addObject("errorCode", errorCode);
+			modelAndView.setViewName("error/500");
+			return modelAndView;
+		}
 	}
 
 }

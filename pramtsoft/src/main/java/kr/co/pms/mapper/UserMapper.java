@@ -11,6 +11,7 @@ import kr.co.pms.model.UserInfo2;
 public interface UserMapper {
 	 public UserInfo getData(LoginInfo loginInfo) throws SQLException;
 	 public List<UserInfo> getUserList() throws SQLException;
+	 public List<UserInfo> getLevelList(String levels) throws SQLException;
 	 public List<UserInfo> getUserListP(Pagination pagination) throws SQLException;
 	 public List<UserInfo> getRequest() throws SQLException;
 	 public int getAllRownum() throws SQLException;

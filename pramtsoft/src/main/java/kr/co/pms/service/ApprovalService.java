@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import kr.co.pms.dao.UserDao;
 import kr.co.pms.model.UserInfo2;
+import kr.co.pms.model.UserList;
 
 import org.springframework.stereotype.Service;
 
@@ -17,5 +18,8 @@ public class ApprovalService {
 	
 	public UserInfo2 getUser(int uidx) throws SQLException{
 		return userDao.getUser(uidx);
+	}
+	public UserList getLevelList(String levels) throws SQLException {
+		return userDao.getLevelList(levels);
 	}
 }

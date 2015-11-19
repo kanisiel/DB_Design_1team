@@ -49,6 +49,7 @@
 		</div>
 		<div class="text-center">
 			<nav>
+				<%-- <c:out value="${max }"/> --%>
 				<ul class="pagination">
 					<li>
 					<c:choose>
@@ -67,7 +68,7 @@
 					<c:forEach begin="0" end="4" var="steps">
 						<c:if test="${ (floored + steps) <= max }">
 							<c:choose>
-							<c:when test="${ floored + steps } != ${ page }">
+							<c:when test="${ (floored + steps) != page }">
 					<li><a href="${pageContext.request.contextPath}/executiveController/memberList?p=${ floored + steps }"><c:out value="${ floored + steps }"></c:out></a></li>
 							</c:when>
 							<c:otherwise>

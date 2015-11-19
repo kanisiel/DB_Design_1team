@@ -28,6 +28,9 @@ public class ExecutiveService {
 	public UserList getUserList() throws SQLException {
 		return userDao.getUserList();
 	}
+	public UserList getLevelList(String levels) throws SQLException {
+		return userDao.getLevelList(levels);
+	}
 	public UserList getUserListP(Pagination pagination) throws SQLException {
 		return userDao.userListP(pagination);
 	}
