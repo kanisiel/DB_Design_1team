@@ -38,14 +38,14 @@
 <body onKeypress="hitEnter(event)">
 <div class="container">
 	<div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-6 col-md-offset-3">
 			<p class="text-center"><font style="font-size:34px"><Strong>프람트소프트 관리 시스템</Strong></font></p>
 		</div>
-		<div class="col-md-8 col-md-offset-2">
+		<div class="col-md-6 col-md-offset-3">
 			<%-- <p class="text-center"><font style="font-size:13px;color:#FF3333;">${userInfo.getSubscribe_kor()}</font><p class="text-center"> --%>
 		</div>
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
+			<div class="col-md-6 col-md-offset-3">
 				<form class="form-horizontal" id="loginform" action="/pms/loginController/login.do" method="post">
 					<div class="form-group">
 						<label for="userID">아이디</label>

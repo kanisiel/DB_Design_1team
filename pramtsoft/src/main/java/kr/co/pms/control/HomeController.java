@@ -8,7 +8,6 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,11 +27,13 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpServletRequest request, HttpSession session) {
 		//logger.info("Welcome home! The client locale is {}.", locale);
-		//logger.info("userinfo", userinfo);
-		
-		if(session.getAttribute("userInfo") != null){
-			return "template";
-		}
+//		//logger.info("userinfo", userinfo);
+//		UserInfo userInfo = (UserInfo)session.getAttribute("userInfo");
+//		if(userInfo != null){
+//			if(userInfo.getName() != null){
+//				return "template";
+//			}
+//		}
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
