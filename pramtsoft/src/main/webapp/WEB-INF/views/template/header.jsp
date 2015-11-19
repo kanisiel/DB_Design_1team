@@ -54,7 +54,7 @@
 							<button type="button" class="btn btn-success" onClick="javascript:addText('프로젝트');">프로젝트</button>
 						</div>
 						<div class="btn-group" role="group">
-							<button type="button" class="btn btn-warning" onClick="javascript:addText('마이페이지');">마이페이지</button>
+							<button type="button" class="btn btn-warning" onClick="location.href='${pageContext.request.contextPath}/loginController/mypage';">마이페이지</button>
 						</div>
 					</c:when>
 					<c:when test="${userInfo.getLevels() == 'EMPLOYEE' }">
@@ -73,7 +73,7 @@
 							</ul>
 						</div>
 						<div class="btn-group" role="group">
-							<button type="button" class="btn btn-warning" onClick="javascript:addText('마이페이지');">마이페이지</button>
+							<button type="button" class="btn btn-warning" onClick="location.href='${pageContext.request.contextPath}/loginController/mypage';">마이페이지</button>
 						</div>
 					</c:when>
 				</c:choose>

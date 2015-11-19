@@ -27,7 +27,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpServletRequest request, HttpSession session) {
 		//logger.info("Welcome home! The client locale is {}.", locale);
-//		//logger.info("userinfo", userinfo);
+		//logger.info("userinfo", userinfo);
 //		UserInfo userInfo = (UserInfo)session.getAttribute("userInfo");
 //		if(userInfo != null){
 //			if(userInfo.getName() != null){

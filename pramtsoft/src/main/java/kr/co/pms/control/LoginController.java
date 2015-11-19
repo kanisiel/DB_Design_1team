@@ -8,8 +8,10 @@ import javax.servlet.http.HttpSession;
 
 import kr.co.pms.conf.Configuration;
 import kr.co.pms.conf.Sha512Encrypter;
+import kr.co.pms.conf.Configuration.ErrorCodes;
 import kr.co.pms.model.LoginInfo;
 import kr.co.pms.model.UserInfo;
+import kr.co.pms.model.UserList;
 import kr.co.pms.service.LoginService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,6 +128,16 @@ public class LoginController {
 	@RequestMapping(value = "/loginController/register.do", method = RequestMethod.GET)
 	public ModelAndView register( RedirectAttributes redir ) throws UnsupportedEncodingException {
 		modelAndView = new ModelAndView("register");
+		return modelAndView;
+	}
+	@RequestMapping(value = "/loginController/mypage", method = RequestMethod.GET)
+	public ModelAndView mypage(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, ModelAndView modelAndView)  throws UnsupportedEncodingException, SQLException {
+		if(modelAndView == null){
+			modelAndView = new ModelAndView();
+		}
+		session.setAttribute("userInfo", userInfo);
+		modelAndView.addObject("url", "mypage.jsp");
+		modelAndView.setViewName("template");
 		return modelAndView;
 	}
 }
