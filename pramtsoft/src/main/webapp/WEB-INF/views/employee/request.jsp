@@ -61,8 +61,7 @@
 
 			 });
 	});
-	</script>
-	<script>
+	
 	function check_date(){
 		var form = document.getElementById("request");
 		var start = form.elements["startDate"].value;
@@ -83,7 +82,7 @@
 			$('#startDate,#endDate').parent().removeClass("has-success").removeClass("has-warning").removeClass("has-error").addClass("has-success");
 			$('#startIcon,#endIcon').removeClass("glyphicon-ok").removeClass("glyphicon-remove").addClass("glyphicon-ok");
 			$('#startDateStatus,#endDateStatus').html("(success)");
-			return false;
+			return true;
 		}
 		return true;
 	}
@@ -104,6 +103,10 @@
 		if(confirm(name+append)){
 			if(id.match("exe")){
 				$("#"+from).append($("#"+to).children());
+				$("#holder").attr("value",$("#"+id+"uid").text());
+			} else if(id.match("emp")){
+				$("#"+id+"option").attr("selected","selected");
+				changeSelect("puts");
 			}
 			$("#"+to).append($("#"+id));
 			$("#"+id).attr("onclick","cancelUser('"+id+"','"+from+"','"+to+"')");
@@ -120,9 +123,40 @@
 		if(confirm(name+append)){
 			if(id.match("exe")){
 				$("#"+from).append($("#"+to).children());
+				$("#holder").attr("value","");
+			} else if(id.match("emp")){
+				$("#"+id+"option").removeAttr("selected");
+				changeSelect("puts");
 			}
 			$("#"+from).append($("#"+id));
 			$("#"+id).attr("onclick","selectUser('"+id+"','"+from+"','"+to+"')");
+		}
+	}
+	function check_null(){
+		var form = document.getElementById("request");
+		var list = form.elements;
+		for(i = 0; i<list.length-2; i++){
+			if(list[i].value =='' || list[i].value == null){
+				alert("모든 정보를 입력 해 주세요!");
+				document.getElementById(list[i].id).focus();
+				return false;
+			}
+		}
+		return true;
+	}
+	function check_form(){
+		if(check_null() == false){
+			return false;
+		} else if(check_date() == false){
+			alert("프로젝트 기간이 잘못 입력 되었습니다!");
+			form.elements["startDate"].focus();
+			return false;
+		} else if(document.getElementById("holder").value==""){
+			alert("승인권자를 선택해 주세요!");
+			document.getElementById("holder").focus();
+			return false;
+		} else {
+			document.getElementById("request").submit();
 		}
 	}
 	$( ".sortable" ).sortable({
@@ -134,11 +168,10 @@
 	<div class="col-md-8 col-md-offset-2">
 		<div class="panel panel-default">
 		<div class="panel-body heightedPanel">
-			<form class="form-horizontal" id="request" method="POST" action="${pageContext.request.contextPath}/approveController/request.do">
+			<form class="form-horizontal" id="request" method="POST" action="${pageContext.request.contextPath}/approvalController/request.do">
 				<div id = "navbar" class="col-md-12">
 					<ul class="nav nav-pills">
 						<li role="presentation" id="project" class="active"><a onclick="show_form('project');">프로젝트정보</a></li>
-						<li role="presentation" id="employee"><a onclick="show_form('employee');">직원 투입</a></li>
 						<li role="presentation" id="approve"><a  onclick="show_form('approve');">결제정보</a></li>
 					</ul>
 				</div>
@@ -180,31 +213,26 @@
 							<span id = "endDateWarn"></span>
 						</div>
 					</div>
-				</div>
-				<div id = "employeeInfo" class="col-md-12 hidden">
-					<div class="col-md-6">
-						<div id="empListHead" class="col-md-12">
-							<h3>직원 목록</h3>
+					<div class="row">
+						<div class="col-md-8">
+							<div class="form-group has-feedback">
+								<label for="reqmanning">필요인원</label>
+								<input type="text" class="form-control" id="reqmanning" name="reqmanning" placeholder="필요인원을 입력하세요">
+							</div>
 						</div>
-						<div id="empList" class="col-md-12 heighted">
-							<c:forEach var="employee" items="${ sessionScope.empList }" varStatus="status">
-								<div id="emp${status.count}" class="col-md-12" onclick="selectUser(this.id,'empList','putList'); ">
-									<table class="table table-striped">
-										<tr>
-											<td><span id="emp${status.count}name"><c:out value="${ employee.getName() }"/></span></td>
-											<td><span id="emp${status.count}uid"><c:out value="${ employee.getUidx() }"/></span></td>
-										<tr>
-									</table>
-								</div>
-							</c:forEach>
+						<div class="col-md-4">
+							<span id = "endDateWarn"></span>
 						</div>
 					</div>
-					<div class="col-md-6">
-						<div id="putHead" class="col-md-12">
-							<h3>투입 직원</h3>
+					<div class="row">
+						<div class="col-md-8">
+							<div class="form-group has-feedback">
+								<label for="orderer">발주처</label>
+								<input type="text" class="form-control" id="orderer" name="orderer" placeholder="발주처를 입력하세요">
+							</div>
 						</div>
-						<div id="putList" class="col-md-12">
-							
+						<div class="col-md-4">
+							<span id = "endDateWarn"></span>
 						</div>
 					</div>
 				</div>
@@ -231,13 +259,13 @@
 							<h3>승인권자</h3>
 						</div>
 						<div id="approval" class="col-md-12">
-							
 						</div>
 					</div>
+					<input type="text" id="holder" name="holder" class="hidden" value=""/>
 				</div>
 				<div id = "footer" class="col-md-12">
 					<p id="buttonrow" class="text-center">
-						<button id="requestSubmit" type="button" class="btn btn-success" onclick="">결제요청</button>
+						<button id="requestSubmit" type="button" class="btn btn-success" onclick="check_form();">결제요청</button>
 						<button id="cancel" type="button" class="btn btn-warning" onclick="">취소</button>
 					</p>
 				</div>

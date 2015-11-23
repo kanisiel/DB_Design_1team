@@ -2,7 +2,10 @@ package kr.co.pms.control;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import kr.co.pms.conf.Configuration.ErrorCodes;
@@ -52,11 +55,11 @@ public class ApprovalController extends CController {
 	@RequestMapping(value = "/approvalController/request", method = RequestMethod.GET)
 	public ModelAndView request(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session)  throws UnsupportedEncodingException, SQLException {
 		modelAndView = new ModelAndView();
-		UserList empList = approvalService.getLevelList("EMPLOYEE");
+		//UserList empList = approvalService.getLevelList("EMPLOYEE");
 		UserList exeList = approvalService.getLevelList("EXECUTIVE");
-		if(empList.getErrorCode().equals("Success")&&exeList.getErrorCode().equals("Success")){
+		if(exeList.getErrorCode().equals("Success")){
 			flushSessionAttribute(session);
-			session.setAttribute("empList", empList.getReqList());
+			//session.setAttribute("empList", empList.getReqList());
 			session.setAttribute("exeList", exeList.getReqList());
 			modelAndView.addObject("url", "employee/request.jsp");
 			modelAndView.setViewName("template");
@@ -68,5 +71,15 @@ public class ApprovalController extends CController {
 			return modelAndView;
 		}
 	}
-
+	@RequestMapping(value = "/approvalController/request.do", method = RequestMethod.POST)
+	public ModelAndView requestToDB(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
+		modelAndView = new ModelAndView();
+		String puttedEmp = request.getParameter("putEmp");
+		List<String> items = Arrays.asList(puttedEmp.split(","));
+		for(String uidx : items){
+			System.out.println(items.indexOf(uidx)+"'s uidx is "+uidx);
+		}
+		modelAndView.setViewName("template");
+		return modelAndView;
+	}
 }

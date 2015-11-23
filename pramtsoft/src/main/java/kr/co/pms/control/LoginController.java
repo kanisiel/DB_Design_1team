@@ -8,10 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import kr.co.pms.conf.Configuration;
 import kr.co.pms.conf.Sha512Encrypter;
-import kr.co.pms.conf.Configuration.ErrorCodes;
 import kr.co.pms.model.LoginInfo;
 import kr.co.pms.model.UserInfo;
-import kr.co.pms.model.UserList;
 import kr.co.pms.service.LoginService;
 
 import org.springframework.beans.factory.annotation.Autowired;

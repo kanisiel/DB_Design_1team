@@ -67,7 +67,7 @@
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="${pageContext.request.contextPath}/approvalController/request">결제요청</a></li>
-								<li><a href="#">결재목록</a></li>
+								<li><a href="${pageContext.request.contextPath}/approvalController/select">결재목록</a></li>
 								<li class="divider"></li>
 								<li><a href="#">결재이력</a></li>
 							</ul>
