@@ -16,6 +16,8 @@ public class UserInfo implements Info {
 	private String entry_Date;
 	private String reg_Date;
 	private String up_Date;
+	private String department;
+	private String section;
 	
 	public UserInfo(){}
 	
@@ -142,4 +144,38 @@ public class UserInfo implements Info {
 	public void setUp_Date(String up_Date) {
 		this.up_Date = up_Date;
 	}
+
+	public String getBirth_Date() {
+		return birth_Date;
+	}
+
+	public void setBirth_Date(String birth_Date) {
+		this.birth_Date = birth_Date;
+	}
+
+	public String getEntry_Date() {
+		return entry_Date;
+	}
+
+	public void setEntry_Date(String entry_Date) {
+		this.entry_Date = entry_Date;
+	}
+
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+
+	public String getSection() {
+		return section;
+	}
+
+	public void setSection(String section) {
+		this.section = section;
+	}
+	
+	
 }

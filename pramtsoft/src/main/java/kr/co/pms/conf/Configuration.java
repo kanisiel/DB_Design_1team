@@ -22,9 +22,9 @@ public class Configuration {
 		ER0001("ER0001", "Error ocurred when querying. Please contact to System Administrator ", "쿼리수행에서 오류가 발생하였습니다. 시스템 관리자에게 문의해 주세요."),
 		ER1001("ER1001", "You're input invalid ID. Check ID and retry.", "없는 아이디 입니다. 확인 후 다시 로그인 해 주세요."),
 		ER1002("ER1002", "You're input invalid Password. Check ID and Password.", "비밀번호가 틀렸습니다. 확인 후 다시 로그인 해 주세요."),
-		ER2000("ER2000", "Subject data doesn't exist. Please contact in charge.", "과목정보가 입력되지 않았습니다. 담당자에게 문의해 주세요."),
+		ER2000("ER2000", "Error ocurred when querying Project Table. Please contact to System Administrator", "프로젝트 테이블 쿼리수행에서 오류가 발생하였습니다. 시스템 관리자에게 문의해 주세요."),
 		ER2001("ER2001", "Duplicate Subject Data! Please Check Input Values!", "과목 정보가 중복됩니다. 입력값을 다시 확인해 주세요."),
-		ER3000("ER3000", "Course data doesn't exist. Please contact in charge.", "개설된 강좌가 없습니다. 담당자에게 문의해 주세요."),
+		ER3000("ER3000", "Error ocurred when querying Approval Table. Please contact to System Administrator", "결재 테이블 쿼리수행에서 오류가 발생하였습니다. 시스템 관리자에게 문의해 주세요."),
 		ER8000("ER8000", "Error on your SQL. Check SQL Sentence again.", "입력된 SQL문에 오류가 있습니다. 다시 확인해 보세요."),
 		Success("Success", "Your request is performed clearly.", "요청이 정상적으로 처리 되었습니다.");
 		

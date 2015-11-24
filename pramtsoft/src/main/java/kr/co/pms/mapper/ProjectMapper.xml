@@ -16,4 +16,27 @@
         VALUES (#{cIdx}, #{nameEn}, #{nameOther})
         
     </insert>
+    
+    <select id='getDocSequence' resultType="int">
+        SELECT DOCUMENT_SEQ.NEXTVAL from dual
+    </select>
+    
+    <select id='getProSequence' resultType="int">
+        SELECT PROJECT_SEQ.NEXTVAL from dual
+    </select>
+    
+    <insert id="addProject" parameterType="kr.co.pms.model.Project">
+        
+        INSERT INTO PROJECT ( PID, NAME, START_DATE, END_DATE, ORDERER, MANAGER, STATUS, REQUIREMAN, REG_DATE, UP_DATE)
+        VALUES ( #{pid}, #{name}, #{startDate}, #{endDate}, #{orderer}, #{manager}, #{status}, #{requireMan}, SYSDATE, SYSDATE)
+        
+    </insert>
+    
+    <insert id="addApproval" parameterType="kr.co.pms.model.Document">
+        
+        INSERT INTO APPROVAL ( DID, PID, DRAFTER, SUPERIOR, LIMITS, DESCRIPTION, REG_DATE, UP_DATE)
+        VALUES (#{did}, #{pid}, #{drafter}, #{superior}, #{limits}, #{description}, SYSDATE, SYSDATE)
+        
+    </insert>
+    
 </mapper>

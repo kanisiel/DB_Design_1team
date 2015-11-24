@@ -2,8 +2,9 @@ package kr.co.pms.control;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,13 +13,18 @@ import kr.co.pms.conf.Configuration;
 import kr.co.pms.conf.Configuration.ErrorCodes;
 import kr.co.pms.model.Company;
 import kr.co.pms.model.CompanyList;
+import kr.co.pms.model.Document;
+import kr.co.pms.model.Project;
 import kr.co.pms.model.UserInfo;
 import kr.co.pms.model.UserList;
 import kr.co.pms.service.ApprovalService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -77,13 +83,49 @@ public class ApprovalController extends CController {
 	@RequestMapping(value = "/approvalController/request.do", method = RequestMethod.POST)
 	public ModelAndView requestToDB(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
 		modelAndView = new ModelAndView();
-		String puttedEmp = request.getParameter("putEmp");
-		List<String> items = Arrays.asList(puttedEmp.split(","));
-		for(String uidx : items){
-			System.out.println(items.indexOf(uidx)+"'s uidx is "+uidx);
+		Date date = new Date();
+	    String strDateFormat = "yyyy-MM-dd";
+	    DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+	    String limits= dateFormat.format(date)+" 00:00:00.000000";
+		Project project = new Project(request.getParameter("projectName"), request.getParameter("startDate"), request.getParameter("endDate"), request.getParameter("orderer"), request.getParameter("reqmanning"));
+		Document document = new Document(userInfo.getUidx(), Integer.parseInt(request.getParameter("holder")), limits);
+		int docSeq = approvalService.getDocSequence();
+		int proSeq = approvalService.getProSequence();
+		if(docSeq > 0 || proSeq > 0){
+			String did = "PRT-"+userInfo.getDepartment()+"-"+userInfo.getSection()+"-"+dateFormat.format(date).replace("-", "")+"-"+String.format("%03d", docSeq);
+			String pid = "PRT-"+request.getParameter("orderer")+"-"+dateFormat.format(date).replace("-", "")+"-"+String.format("%03d", proSeq);
+			System.out.println(did);
+			System.out.println(pid);
+			document.setDid(did);
+			document.setPid(pid);
+			document.setDescription(" ");
+			project.setPid(pid);
+			project.setManager(userInfo.getUidx());
+			project.setStatus("RN");
+		} else {
+			String errorCode = ErrorCodes.ER0001.getSubtitleKor();
+			modelAndView.addObject("errorCode", errorCode);
+			modelAndView.setViewName("error/500");
 		}
-		modelAndView.setViewName("template");
-		return modelAndView;
+		if(approvalService.addProject(project) != false){
+			if(approvalService.addApproval(document)!= false){
+				userInfo.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				userInfo.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				modelAndView.setViewName("template");
+				return modelAndView;
+			} else {
+				String errorCode = ErrorCodes.ER3000.getSubtitleKor();
+				modelAndView.addObject("errorCode", errorCode);
+				modelAndView.setViewName("error/500");
+				return modelAndView;
+			}
+		} else {
+			String errorCode = ErrorCodes.ER2000.getSubtitleKor();
+			modelAndView.addObject("errorCode", errorCode);
+			modelAndView.setViewName("error/500");
+			return modelAndView;
+		}
+		
 	}
 	@RequestMapping(value = "/approvalController/campanyList", method = RequestMethod.GET)
 	public ModelAndView getCampanies(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
