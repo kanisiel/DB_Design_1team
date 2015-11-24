@@ -8,7 +8,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import kr.co.pms.conf.Configuration;
 import kr.co.pms.conf.Configuration.ErrorCodes;
+import kr.co.pms.model.Company;
+import kr.co.pms.model.CompanyList;
 import kr.co.pms.model.UserInfo;
 import kr.co.pms.model.UserList;
 import kr.co.pms.service.ApprovalService;
@@ -81,5 +84,40 @@ public class ApprovalController extends CController {
 		}
 		modelAndView.setViewName("template");
 		return modelAndView;
+	}
+	@RequestMapping(value = "/approvalController/campanyList", method = RequestMethod.GET)
+	public ModelAndView getCampanies(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
+		modelAndView = new ModelAndView();
+		CompanyList companyList = approvalService.getCompanyList();
+		if(companyList.getErrorCode().equals("Success")){
+//			for(Company company : companyList.getComList()){
+//				System.out.println(company.getcIdx());
+//			}
+			modelAndView.addObject("companyList",companyList.getComList());
+			modelAndView.setViewName("employee/companyList");
+			return modelAndView;
+		} else {
+			String errorCode = ErrorCodes.ER0001.getSubtitleKor();
+			modelAndView.addObject("errorCode", errorCode);
+			modelAndView.setViewName("error/500");
+			return modelAndView;
+		}
+	}
+	@RequestMapping(value = "/approvalController/addCompany.do", method = RequestMethod.POST)
+	public ModelAndView addCampany(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
+		modelAndView = new ModelAndView();
+		request.setCharacterEncoding("UTF-8");
+		Company company = new Company(request.getParameter("addCidx"), request.getParameter("addNameEn"), request.getParameter("addNameOther"));
+		if(approvalService.addCompany(company)==false){
+			String errorCode = ErrorCodes.ER0001.getSubtitleKor();
+			modelAndView.addObject("errorCode", errorCode);
+			modelAndView.setViewName("error/500");
+			return modelAndView;
+		}else {
+			userInfo.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+			userInfo.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+			modelAndView.setViewName("redirect:/approvalController/campanyList");
+			return modelAndView;
+		}
 	}
 }

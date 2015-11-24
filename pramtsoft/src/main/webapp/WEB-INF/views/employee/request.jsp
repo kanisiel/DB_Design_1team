@@ -61,7 +61,13 @@
 
 			 });
 	});
-	
+	function company_win() { // 상태표시바 있는 팝업
+		window.open("${pageContext.request.contextPath}/approvalController/campanyList", "", "width=500, height=500");
+	}
+	function setCompany(idx, name){
+		$('#orderers').val(name);
+		$('#orderer').val(idx);		
+	}
 	function check_date(){
 		var form = document.getElementById("request");
 		var start = form.elements["startDate"].value;
@@ -228,7 +234,8 @@
 						<div class="col-md-8">
 							<div class="form-group has-feedback">
 								<label for="orderer">발주처</label>
-								<input type="text" class="form-control" id="orderer" name="orderer" placeholder="발주처를 입력하세요">
+								<input type="text" class="form-control" id="orderers" name="orderers" onclick="company_win();">
+								<input type="text" class="form-control hidden" id="orderer" name="orderer">
 							</div>
 						</div>
 						<div class="col-md-4">
