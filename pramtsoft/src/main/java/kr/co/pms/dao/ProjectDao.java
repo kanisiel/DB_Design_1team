@@ -4,10 +4,13 @@ import java.util.List;
 
 import kr.co.pms.conf.Configuration;
 import kr.co.pms.mapper.ProjectMapper;
+import kr.co.pms.model.ApprovalHistory;
 import kr.co.pms.model.Company;
 import kr.co.pms.model.CompanyList;
 import kr.co.pms.model.Document;
+import kr.co.pms.model.DocumentList;
 import kr.co.pms.model.Project;
+import kr.co.pms.model.ProjectList;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +88,7 @@ public class ProjectDao implements Dao {
 		if(projectMapper!=null){
 			try{
 				projectMapper.addApproval(document);
+				projectMapper.addApprovalHistory(document);
 				return true;
 			}catch(Exception e){
 				return false;
@@ -104,5 +108,121 @@ public class ProjectDao implements Dao {
 			}
 		}
 		return false;
+	}
+	public DocumentList getDocumentsEmp(int uidx) throws SQLException {
+		DocumentList documentList;
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper!=null){
+			List<Document> docList = projectMapper.getDocumentEmp(uidx);
+			if(docList == null){
+				documentList = new DocumentList();
+				documentList.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				documentList.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return documentList;
+			} else {
+				documentList = new DocumentList();
+				documentList.setDocList(docList);
+				documentList.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				documentList.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return documentList;
+			}
+		} else {
+			documentList = new DocumentList();
+			documentList.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			documentList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return documentList;
+		}
+	}
+	public DocumentList getDocumentsExe(int uidx) throws SQLException {
+		DocumentList documentList;
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper!=null){
+			List<Document> docList = projectMapper.getDocumentExe(uidx);
+			if(docList == null){
+				documentList = new DocumentList();
+				documentList.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				documentList.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return documentList;
+			} else {
+				documentList = new DocumentList();
+				documentList.setDocList(docList);
+				documentList.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				documentList.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return documentList;
+			}
+		} else {
+			documentList = new DocumentList();
+			documentList.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			documentList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return documentList;
+		}
+	}
+	public ProjectList getProjectList(String pid) throws SQLException {
+		ProjectList projectList;
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper!=null){
+			List<Project> proList = projectMapper.getProjectList(pid);
+			if(proList == null){
+				projectList = new ProjectList();
+				projectList.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				projectList.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return projectList;
+			} else {
+				projectList = new ProjectList();
+				projectList.setProList(proList);
+				projectList.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				projectList.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return projectList;
+			}
+		} else {
+			projectList = new ProjectList();
+			projectList.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			projectList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return projectList;
+		}
+	}
+	public Project getProject(String pid) throws SQLException {
+		Project project;
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper!=null){
+			project = projectMapper.getProject(pid);
+			if(project == null){
+				project = new Project();
+				project.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				project.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return project;
+			} else {
+				project.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				project.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return project;
+			}
+		} else {
+			project = new Project();
+			project.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			project.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return project;
+		}
+	}
+	public ApprovalHistory getApprovalHistory(String did) throws SQLException {
+		ApprovalHistory history;
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper!=null){
+			history = projectMapper.getApprovalHistory(did);
+			if(history==null){
+				history = new ApprovalHistory();
+				history.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				history.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return history;
+			} else {
+				history.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				history.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return history;
+			}
+		} else {
+			history = new ApprovalHistory();
+			history.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			history.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return history;
+		}
 	}
 }

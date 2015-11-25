@@ -12,11 +12,16 @@ public class Project implements CEntity {
 	private String startDate;
 	private String endDate;
 	private String orderer;
+	private String ordererName;
 	private int manager;
+	private String managerName;
 	private String status;
+	private String meaning;
 	private String requireMan;
 	private String reg_Date;
 	private String up_Date;
+	private String errorCode;
+	private String subscribe_kor;
 	
 	public Project() {
 		super();
@@ -113,4 +118,44 @@ public class Project implements CEntity {
 		this.up_Date = up_Date;
 	}
 
+	public String getOrdererName() {
+		return ordererName;
+	}
+
+	public void setOrdererName(String ordererName) {
+		this.ordererName = ordererName;
+	}
+
+	public String getManagerName() {
+		return managerName;
+	}
+
+	public void setManagerName(String managerName) {
+		this.managerName = managerName;
+	}
+
+	public String getMeaning() {
+		return meaning;
+	}
+
+	public void setMeaning(String meaning) {
+		this.meaning = meaning;
+	}
+
+	public String getSubscribe_kor() {
+		return subscribe_kor;
+	}
+
+	public void setSubscribe_kor(String subscribe_kor) {
+		this.subscribe_kor = subscribe_kor;
+	}
+
+	public String getErrorCode() {
+		return errorCode;
+	}
+
+	public void setErrorCode(String errorCode) {
+		this.errorCode = errorCode;
+	}
+	
 }

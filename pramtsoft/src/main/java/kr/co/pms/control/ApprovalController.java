@@ -11,9 +11,11 @@ import javax.servlet.http.HttpSession;
 
 import kr.co.pms.conf.Configuration;
 import kr.co.pms.conf.Configuration.ErrorCodes;
+import kr.co.pms.model.ApprovalHistory;
 import kr.co.pms.model.Company;
 import kr.co.pms.model.CompanyList;
 import kr.co.pms.model.Document;
+import kr.co.pms.model.DocumentList;
 import kr.co.pms.model.Project;
 import kr.co.pms.model.UserInfo;
 import kr.co.pms.model.UserList;
@@ -87,18 +89,18 @@ public class ApprovalController extends CController {
 	    String strDateFormat = "yyyy-MM-dd";
 	    DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
 	    String limits= dateFormat.format(date)+" 00:00:00.000000";
-		Project project = new Project(request.getParameter("projectName"), request.getParameter("startDate"), request.getParameter("endDate"), request.getParameter("orderer"), request.getParameter("reqmanning"));
+		Project project = new Project(request.getParameter("projectName"), request.getParameter("startDate")+" 00:00:00.000000", request.getParameter("endDate")+" 00:00:00.000000", request.getParameter("orderer"), request.getParameter("reqmanning"));
 		Document document = new Document(userInfo.getUidx(), Integer.parseInt(request.getParameter("holder")), limits);
 		int docSeq = approvalService.getDocSequence();
 		int proSeq = approvalService.getProSequence();
 		if(docSeq > 0 || proSeq > 0){
 			String did = "PRT-"+userInfo.getDepartment()+"-"+userInfo.getSection()+"-"+dateFormat.format(date).replace("-", "")+"-"+String.format("%03d", docSeq);
 			String pid = "PRT-"+request.getParameter("orderer")+"-"+dateFormat.format(date).replace("-", "")+"-"+String.format("%03d", proSeq);
-			System.out.println(did);
-			System.out.println(pid);
 			document.setDid(did);
 			document.setPid(pid);
 			document.setDescription(" ");
+			document.setStatus("RN");
+			document.setReply("");
 			project.setPid(pid);
 			project.setManager(userInfo.getUidx());
 			project.setStatus("RN");
@@ -161,5 +163,45 @@ public class ApprovalController extends CController {
 			modelAndView.setViewName("redirect:/approvalController/campanyList");
 			return modelAndView;
 		}
+	}
+	@RequestMapping(value = "/approvalController/approvalList", method = RequestMethod.GET)
+	public ModelAndView approvalList(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session)  throws UnsupportedEncodingException, SQLException {
+		modelAndView = new ModelAndView();
+		DocumentList docList;
+		if(userInfo.getLevels().equals("EMPLOYEE")){
+			docList = approvalService.getDocumentEmp(userInfo.getUidx());
+		} else if(userInfo.getLevels().equals("EXECUTIVE")){
+			docList = approvalService.getDocumentExe(userInfo.getUidx());
+		} else {
+			String errorCode = ErrorCodes.ER9999.getSubtitleKor();
+			modelAndView.addObject("errorCode", errorCode);
+			modelAndView.setViewName("error/500");
+			return modelAndView;
+		}
+		for(Document document : docList.getDocList()){
+			Project project = approvalService.getProject(document.getPid());
+			if(project == null){
+				String errorCode = ErrorCodes.ER0001.getSubtitleKor();
+				modelAndView.addObject("errorCode", errorCode);
+				modelAndView.setViewName("error/500");
+				return modelAndView;
+			}else {
+				document.setProject(project);
+				ApprovalHistory history = approvalService.getApprovalHistory(document.getDid());
+				if(history.getErrorCode().equals(ErrorCodes.Success.getCodeName())){
+					document.setStatus(history.getStatus());
+					document.setMeaningKor(history.getMeaningKor());
+				} else {
+					String errorCode = ErrorCodes.ER0001.getSubtitleKor();
+					modelAndView.addObject("errorCode", errorCode);
+					modelAndView.setViewName("error/500");
+					return modelAndView;
+				}
+			}
+		}
+		session.setAttribute("docList", docList);
+		modelAndView.addObject("url", "template/approvalList.jsp");
+		modelAndView.setViewName("template");
+		return modelAndView;
 	}
 }

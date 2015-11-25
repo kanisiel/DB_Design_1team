@@ -14,10 +14,10 @@ public class DocumentList implements CList {
 	private String errorCode;
 	private String subscribe_kor;
 	
-	public List<Document> getComList() {
+	public List<Document> getDocList() {
 		return docList;
 	}
-	public void setComList(List<Document> docList) {
+	public void setDocList(List<Document> docList) {
 		this.docList = docList;
 	}
 	public String getErrorCode() {

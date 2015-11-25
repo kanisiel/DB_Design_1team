@@ -26,6 +26,7 @@ public class Configuration {
 		ER2001("ER2001", "Duplicate Subject Data! Please Check Input Values!", "과목 정보가 중복됩니다. 입력값을 다시 확인해 주세요."),
 		ER3000("ER3000", "Error ocurred when querying Approval Table. Please contact to System Administrator", "결재 테이블 쿼리수행에서 오류가 발생하였습니다. 시스템 관리자에게 문의해 주세요."),
 		ER8000("ER8000", "Error on your SQL. Check SQL Sentence again.", "입력된 SQL문에 오류가 있습니다. 다시 확인해 보세요."),
+		ER9999("ER9999", "Session is expired! Please Re-Login!", "세션이 만료되었습니다! 다시 로그인 해 주세요!"),
 		Success("Success", "Your request is performed clearly.", "요청이 정상적으로 처리 되었습니다.");
 		
 		private String codeName;

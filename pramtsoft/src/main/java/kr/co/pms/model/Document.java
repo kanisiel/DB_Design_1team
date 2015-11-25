@@ -9,10 +9,16 @@ public class Document implements CEntity {
 	
 	private String did;
 	private String pid;
+	private Project project;
 	private int drafter;
+	private String drafterName;
 	private int superior;
+	private String superiorName;
 	private String limits;
 	private String description;
+	private String reply;
+	private String status;
+	private String meaningKor;
 	private String reg_Date;
 	private String up_Date;
 	
@@ -90,6 +96,54 @@ public class Document implements CEntity {
 
 	public void setUp_Date(String up_Date) {
 		this.up_Date = up_Date;
+	}
+
+	public String getDrafterName() {
+		return drafterName;
+	}
+
+	public void setDrafterName(String drafterName) {
+		this.drafterName = drafterName;
+	}
+
+	public String getSuperiorName() {
+		return superiorName;
+	}
+
+	public void setSuperiorName(String superiorName) {
+		this.superiorName = superiorName;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getReply() {
+		return reply;
+	}
+
+	public void setReply(String reply) {
+		this.reply = reply;
+	}
+
+	public String getMeaningKor() {
+		return meaningKor;
+	}
+
+	public void setMeaningKor(String meaningKor) {
+		this.meaningKor = meaningKor;
 	}
 	
 	

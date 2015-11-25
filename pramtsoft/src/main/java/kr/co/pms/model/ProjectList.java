@@ -14,10 +14,10 @@ public class ProjectList implements CList {
 	private String errorCode;
 	private String subscribe_kor;
 	
-	public List<Project> getComList() {
+	public List<Project> getProList() {
 		return proList;
 	}
-	public void setComList(List<Project> proList) {
+	public void setProList(List<Project> proList) {
 		this.proList = proList;
 	}
 	public String getErrorCode() {

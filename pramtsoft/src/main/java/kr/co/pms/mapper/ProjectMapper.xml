@@ -27,16 +27,98 @@
     
     <insert id="addProject" parameterType="kr.co.pms.model.Project">
         
-        INSERT INTO PROJECT ( PID, NAME, START_DATE, END_DATE, ORDERER, MANAGER, STATUS, REQUIREMAN, REG_DATE, UP_DATE)
-        VALUES ( #{pid}, #{name}, #{startDate}, #{endDate}, #{orderer}, #{manager}, #{status}, #{requireMan}, SYSDATE, SYSDATE)
+        INSERT INTO PROJECT ( PID, NAME, STARTDATE, ENDDATE, ORDERER, MANAGER, STATUS, REQUIREMAN, REG_DATE, UP_DATE)
+        VALUES ( #{pid}, #{name}, to_timestamp(#{startDate}), to_timestamp(#{endDate}), #{orderer}, #{manager}, #{status}, #{requireMan}, SYSDATE, SYSDATE)
         
     </insert>
     
     <insert id="addApproval" parameterType="kr.co.pms.model.Document">
         
         INSERT INTO APPROVAL ( DID, PID, DRAFTER, SUPERIOR, LIMITS, DESCRIPTION, REG_DATE, UP_DATE)
-        VALUES (#{did}, #{pid}, #{drafter}, #{superior}, #{limits}, #{description}, SYSDATE, SYSDATE)
+        VALUES (#{did}, #{pid}, #{drafter}, #{superior}, to_timestamp(#{limits}), #{description}, SYSDATE, SYSDATE)
         
     </insert>
+    
+    <insert id="addApprovalHistory" parameterType="kr.co.pms.model.Document">
+        
+        INSERT INTO APPROVAL_HISTORY ( DID, STATUS, REPLY, REG_DATE, UP_DATE)
+        VALUES (#{did}, #{status}, #{reply}, SYSDATE, SYSDATE)
+        
+    </insert>
+    
+    <select id="getDocumentEmp" parameterType="int" resultType="kr.co.pms.model.Document">
+        
+        select d.*, m.name superiorName
+		from (
+		  select a.*, m.name drafterName
+		  from (
+		  	select * from APPROVAL where Drafter = #{ drafter }
+		  ) a, Member m
+		  where a.Drafter = m.uidx
+		) d, Member m
+		where d.superior = m.uidx
+        
+    </select>
+    
+    <select id="getDocumentExe" parameterType="int" resultType="kr.co.pms.model.Document">
+        
+        select d.*, m.name superiorName
+		from (
+		  select a.*, m.name drafterName
+		  from (
+		  	select * from APPROVAL where superior = #{ superior }
+		  ) a, Member m
+		  where a.Drafter = m.uidx
+		) d, Member m
+		where d.superior = m.uidx
+        
+    </select>
+    
+    <select id="getProjectList" parameterType="String" resultType="kr.co.pms.model.Project">
+        
+		with setOrderer as (
+		  select p.*, c.NameOther as OrdererName
+		  from Project p, Company c
+		  where p.orderer = c.cidx
+		  AND p.pid = #{ pid }
+		)
+		 select m.*, c.MeaningKor as Meaning
+		 from (select o.*, m.name as ManagerName
+		  from setOrderer o, Member m
+		  where o.manager = m.uidx) m, codes c
+		  where m.status = c.codename
+        
+    </select>
+    
+    <select id="getProject" parameterType="String" resultType="kr.co.pms.model.Project">
+        
+		with setOrderer as (
+		  select p.*, c.NameOther as OrdererName
+		  from Project p, Company c
+		  where p.orderer = c.cidx
+		  AND p.pid = #{ pid }
+		)
+		 select m.*, c.MeaningKor as Meaning
+		 from (select o.*, m.name as ManagerName
+		  from setOrderer o, Member m
+		  where o.manager = m.uidx) m, codes c
+		  where m.status = c.codename
+        
+    </select>
+    
+    <select id="getApprovalHistory" parameterType="String" resultType="kr.co.pms.model.ApprovalHistory">
+        
+		SELECT h.*, c.MEANINGKOR
+		FROM (
+			SELECT * 
+			FROM(
+			  SELECT * FROM APPROVAL_HISTORY
+			  WHERE DID = #{ did }
+			  ORDER BY UP_DATE DESC
+			) 
+			WHERE ROWNUM = 1) h, CODES c
+		WHERE h.STATUS = c.CODENAME
+        
+    </select>
     
 </mapper>
