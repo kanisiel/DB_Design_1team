@@ -150,4 +150,16 @@ public class ExecutiveController extends CController {
 			return modelAndView;
 		}
 	}	
+	
+	//------------------------프로젝트 controller-----------------------------------------------
+	@RequestMapping(value = "/executiveController/project", method = RequestMethod.GET)
+	public ModelAndView mypage(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, ModelAndView modelAndView)  throws UnsupportedEncodingException, SQLException {
+		if(modelAndView == null){
+			modelAndView = new ModelAndView();
+		}
+		session.setAttribute("userInfo", userInfo);
+		modelAndView.addObject("url", "projectHis.jsp");
+		modelAndView.setViewName("template");
+		return modelAndView;
+	}
 }

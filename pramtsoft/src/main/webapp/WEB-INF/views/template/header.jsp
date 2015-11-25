@@ -51,7 +51,7 @@
 							<button type="button" class="btn btn-info" onClick="location.href='${pageContext.request.contextPath}/executiveController/memberList';">직원</button>
 						</div>
 						<div class="btn-group" role="group">
-							<button type="button" class="btn btn-success" onClick="javascript:addText('프로젝트');">프로젝트</button>
+							<button type="button" class="btn btn-success" onClick="location.href='${pageContext.request.contextPath}/executiveController/project';">프로젝트</button>
 						</div>
 						<div class="btn-group" role="group">
 							<button type="button" class="btn btn-warning" onClick="location.href='${pageContext.request.contextPath}/loginController/mypage';">마이페이지</button>
@@ -59,7 +59,7 @@
 					</c:when>
 					<c:when test="${userInfo.getLevels() == 'EMPLOYEE' }">
 						<div class="btn-group" role="group">
-							<button type="button" class="btn btn-info" onClick="javascript:addText('프로젝트');">프로젝트</button>
+							<button type="button" class="btn btn-info" onClick="location.href='${pageContext.request.contextPath}/executiveController/project';">프로젝트</button>
 						</div>
 						<div class="btn-group dropdown">
 							<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
