@@ -16,12 +16,12 @@
 						<table id="list" class="table table-hover">
 							<thead>
 								<tr class="table-heading">
-									<td><p class="text-center"><Strong>문서번호</Strong></p></td>
-									<td><p class="text-center"><Strong>문서명<br>(프로젝트명)</Strong></p></td>
-									<td><p class="text-center"><Strong>기안자</Strong></p></td>
-									<td><p class="text-center"><Strong>승인권자</Strong></p></td>
-									<td><p class="text-center"><Strong>상태</Strong></p></td>
-									<td><p class="text-center"><Strong>보기</Strong></p></td>
+									<th><p class="text-center"><Strong>문서번호</Strong></p></th>
+									<th><p class="text-center"><Strong>문서명<br>(프로젝트명)</Strong></p></th>
+									<th><p class="text-center"><Strong>기안자</Strong></p></th>
+									<th><p class="text-center"><Strong>승인권자</Strong></p></th>
+									<th><p class="text-center"><Strong>상태</Strong></p></th>
+									<th><p class="text-center"><Strong>보기</Strong></p></th>
 								</tr>
 							</thead>
 							<tbody>

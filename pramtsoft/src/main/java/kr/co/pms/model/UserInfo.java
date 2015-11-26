@@ -23,7 +23,7 @@ public class UserInfo implements Info {
 	
 	public UserInfo(String userId, String userPassword, String userName,
 			String levels, String birthDate, int serialNum, String schooling,
-			String entryDate) {
+			String entryDate, String department, String section) {
 		super();
 		this.id = userId;
 		this.password = userPassword;
@@ -33,6 +33,8 @@ public class UserInfo implements Info {
 		this.serial_Num = serialNum;
 		this.schooling = schooling;
 		this.entry_Date = entryDate;
+		this.department = department;
+		this.section = section;
 	}
 	
 	public UserInfo(int uidx, String id, String password, String name,

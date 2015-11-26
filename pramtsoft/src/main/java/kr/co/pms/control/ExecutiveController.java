@@ -2,16 +2,23 @@ package kr.co.pms.control;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import kr.co.pms.conf.Configuration.ErrorCodes;
 import kr.co.pms.conf.Sha512Encrypter;
-import kr.co.pms.conf.Configuration.*;
+import kr.co.pms.model.Department;
+import kr.co.pms.model.DepartmentList;
 import kr.co.pms.model.Pagination;
+import kr.co.pms.model.Section;
+import kr.co.pms.model.SectionList;
 import kr.co.pms.model.UserInfo;
 import kr.co.pms.model.UserList;
 import kr.co.pms.service.ExecutiveService;
+import kr.co.pms.service.LoginService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +34,8 @@ public class ExecutiveController extends CController {
 
 	@Autowired
 	ExecutiveService executiveService;
+	@Autowired
+	LoginService loginService;
 	
 	@ModelAttribute("userInfo")  
     public UserInfo userInfo() {  
@@ -46,6 +55,20 @@ public class ExecutiveController extends CController {
 		modelAndView.addObject("userInfo", userInfo);
 		UserList userList = executiveService.getRegList();
 		if(userList.getErrorCode().equals("Success")){
+			DepartmentList depList = loginService.getDepartmentList();
+			SectionList secList = loginService.getSectionList();
+			Map<String, String> depMap = new HashMap<String, String>();
+			Map<String, String> secMap = new HashMap<String, String>();
+			if(depList.getErrorCode().equals(ErrorCodes.Success.getCodeName())&&secList.getErrorCode().equals(ErrorCodes.Success.getCodeName())){
+				for(Department d : depList.getDepList()){
+					depMap.put(d.getDidx(),d.getNameOther());
+				}
+				session.setAttribute("depMap", depMap);
+				for(Section s : secList.getSecList()){
+					secMap.put(s.getSidx(),s.getNameOther());
+				}
+				session.setAttribute("secMap", secMap);
+			}
 			flushSessionAttribute(session);
 			session.setAttribute("userList", userList);
 //			modelAndView.addObject("userList", userList);
@@ -121,7 +144,7 @@ public class ExecutiveController extends CController {
 		} else {
 			page = 1;
 		}
-		Pagination pagination = new Pagination((page-1)*10, page*10);
+		Pagination pagination = new Pagination(((page-1)*10)+1, page*10);
 		int max = executiveService.getAllRownum();
 		Double md = (double) (max);
 		int maxpage = 1;
@@ -151,7 +174,7 @@ public class ExecutiveController extends CController {
 		}
 	}	
 	
-	//------------------------га╥на╖ф╝ controller-----------------------------------------------
+	//------------------------О©╫О©╫О©╫О©╫О©╫О©╫ф╝ controller-----------------------------------------------
 	@RequestMapping(value = "/executiveController/project", method = RequestMethod.GET)
 	public ModelAndView mypage(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, ModelAndView modelAndView)  throws UnsupportedEncodingException, SQLException {
 		if(modelAndView == null){

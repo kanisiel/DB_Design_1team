@@ -7,8 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import kr.co.pms.conf.Configuration;
+import kr.co.pms.conf.Configuration.ErrorCodes;
 import kr.co.pms.conf.Sha512Encrypter;
+import kr.co.pms.model.DepartmentList;
 import kr.co.pms.model.LoginInfo;
+import kr.co.pms.model.SectionList;
 import kr.co.pms.model.UserInfo;
 import kr.co.pms.service.LoginService;
 
@@ -54,6 +57,8 @@ public class LoginController {
 		int levels = Integer.parseInt(request.getParameter("levels"));
 		String level;
 		String entryDate = request.getParameter("entryDate")+" 00:00:00.000000";
+		String department = request.getParameter("department");
+		String section = request.getParameter("section");
 		switch(levels){
 		case 1:
 			level = "EMPLOYEE";
@@ -66,7 +71,7 @@ public class LoginController {
 		if(encrypter.encryption(userPassword)){
 			userPassword = encrypter.getPassword();
 		}
-		UserInfo userInfo = new UserInfo(userId, userPassword, userName, level, birthDate, serialNum, schooling, entryDate);
+		UserInfo userInfo = new UserInfo(userId, userPassword, userName, level, birthDate, serialNum, schooling, entryDate, department, section);
 		int uidx = Integer.parseInt(Integer.toString(levels)+"0"+request.getParameter("entryDate").substring(2, 4))*10000;
 		int seq=loginService.getSequence();
 		if(seq>0){
@@ -124,9 +129,29 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/loginController/register.do", method = RequestMethod.GET)
-	public ModelAndView register( RedirectAttributes redir ) throws UnsupportedEncodingException {
-		modelAndView = new ModelAndView("register");
-		return modelAndView;
+	public ModelAndView register( RedirectAttributes redir ) throws UnsupportedEncodingException, SQLException {
+		modelAndView = new ModelAndView();
+		DepartmentList depList = loginService.getDepartmentList();
+		if(depList.getErrorCode().equals(ErrorCodes.Success.getCodeName())){
+			SectionList secList = loginService.getSectionList();
+			if(secList.getErrorCode().equals(ErrorCodes.Success.getCodeName())){
+				modelAndView.addObject("depList", depList);
+				modelAndView.addObject("secList", secList);
+				modelAndView.setViewName("register");
+
+				return modelAndView;
+			} else {
+				String errorCode = ErrorCodes.ER0001.getSubtitleKor();
+				modelAndView.addObject("errorCode", errorCode);
+				modelAndView.setViewName("error/500");
+				return modelAndView;
+			}
+		} else {
+			String errorCode = ErrorCodes.ER0001.getSubtitleKor();
+			modelAndView.addObject("errorCode", errorCode);
+			modelAndView.setViewName("error/500");
+			return modelAndView;
+		}
 	}
 	@RequestMapping(value = "/loginController/mypage", method = RequestMethod.GET)
 	public ModelAndView mypage(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, ModelAndView modelAndView)  throws UnsupportedEncodingException, SQLException {

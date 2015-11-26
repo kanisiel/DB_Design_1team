@@ -227,6 +227,64 @@
 							</div>
 							<div class="col-md-8">
 								<div class="form-group">
+									<label for="department">부서</label>
+									<select id="department" class="form-control" name="department" onchange="allow_sec()">
+										<option>부서를 선택하세요</option>
+										<c:forEach var="department" items="${ depList.getDepList() }" varStatus="status">
+											<option value="${ department.getDidx() }"><c:out value="${ department.getNameOther() }"/></option>
+										</c:forEach>
+									</select>
+								</div>	
+							</div>							
+							<div class="col-md-4">
+								<p id="deWarning" class="text-danger"></p>
+							</div>
+							<div class="col-md-8">
+								<div class="form-group">
+									<label for="section">과</label>
+									<select id="section" class="form-control" name="section" onchange="sync()" disabled>
+										<option value="">과를 선택하세요</option>
+										<c:forEach var="section" items="${ secList.getSecList() }" varStatus="status">
+											<option value="${ section.getSidx() }"><c:out value="${ section.getNameOther() }"/></option>
+										</c:forEach>
+									</select>
+									<select id="secDep" class="form-control hidden" name="secDep">
+										<option value="">과를 선택하세요</option>
+										<c:forEach var="sec" items="${ secList.getSecList() }" varStatus="status">
+											<option value="${ sec.getDepartment() }"><c:out value="${ sec.getSidx() }"/></option>
+										</c:forEach>
+									</select>
+									<script>
+									function sync(){
+										$('#secDep option').each(function () {
+											if($(this).text() == $('#section').val()){
+												$(this).attr("selected","selected");
+												document.getElementById("secDep").value = $(this).val();
+											}
+										});
+									}
+									function allow_sec(){
+										var val;
+										$('#section').val("");
+										$('#section option').each(function () {
+											$(this).addClass("hidden");
+										});
+										$('#section').removeAttr("disabled");
+										$('#secDep option').each(function () {
+											if($(this).val() == $('#department').val()){
+												val = $(this).text();
+												$("#section>option[value="+$(this).text()+"]").removeClass("hidden");
+											}
+										});
+									}
+									</script>
+								</div>	
+							</div>							
+							<div class="col-md-4">
+								<p id="seWarning" class="text-danger"></p>
+							</div>
+							<div class="col-md-8">
+								<div class="form-group">
 									<label for="entryDate">입사일자</label>
 									<input type="text" id="entryDate" class="form-control" name="entryDate" placeholder="입사일을 선택하세요">
 								</div>	

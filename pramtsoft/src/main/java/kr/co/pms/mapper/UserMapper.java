@@ -3,10 +3,7 @@ package kr.co.pms.mapper;
 import java.sql.SQLException;
 import java.util.List;
 
-import kr.co.pms.model.LoginInfo;
-import kr.co.pms.model.Pagination;
-import kr.co.pms.model.UserInfo;
-import kr.co.pms.model.UserInfo2;
+import kr.co.pms.model.*;
 
 public interface UserMapper {
 	 public UserInfo getData(LoginInfo loginInfo) throws SQLException;
@@ -22,4 +19,6 @@ public interface UserMapper {
 	 public UserInfo2 getUser(int uidx) throws SQLException;
 	 public void createAccount(UserInfo userInfo) throws SQLException;
 	 public int getSequence() throws SQLException;
+	 public List<Department> getDepartmentList() throws SQLException;
+	 public List<Section> getSectionList() throws SQLException;
 }

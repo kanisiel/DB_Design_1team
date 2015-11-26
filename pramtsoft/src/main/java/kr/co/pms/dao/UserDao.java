@@ -3,10 +3,14 @@ package kr.co.pms.dao;
 import java.sql.SQLException;
 import java.util.List;
 
-import kr.co.pms.conf.*;
+import kr.co.pms.conf.Configuration;
 import kr.co.pms.mapper.UserMapper;
+import kr.co.pms.model.Department;
+import kr.co.pms.model.DepartmentList;
 import kr.co.pms.model.LoginInfo;
 import kr.co.pms.model.Pagination;
+import kr.co.pms.model.Section;
+import kr.co.pms.model.SectionList;
 import kr.co.pms.model.UserInfo;
 import kr.co.pms.model.UserInfo2;
 import kr.co.pms.model.UserList;
@@ -247,5 +251,53 @@ public class UserDao implements Dao {
 			}
 		}
 		return -999;
+	}
+	public DepartmentList getDepartmentList() throws SQLException{
+		DepartmentList depList;
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		if(userMapper != null){
+			List<Department> dList = userMapper.getDepartmentList();
+			if(dList == null){
+				depList = new DepartmentList();
+				depList.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				depList.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return depList;
+			} else {
+				depList = new DepartmentList();
+				depList.setDepList(dList);
+				depList.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				depList.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return depList;
+			}
+		} else {
+			depList = new DepartmentList();
+			depList.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			depList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return depList;
+		}
+	}
+	public SectionList getSectionList() throws SQLException{
+		SectionList sectionList;
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		if(userMapper != null){
+			List<Section> sList = userMapper.getSectionList();
+			if(sList == null){
+				sectionList = new SectionList();
+				sectionList.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				sectionList.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return sectionList;
+			} else {
+				sectionList = new SectionList();
+				sectionList.setSecList(sList);
+				sectionList.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				sectionList.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return sectionList;
+			}
+		} else {
+			sectionList = new SectionList();
+			sectionList.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			sectionList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return sectionList;
+		}
 	}
 }

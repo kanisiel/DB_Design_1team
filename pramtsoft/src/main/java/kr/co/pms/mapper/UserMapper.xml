@@ -72,12 +72,24 @@
     </select>
     
     <insert id="createAccount" parameterType="kr.co.pms.model.UserInfo">
-        INSERT INTO REG_QUEUE (UIDX, ID, PASSWORD, NAME, BIRTH_DATE, SERIAL_NUM, SCHOOLING, LEVELS, ENTRY_DATE, REG_DATE, UP_DATE) 
-        VALUES (#{uidx}, #{id}, #{password}, #{name}, to_date(#{birth_Date}), #{serial_Num}, #{schooling}, #{levels}, to_timestamp(#{entry_Date}), SYSDATE, SYSDATE)
+        INSERT INTO REG_QUEUE (UIDX, ID, PASSWORD, NAME, BIRTH_DATE, SERIAL_NUM, SCHOOLING, LEVELS, ENTRY_DATE, REG_DATE, UP_DATE, DEPARTMENT, SECTION) 
+        VALUES (#{uidx}, #{id}, #{password}, #{name}, to_date(#{birth_Date}), #{serial_Num}, #{schooling}, #{levels}, to_timestamp(#{entry_Date}), SYSDATE, SYSDATE, #{ department}, #{ section })
     </insert>
     
     <select id='getSequence' resultType="int">
         SELECT SEQ_UID.NEXTVAL from dual
+    </select>
+    
+    <select id="getDepartmentList" resultType="kr.co.pms.model.Department">
+    
+    	SELECT * FROM DEPARTMENT
+            
+    </select>
+    
+    <select id="getSectionList" resultType="kr.co.pms.model.Section">
+    
+    	SELECT * FROM SECTION
+            
     </select>
     
 </mapper>

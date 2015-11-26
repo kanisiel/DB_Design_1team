@@ -9,6 +9,8 @@
 		  placeholder : 'sortable-placeholder'
 		});
 		$( ".sortable" ).disableSelection();
+		var depMap = ${ sessionScope.depMap };
+		var secMap = ${ sessionScope.secMap };
 </script>		
 <fmt:setLocale value="ko" scope="session"/>
 			<div class="col-md-8 col-md-offset-2">
@@ -53,6 +55,14 @@
 														<tr>
 															<td>구분</td>
 															<td><p><c:choose><c:when test="${ user.getLevels() == 'EMPLOYEE' }">직원</c:when><c:otherwise>임원진</c:otherwise></c:choose></p></td>
+														</tr>
+														<tr>
+															<td>부서</td>
+															<td><p><c:out value="${ sessionScope.depMap.get( user.getDepartment() ) }"/></p></td>
+														</tr>
+														<tr>
+															<td>과</td>
+															<td><p><c:out value="${ sessionScope.secMap.get( user.getSection() ) }"/></p></td>
 														</tr>
 														<tr>
 															<td>생년월일</td>
