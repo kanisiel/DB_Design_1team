@@ -212,7 +212,7 @@
 			<div class="col-md-8">
 				<div class="row">
 					<p id="buttonrow" class="text-center">
-						<button type="button" class="btn btn-success" onclick="javascript:check_form();">가입신청</button>
+						<button type="button" class="btn btn-success" onclick="javascript:check_form();">정보수정</button>
 						<button type="button" class="btn btn-warning" onclick="location.href='${pageContext.request.contextPath}/loginController/logout'">취소</button>
 					</p>
 				</div>

@@ -45,13 +45,27 @@
 							<button type="button" class="btn btn-primary" onClick="location.href='${pageContext.request.contextPath}/executiveController/approveRegRequest';">가입승인</button>
 						</div>
 						<div class="btn-group" role="group">
-							<button type="button" class="btn btn-danger" onClick="javascript:addText('결재시스템');">결재시스템</button>
+							<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+							결재시스템 <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="${pageContext.request.contextPath}/approvalController/approvalList">결재목록</a></li>
+								<li class="divider"></li>
+								<li><a href="#">결재이력</a></li>
+							</ul>
 						</div>
 						<div class="btn-group" role="group">
 							<button type="button" class="btn btn-info" onClick="location.href='${pageContext.request.contextPath}/executiveController/memberList';">직원</button>
 						</div>
-						<div class="btn-group" role="group">
-							<button type="button" class="btn btn-success" onClick="location.href='${pageContext.request.contextPath}/executiveController/project';">프로젝트</button>
+						<div class="btn-group dropdown">
+							<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+							프로젝트 <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">직원투입</a></li>
+								<li class="divider"></li>
+								<li><a href='${pageContext.request.contextPath}/executiveController/project'>프로젝트 목록</a></li>
+							</ul>
 						</div>
 						<div class="btn-group" role="group">
 							<button type="button" class="btn btn-warning" onClick="location.href='${pageContext.request.contextPath}/loginController/mypage';">마이페이지</button>
@@ -66,7 +80,7 @@
 							결재시스템 <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="${pageContext.request.contextPath}/approvalController/request">결제요청</a></li>
+								<li><a href="${pageContext.request.contextPath}/approvalController/request">결재요청</a></li>
 								<li><a href="${pageContext.request.contextPath}/approvalController/approvalList">결재목록</a></li>
 								<li class="divider"></li>
 								<li><a href="#">결재이력</a></li>
@@ -82,16 +96,4 @@
 	</div>
 	<div class="col-md-8 col-md-offset-2">
 		
-	</div><!-- 
-	<div class="btn-group">
-	  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-	    Action <span class="caret"></span>
-	  </button>
-	  <ul class="dropdown-menu" role="menu">
-	    <li><a href="#">Action</a></li>
-	    <li><a href="#">Another action</a></li>
-	    <li><a href="#">Something else here</a></li>
-	    <li class="divider"></li>
-	    <li><a href="#">Separated link</a></li>
-	  </ul>
-	</div> -->
+	</div>

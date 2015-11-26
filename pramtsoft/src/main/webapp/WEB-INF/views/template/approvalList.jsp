@@ -33,7 +33,16 @@
 										<td><p class="text-center"><c:out value="${ document.getDrafterName() }"/></p></td>
 										<td><p class="text-center"><c:out value="${ document.getSuperiorName() }"/></p></td>
 										<td><p id="status${ status.count }" class="text-center"><c:out value="${ document.getMeaningKor() }"/></p><input type="text" id="doc${status.count}" class="hidden" value="${ document.getStatus() }"/></td>
-										<td><p class="text-center"><input type="button" id="show${ status.count }" value="보기"/></p></td>
+										<td><p class="text-center">
+											<c:choose>
+												<c:when test="${ userInfo.getLevels() == 'EMPLOYEE' }">
+													<input type="button" id="btn${ status.count }" value="보기"/>
+												</c:when>
+												<c:when test="${ userInfo.getLevels() == 'EXECUTIVE' }">
+													<input type="button" id="btn${ status.count }" value="보기" onclick="alert('/approvalController/showDocument?did=')"/>
+												</c:when>
+											</c:choose>
+										</p></td>
 									</tr>
 								</c:forEach>
 							</tbody>
