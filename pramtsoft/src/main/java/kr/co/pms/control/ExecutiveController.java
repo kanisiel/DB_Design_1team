@@ -173,8 +173,6 @@ public class ExecutiveController extends CController {
 			return modelAndView;
 		}
 	}	
-	
-	//------------------------������Ʈ controller-----------------------------------------------
 	@RequestMapping(value = "/executiveController/project", method = RequestMethod.GET)
 	public ModelAndView mypage(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, ModelAndView modelAndView)  throws UnsupportedEncodingException, SQLException {
 		if(modelAndView == null){
