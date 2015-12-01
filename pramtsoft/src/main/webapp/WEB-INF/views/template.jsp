@@ -22,10 +22,11 @@
 		<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 		<!-- nanoScroller -->
-		<script src="template/jquery.nanoscroller.min.js"></script>
-		<link rel="stylesheet" href="template/nanoscroller.css">
-    	<link rel="stylesheet" href="css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
-    	<script src="js/star-rating.js" type="text/javascript"></script>
+		<script src="<c:url value="/resources/jquery.nanoscroller.min.js"/>"></script>
+		<link rel="stylesheet" href="<c:url value="/resources/nanoscroller.css" />"/>
+   	 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    	<link rel="stylesheet" href="<c:url value="/resources/bootstrap-star-rating/css/star-rating.min.css" />" media="all" rel="stylesheet" type="text/css"/>
+    	<script src="<c:url value="/resources/bootstrap-star-rating/js/star-rating.js"/>" type="text/javascript"></script>
 		<script>
 			$(".nano").nanoScroller();
 			$(".nano").nanoScroller({ iOSNativeScrolling: true });

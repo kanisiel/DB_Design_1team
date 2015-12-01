@@ -41,6 +41,13 @@ public class EmployeeController extends CController {
 	}
 	ModelAndView modelAndView;
 	
+	@RequestMapping(value = "/employeeController/rating", method = RequestMethod.GET)
+	public ModelAndView rating(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, ModelAndView modelAndView, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
+		modelAndView = new ModelAndView();
+		modelAndView.addObject("url", "rating.jsp");
+		modelAndView.setViewName("template");
+		return modelAndView;
+	}
 	@RequestMapping(value = "/employeeController/project", method = RequestMethod.GET)
 	public ModelAndView projectview(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, ModelAndView modelAndView, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
 		if(modelAndView == null){
