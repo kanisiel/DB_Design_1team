@@ -5,15 +5,7 @@ import java.util.List;
 
 import kr.co.pms.conf.Configuration;
 import kr.co.pms.mapper.UserMapper;
-import kr.co.pms.model.Department;
-import kr.co.pms.model.DepartmentList;
-import kr.co.pms.model.LoginInfo;
-import kr.co.pms.model.Pagination;
-import kr.co.pms.model.Section;
-import kr.co.pms.model.SectionList;
-import kr.co.pms.model.UserInfo;
-import kr.co.pms.model.UserInfo2;
-import kr.co.pms.model.UserList;
+import kr.co.pms.model.*;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -225,4 +225,149 @@ public class ProjectDao implements Dao {
 			return history;
 		}
 	}
+	public ProjectList getAllProjects() throws SQLException{
+		ProjectList projectList;
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper != null){
+			List<Project> pList = projectMapper.getAllProject();
+			if(pList == null){
+				projectList = new ProjectList();
+				projectList.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				projectList.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return projectList;
+			} else {
+				projectList = new ProjectList();
+				projectList.setProList(pList);
+				projectList.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				projectList.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return projectList;
+			}
+		} else {
+			projectList = new ProjectList();
+			projectList.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			projectList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return projectList;
+		}
+	}
+	public ProjectList getProgressProjects() throws SQLException{
+		ProjectList projectList;
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper != null){
+			List<Project> pList = projectMapper.getProgressProjects();
+			if(pList == null){
+				projectList = new ProjectList();
+				projectList.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				projectList.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return projectList;
+			} else {
+				projectList = new ProjectList();
+				projectList.setProList(pList);
+				projectList.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				projectList.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return projectList;
+			}
+		} else {
+			projectList = new ProjectList();
+			projectList.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			projectList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return projectList;
+		}
+	}
+	public ProjectList getEndProjects() throws SQLException{
+		ProjectList projectList;
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper != null){
+			List<Project> pList = projectMapper.getEndProject();
+			if(pList == null){
+				projectList = new ProjectList();
+				projectList.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				projectList.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return projectList;
+			} else {
+				projectList = new ProjectList();
+				projectList.setProList(pList);
+				projectList.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				projectList.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return projectList;
+			}
+		} else {
+			projectList = new ProjectList();
+			projectList.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			projectList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return projectList;
+		}
+	}
+
+	public ProjectList getProjectsPM(int uidx) throws SQLException{
+		ProjectList projectList;
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper != null){
+			List<Project> pList = projectMapper.getProjectsPM(uidx);
+			if(pList == null){
+				projectList = new ProjectList();
+				projectList.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				projectList.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return projectList;
+			} else {
+				projectList = new ProjectList();
+				projectList.setProList(pList);
+				projectList.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				projectList.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return projectList;
+			}
+		} else {
+			projectList = new ProjectList();
+			projectList.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			projectList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return projectList;
+		}
+	}
+	public ProjectList getProgressProjectsPM(int uidx) throws SQLException{
+		ProjectList projectList;
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper != null){
+			List<Project> pList = projectMapper.getProgressProjectsPM(uidx);
+			if(pList == null){
+				projectList = new ProjectList();
+				projectList.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				projectList.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return projectList;
+			} else {
+				projectList = new ProjectList();
+				projectList.setProList(pList);
+				projectList.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				projectList.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return projectList;
+			}
+		} else {
+			projectList = new ProjectList();
+			projectList.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			projectList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return projectList;
+		}
+	}
+	public ProjectList getEndProjectsPM(int uidx) throws SQLException{
+		ProjectList projectList;
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper != null){
+			List<Project> pList = projectMapper.getEndProjectPM(uidx);
+			if(pList == null){
+				projectList = new ProjectList();
+				projectList.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				projectList.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return projectList;
+			} else {
+				projectList = new ProjectList();
+				projectList.setProList(pList);
+				projectList.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				projectList.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return projectList;
+			}
+		} else {
+			projectList = new ProjectList();
+			projectList.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			projectList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return projectList;
+		}
+	}
 }

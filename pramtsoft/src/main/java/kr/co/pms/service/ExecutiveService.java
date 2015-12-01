@@ -4,10 +4,9 @@ import java.sql.SQLException;
 
 import javax.annotation.Resource;
 
+import kr.co.pms.dao.ProjectDao;
 import kr.co.pms.dao.UserDao;
-import kr.co.pms.model.Pagination;
-import kr.co.pms.model.UserInfo;
-import kr.co.pms.model.UserList;
+import kr.co.pms.model.*;
 
 import org.springframework.stereotype.Service;
 
@@ -15,6 +14,8 @@ import org.springframework.stereotype.Service;
 public class ExecutiveService {
 	@Resource(name="userDao")
 	private UserDao userDao;
+	@Resource(name="projectDao")
+	private ProjectDao projectDao;
 	
 	public UserList getRegList() throws SQLException {
 		return userDao.getRegList();
@@ -42,5 +43,17 @@ public class ExecutiveService {
 	 */
 	public boolean encryptSha512(UserInfo userInfo) throws SQLException {
 		return userDao.encryptPassword(userInfo);
+	}
+	public ProjectList getAllProject() throws SQLException {
+		return projectDao.getAllProjects();
+	}
+	public ProjectList getEndProject() throws SQLException {
+		return projectDao.getEndProjects();
+	}
+	public ProjectList getProgressProject() throws SQLException {
+		return projectDao.getProgressProjects();
+	}
+	public Project getProject(String pid) throws SQLException {
+		return projectDao.getProject(pid);
 	}
 }

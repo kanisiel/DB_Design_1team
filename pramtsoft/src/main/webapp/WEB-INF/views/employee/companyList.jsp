@@ -30,7 +30,7 @@
 			}
 			.heightedPanel{
 				min-height: 30;
-		        max-height: 400;
+		        max-height: 300;
 		        overflow-y: scroll;
 			}
 			.heighted{

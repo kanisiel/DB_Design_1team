@@ -13,6 +13,8 @@ import kr.co.pms.conf.Sha512Encrypter;
 import kr.co.pms.model.Department;
 import kr.co.pms.model.DepartmentList;
 import kr.co.pms.model.Pagination;
+import kr.co.pms.model.Project;
+import kr.co.pms.model.ProjectList;
 import kr.co.pms.model.Section;
 import kr.co.pms.model.SectionList;
 import kr.co.pms.model.UserInfo;
@@ -174,9 +176,48 @@ public class ExecutiveController extends CController {
 		}
 	}	
 	@RequestMapping(value = "/executiveController/project", method = RequestMethod.GET)
-	public ModelAndView mypage(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, ModelAndView modelAndView)  throws UnsupportedEncodingException, SQLException {
+	public ModelAndView projectview(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, ModelAndView modelAndView, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
 		if(modelAndView == null){
 			modelAndView = new ModelAndView();
+		}
+		String pid = request.getParameter("pid");
+		if(pid != null){
+			Project projectInfo = executiveService.getProject(pid);
+			if(projectInfo.getErrorCode().equals(ErrorCodes.Success.getCodeName())){
+				session.setAttribute("projectInfo", projectInfo);
+			} else {
+				String errorCode = ErrorCodes.ER9999.getCodeName();
+				modelAndView.addObject("errorCode", errorCode);
+				modelAndView.setViewName("error/500");
+				return modelAndView;
+			}
+		}
+		ProjectList progressList = executiveService.getProgressProject();
+		if(progressList.getErrorCode().equals(ErrorCodes.Success.getCodeName())){
+			session.setAttribute("progressList", progressList);
+			ProjectList endList = executiveService.getEndProject();
+			if(endList.getErrorCode().equals(ErrorCodes.Success.getCodeName())){
+				session.setAttribute("endList", endList);
+				ProjectList allList = executiveService.getAllProject();
+				if(allList.getErrorCode().equals(ErrorCodes.Success.getCodeName())){
+					session.setAttribute("allList", allList);
+				} else {
+					ErrorCodes errorCodes = ErrorCodes.valueOf(allList.getErrorCode());
+					modelAndView.addObject("errorCode", errorCodes);
+					modelAndView.setViewName("error/500");
+					return modelAndView;
+				}
+			} else {
+				ErrorCodes errorCodes = ErrorCodes.valueOf(endList.getErrorCode());
+				modelAndView.addObject("errorCode", errorCodes);
+				modelAndView.setViewName("error/500");
+				return modelAndView;
+			}
+		} else {
+			ErrorCodes errorCodes = ErrorCodes.valueOf(progressList.getErrorCode());
+			modelAndView.addObject("errorCode", errorCodes);
+			modelAndView.setViewName("error/500");
+			return modelAndView;
 		}
 		session.setAttribute("userInfo", userInfo);
 		modelAndView.addObject("url", "projectHis.jsp");

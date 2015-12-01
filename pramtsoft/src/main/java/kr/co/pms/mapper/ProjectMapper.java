@@ -21,4 +21,10 @@ public interface ProjectMapper {
 	public List<Document> getDocumentExe(int superior) throws SQLException;
 	public List<Document> getDocumentEmp(int drafter) throws SQLException;
 	public ApprovalHistory getApprovalHistory(String did) throws SQLException;
+	 public List<Project> getProgressProjects() throws SQLException;
+	 public List<Project> getEndProject() throws SQLException;
+	 public List<Project> getAllProject() throws SQLException;
+	 public List<Project> getProjectsPM(int uidx) throws SQLException;
+	 public List<Project> getProgressProjectsPM(int uidx) throws SQLException;
+	 public List<Project> getEndProjectPM(int uidx) throws SQLException;
 }
