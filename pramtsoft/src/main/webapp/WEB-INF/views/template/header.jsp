@@ -86,6 +86,16 @@
 								<li><a href="#">결재이력</a></li>
 							</ul>
 						</div>
+						<div class="btn-group dropdown">
+							<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+							평가 <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">PM평가</a></li>
+								<li class="divider"></li>
+								<li><a href='${pageContext.request.contextPath}/employeeController/rating'>동료평가</a></li>
+							</ul>
+						</div>
 						<div class="btn-group" role="group">
 							<button type="button" class="btn btn-warning" onClick="location.href='${pageContext.request.contextPath}/loginController/mypage';">마이페이지</button>
 						</div>

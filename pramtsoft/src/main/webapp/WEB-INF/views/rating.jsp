@@ -11,14 +11,16 @@
 				    <input id="input-21f" value="0" type="number" min=0 max=10 step=0.1 data-size="sm" >
 				</form>
 			</div>
-			<script>
+		</div>
+	</div>
+	
+	
+	<script>
 			    jQuery(document).ready(function () {
 			        $("#input-21f").rating({
 			            starCaptions: function(val) {
 			                if (val != 10) {
 			                    return val;
-			                } else if(val == 0){
-			                	return 'min';
 			                } else {
 			                    return 'max';
 			                }
@@ -40,5 +42,3 @@
 			        });
 			    });
 			</script>
-		</div>
-	</div>
