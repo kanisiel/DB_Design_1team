@@ -141,6 +141,7 @@
 		</script>
 	</head>
 	<body>
+	<form id="putForm" method="POST" action="${pageContext.request.contextPath}/employeeController/putEmp.do">
 	<div class="container">
 		<div class="row">
 			<div id = "employeeInfo" class="col-xs-12">
@@ -195,5 +196,6 @@
 			</div>
 		</div>
 	</div>
+	</form>
 </body>
 </html>

@@ -109,7 +109,7 @@ public class EmployeeController extends CController {
 	}
 
 	@RequestMapping(value = "/employeeController/putEmp", method = RequestMethod.GET)
-	public ModelAndView putEmp(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, ModelAndView modelAndView, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
+	public ModelAndView putEmpview(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, ModelAndView modelAndView, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
 		modelAndView = new ModelAndView();
 		String pid = request.getParameter("pid");
 		UserList uList = employeeService.getFreeMembers();
@@ -135,5 +135,9 @@ public class EmployeeController extends CController {
 			return modelAndView;
 		}
 	}
-
+	@RequestMapping(value = "/employeeController/putEmp.do", method = RequestMethod.POST)
+	public ModelAndView putEmp(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, ModelAndView modelAndView, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
+		modelAndView = new ModelAndView();
+		return modelAndView;
+	}
 }
