@@ -21,7 +21,25 @@ public class Document implements CEntity {
 	private String meaningKor;
 	private String reg_Date;
 	private String up_Date;
+	private String errorCode;
+	private String subscribe_kor;
 	
+	public String getErrorCode() {
+		return errorCode;
+	}
+
+	public void setErrorCode(String errorCode) {
+		this.errorCode = errorCode;
+	}
+
+	public String getSubscribe_kor() {
+		return subscribe_kor;
+	}
+
+	public void setSubscribe_kor(String subscribe_kor) {
+		this.subscribe_kor = subscribe_kor;
+	}
+
 	public Document(int drafter, int superior, String limits) {
 		super();
 		this.drafter = drafter;

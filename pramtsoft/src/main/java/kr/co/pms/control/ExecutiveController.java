@@ -10,15 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import kr.co.pms.conf.Configuration.ErrorCodes;
 import kr.co.pms.conf.Sha512Encrypter;
-import kr.co.pms.model.Department;
-import kr.co.pms.model.DepartmentList;
-import kr.co.pms.model.Pagination;
-import kr.co.pms.model.Project;
-import kr.co.pms.model.ProjectList;
-import kr.co.pms.model.Section;
-import kr.co.pms.model.SectionList;
-import kr.co.pms.model.UserInfo;
-import kr.co.pms.model.UserList;
+import kr.co.pms.model.*;
 import kr.co.pms.service.ExecutiveService;
 import kr.co.pms.service.LoginService;
 
@@ -185,6 +177,15 @@ public class ExecutiveController extends CController {
 			Project projectInfo = executiveService.getProject(pid);
 			if(projectInfo.getErrorCode().equals(ErrorCodes.Success.getCodeName())){
 				session.setAttribute("projectInfo", projectInfo);
+				ProjectHistoryList phList = executiveService.getEnteredMembers(pid);
+				if(phList.getErrorCode().equals(ErrorCodes.Success.getCodeName())){
+					session.setAttribute("enteredList", phList);
+				} else {
+					String errorCode = ErrorCodes.ER9999.getCodeName();
+					modelAndView.addObject("errorCode", errorCode);
+					modelAndView.setViewName("error/500");
+					return modelAndView;
+				}
 			} else {
 				String errorCode = ErrorCodes.ER9999.getCodeName();
 				modelAndView.addObject("errorCode", errorCode);

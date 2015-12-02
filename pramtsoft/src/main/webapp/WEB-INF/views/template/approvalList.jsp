@@ -4,6 +4,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="kr.co.pms.model.UserList" %>
+	<script>
+	function document_win(did) { // 상태표시바 있는 팝업
+		window.open("${pageContext.request.contextPath}/approvalController/showDocument?did="+did, "", "width=550, height=350");
+	}
+	</script>
 	<div class="col-md-8 col-md-offset-2">
 	<form class="form">
 		<div class="row">
@@ -34,14 +39,7 @@
 										<td><p class="text-center"><c:out value="${ document.getSuperiorName() }"/></p></td>
 										<td><p id="status${ status.count }" class="text-center"><c:out value="${ document.getMeaningKor() }"/></p><input type="text" id="doc${status.count}" class="hidden" value="${ document.getStatus() }"/></td>
 										<td><p class="text-center">
-											<c:choose>
-												<c:when test="${ userInfo.getLevels() == 'EMPLOYEE' }">
-													<input type="button" id="btn${ status.count }" value="보기"/>
-												</c:when>
-												<c:when test="${ userInfo.getLevels() == 'EXECUTIVE' }">
-													<input type="button" id="btn${ status.count }" value="보기" onclick="alert('/approvalController/showDocument?did=')"/>
-												</c:when>
-											</c:choose>
+											<button type="button" class="btn btn-info" onclick="document_win('${ document.getDid() }');">보기</button>
 										</p></td>
 									</tr>
 								</c:forEach>

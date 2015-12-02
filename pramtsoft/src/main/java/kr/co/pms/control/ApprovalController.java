@@ -204,4 +204,73 @@ public class ApprovalController extends CController {
 		modelAndView.setViewName("template");
 		return modelAndView;
 	}
+	@RequestMapping(value = "/approvalController/showDocument", method = RequestMethod.GET)
+	public ModelAndView showDoc(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
+		modelAndView = new ModelAndView();
+		request.setCharacterEncoding("UTF-8");
+		Document document = approvalService.getDocument(request.getParameter("did"));
+		if(document.getErrorCode().equals(ErrorCodes.Success.getCodeName())){
+			session.setAttribute("did", document.getDid());
+			Project project = approvalService.getProject(document.getPid());
+			if(project.getErrorCode().equals(ErrorCodes.Success.getCodeName())){
+				session.setAttribute("projectInfo", project);
+				modelAndView.setViewName("template/viewApproval");
+				return modelAndView;
+			} else {
+				String errorCode = ErrorCodes.ER0001.getSubtitleKor();
+				modelAndView.addObject("errorCode", errorCode);
+				modelAndView.setViewName("error/500");
+				return modelAndView;
+			}
+		} else {
+			String errorCode = ErrorCodes.ER0001.getSubtitleKor();
+			modelAndView.addObject("errorCode", errorCode);
+			modelAndView.setViewName("error/500");
+			return modelAndView;
+		}
+	}
+	
+	@RequestMapping(value = "/approvalController/approve.do", method = RequestMethod.POST)
+	public ModelAndView approve(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
+		modelAndView = new ModelAndView();
+		request.setCharacterEncoding("UTF-8");
+		String status = null;
+		switch(request.getParameter("atype")){
+		case "approve":
+			status = "A";
+			break;
+		case "turndown":
+			status = "TD";
+			break;
+		}
+		if(status == null){
+			String errorCode = ErrorCodes.ER0001.getSubtitleKor();
+			modelAndView.addObject("errorCode", errorCode);
+			modelAndView.setViewName("error/500");
+			return modelAndView;
+		}
+		ApprovalHistory aHistory = new ApprovalHistory(request.getParameter("did"), status, request.getParameter("description"));
+		if(approvalService.setStatusApproval(aHistory)==false){
+			String errorCode = ErrorCodes.ER0001.getSubtitleKor();
+			modelAndView.addObject("errorCode", errorCode);
+			modelAndView.setViewName("error/500");
+			return modelAndView;
+		}else {
+			Project project = new Project();
+			project.setPid(request.getParameter("pid"));
+			project.setStatus("P");
+			if(approvalService.setStatusProject(project)==false){
+				String errorCode = ErrorCodes.ER0001.getSubtitleKor();
+				modelAndView.addObject("errorCode", errorCode);
+				modelAndView.setViewName("error/500");
+				return modelAndView;
+			} else {
+				userInfo.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				userInfo.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				session.setAttribute("status", "Success");
+				modelAndView.setViewName("template/viewApproval?");
+				return modelAndView;
+			}
+		}
+	}
 }

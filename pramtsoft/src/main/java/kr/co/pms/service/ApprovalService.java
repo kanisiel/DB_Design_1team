@@ -65,4 +65,13 @@ public class ApprovalService {
 	public ApprovalHistory getApprovalHistory(String did) throws SQLException {
 		return projectDao.getApprovalHistory(did);
 	}
+	public Document getDocument(String did) throws SQLException {
+		return projectDao.getDocument(did);
+	}
+	public Boolean setStatusApproval(ApprovalHistory aHistory) throws SQLException {
+		return projectDao.setStatusApproval(aHistory);
+	}
+	public Boolean setStatusProject(Project project) throws SQLException {
+		return projectDao.setStatusProject(project);
+	}
 }

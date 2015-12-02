@@ -10,7 +10,11 @@ import kr.co.pms.model.CompanyList;
 import kr.co.pms.model.Document;
 import kr.co.pms.model.DocumentList;
 import kr.co.pms.model.Project;
+import kr.co.pms.model.ProjectHistory;
+import kr.co.pms.model.ProjectHistoryList;
 import kr.co.pms.model.ProjectList;
+import kr.co.pms.model.UserInfo;
+import kr.co.pms.model.UserList;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -369,5 +373,101 @@ public class ProjectDao implements Dao {
 			projectList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
 			return projectList;
 		}
+	}
+	public ProjectHistoryList getEnteredMembers(String pid) throws SQLException{
+		ProjectHistoryList projectHistoryList;
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper != null){
+			List<ProjectHistory> phList = projectMapper.getEnteredMembers(pid);
+			if(phList == null){
+				projectHistoryList = new ProjectHistoryList();
+				projectHistoryList.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				projectHistoryList.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return projectHistoryList;
+			} else {
+				projectHistoryList = new ProjectHistoryList();
+				projectHistoryList.setPhList(phList);
+				projectHistoryList.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				projectHistoryList.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return projectHistoryList;
+			}
+		} else {
+			projectHistoryList = new ProjectHistoryList();
+			projectHistoryList.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			projectHistoryList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return projectHistoryList;
+		}
+	}
+	public UserList getFreeMembers() throws SQLException{
+		UserList uList;
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper != null){
+			List<UserInfo> reqList = projectMapper.getfreeMembers();
+			if(reqList == null){
+				uList = new UserList();
+				uList.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				uList.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return uList;
+			} else {
+				uList = new UserList();
+				uList.setReqList(reqList);
+				uList.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				uList.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return uList;
+			}
+		} else {
+			uList = new UserList();
+			uList.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			uList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return uList;
+		}
+	}
+	public Document getDocument(String did) throws SQLException {
+		Document document;
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper != null){
+			document = projectMapper.getDocument(did);
+			if(document == null){
+				document = new Document();
+				document.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				document.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return document;
+			} else {
+				document.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				document.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return document;
+			}
+		} else {
+			document = new Document();
+			document.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			document.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return document;
+		}
+	}
+	public boolean setStatusApproval(ApprovalHistory aHistory) {
+		
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper!=null){
+			try{
+				projectMapper.setStatusApproval(aHistory);
+				return true;
+			}catch(Exception e){
+				return false;
+			}
+		}
+		return false;
+	}
+	public boolean setStatusProject(Project project) {
+		
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper!=null){
+			try{
+				projectMapper.setStatusProject(project);
+				return true;
+			}catch(Exception e){
+				return false;
+			}
+		}
+		return false;
 	}
 }

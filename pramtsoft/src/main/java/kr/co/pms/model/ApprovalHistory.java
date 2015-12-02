@@ -20,6 +20,15 @@ public class ApprovalHistory implements CEntity {
 		super();
 	}
 
+	public ApprovalHistory(String did, String status, String reply) {
+		super();
+		this.did = did;
+		this.status = status;
+		this.reply = reply;
+	}
+
+
+
 	public String getDid() {
 		return did;
 	}

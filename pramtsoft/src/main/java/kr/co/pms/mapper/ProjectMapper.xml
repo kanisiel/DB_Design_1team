@@ -247,4 +247,58 @@
         
     </select>
     
+    <select id="getEnteredMembers" parameterType="String" resultType="kr.co.pms.model.ProjectHistory">
+        
+        with setUname as (
+		  select p.*, m.name as memberName
+			from Project_history p, Member m
+			where p.uidx = m.uidx
+			AND p.pid = #{ pid }
+		)
+		 select m.*, p.name as pName
+		 from (select n.*, c.MeaningKor as positionName
+		  from setUname n, codes c
+		  where n.position = c.codename) m, project p
+		  where m.pid = p.pid
+        
+    </select>
+    
+    <select id="getfreeMembers" resultType="kr.co.pms.model.UserInfo">
+        
+        select *
+        from Member
+        where uidx not in ( 
+       		select uidx
+       		from project_history
+       		where in_date 
+       		<![CDATA[
+       		< 
+       		]]>
+       		SYSDATE
+       		and out_date = null
+        ) and levels = 'EMPLOYEE'
+        
+    </select>
+    
+    <select id="getDocument" parameterType="String" resultType="kr.co.pms.model.Document">
+        
+		select * from Approval
+		where did = #{ did }
+        
+    </select>
+    
+    <insert id="setStatusApproval" parameterType="kr.co.pms.model.ApprovalHistory" >
+        
+        insert into approval_history ( DID, STATUS, REPLY, REG_DATE, UP_DATE)
+        VALUES ( #{ did }, #{ status }, #{ reply }, SYSDATE, SYSDATE )
+        
+    </insert>
+    
+    <update id="setStatusProject" parameterType="kr.co.pms.model.Project">
+        
+        update project
+        set status = #{ status }, up_date = SYSDATE
+        where pid = #{ pid }
+        
+    </update>
 </mapper>

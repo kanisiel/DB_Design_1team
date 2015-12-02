@@ -24,6 +24,9 @@
 	  		$('#'+name).addClass("active");
 	  		$('#'+name+"Info").removeClass("hidden");
 	    }
+		function putEmp_win(pid) { // 상태표시바 있는 팝업
+			window.open("${pageContext.request.contextPath}/employeeController/putEmp?pid="+pid, "", "width=500, height=420");
+		}
 	</script>
 	<div class="col-md-8 col-md-offset-2">
 		<div class="panel panel-default">
@@ -142,7 +145,28 @@
 							        	<h1><small>참여자 정보</small></h1>
 							      	</div>
 							      	<div class="row">
-							        	프로젝트 정보
+								        <table class="table table-hover">
+								        	<thead>
+								        		<tr>
+								        			<th>성명</th>
+								        			<th>직위</th>
+								        			<th>참여일</th>
+								        		</tr>
+								        	</thead>
+								        	<tbody>
+								      	<c:forEach var="projectHistory" items="${ sessionScope.enteredList.getPhList() }" varStatus="status">
+									      		<tr>
+									      			<td><p class="text-centered"><c:out value="${ projectHistory.getUname() }"/></p></td>
+									      			<td><p class="text-centered"><c:out value="${ projectHistory.getPositionName() }"/></p></td>
+									      			<td><p class="text-centered"><fmt:parseDate value="${ fn:substring(projectHistory.getIn_Date(),0,10) }" pattern="yyyy-mm-dd" var="entrydate" />
+														<fmt:formatDate value="${ entrydate }" pattern="yyyy년 mm월 dd일"/></p></td>
+									      		</tr>
+							      		</c:forEach>
+							      			</tbody>
+							      		</table>
+							      		<c:if test="${ sessionScope.projectInfo.getStatus() == 'P'}">
+							      			<p class="text-right"><button type="button" class="btn btn-info" onclick="putEmp_win('${ sessionScope.projectInfo.getPid() }');">직원투입</button></p>
+							      		</c:if>
 						      		</div>
 						      	</div>
 							</div>

@@ -10,7 +10,7 @@ public class ProjectHistory implements CEntity {
 	private int uidx;
 	private String uname;
 	private String pid;
-	private String pname;
+	private String pName;
 	private String position;
 	private String positionName;
 	private String in_Date;
@@ -39,11 +39,11 @@ public class ProjectHistory implements CEntity {
 	public void setPid(String pid) {
 		this.pid = pid;
 	}
-	public String getPname() {
-		return pname;
+	public String getpName() {
+		return pName;
 	}
-	public void setPname(String pname) {
-		this.pname = pname;
+	public void setpName(String pName) {
+		this.pName = pName;
 	}
 	public String getPosition() {
 		return position;

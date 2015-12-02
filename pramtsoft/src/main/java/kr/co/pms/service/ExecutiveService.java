@@ -56,4 +56,7 @@ public class ExecutiveService {
 	public Project getProject(String pid) throws SQLException {
 		return projectDao.getProject(pid);
 	}
+	public ProjectHistoryList getEnteredMembers(String pid) throws SQLException {
+		return projectDao.getEnteredMembers(pid);
+	}
 }
