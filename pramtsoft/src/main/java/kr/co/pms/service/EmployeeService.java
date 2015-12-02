@@ -9,7 +9,6 @@ import kr.co.pms.dao.UserDao;
 import kr.co.pms.model.Project;
 import kr.co.pms.model.ProjectHistoryList;
 import kr.co.pms.model.ProjectList;
-import kr.co.pms.model.UserList;
 
 import org.springframework.stereotype.Service;
 
@@ -34,8 +33,5 @@ public class EmployeeService {
 	}
 	public ProjectHistoryList getEnteredMembers(String pid) throws SQLException {
 		return projectDao.getEnteredMembers(pid);
-	}
-	public UserList getFreeMembers() throws SQLException {
-		return projectDao.getFreeMembers();
 	}
 }

@@ -20,6 +20,7 @@ public interface ProjectMapper {
 	public Boolean addApprovalHistory(Document document) throws SQLException;
 	public Boolean setStatusApproval(ApprovalHistory aHistory) throws SQLException;
 	public Boolean setStatusProject(Project project) throws SQLException;
+	public Boolean putEmp(ProjectHistory pHistory) throws SQLException;
 	public List<Project> getProjectList(String pid) throws SQLException;
 	public Project getProject(String pid) throws SQLException;
 	public List<Document> getDocumentExe(int superior) throws SQLException;

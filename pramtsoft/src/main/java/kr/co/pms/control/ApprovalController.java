@@ -17,6 +17,7 @@ import kr.co.pms.model.CompanyList;
 import kr.co.pms.model.Document;
 import kr.co.pms.model.DocumentList;
 import kr.co.pms.model.Project;
+import kr.co.pms.model.ProjectHistory;
 import kr.co.pms.model.UserInfo;
 import kr.co.pms.model.UserList;
 import kr.co.pms.service.ApprovalService;
@@ -235,6 +236,7 @@ public class ApprovalController extends CController {
 		modelAndView = new ModelAndView();
 		request.setCharacterEncoding("UTF-8");
 		String status = null;
+		int manager = Integer.parseInt(request.getParameter("manager")); 
 		switch(request.getParameter("atype")){
 		case "approve":
 			status = "A";
@@ -265,11 +267,19 @@ public class ApprovalController extends CController {
 				modelAndView.setViewName("error/500");
 				return modelAndView;
 			} else {
-				userInfo.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
-				userInfo.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
-				session.setAttribute("status", "Success");
-				modelAndView.setViewName("template/viewApproval?");
-				return modelAndView;
+				ProjectHistory pHistory = new ProjectHistory(manager, request.getParameter("pid"),"PM");
+				if(approvalService.putEmp(pHistory) == false){
+					String errorCode = ErrorCodes.ER0001.getSubtitleKor();
+					modelAndView.addObject("errorCode", errorCode);
+					modelAndView.setViewName("error/500");
+					return modelAndView;
+				} else {
+					userInfo.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+					userInfo.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+					modelAndView.addObject("status", "Success");
+					modelAndView.setViewName("template/viewApproval");
+					return modelAndView;
+				}
 			}
 		}
 	}

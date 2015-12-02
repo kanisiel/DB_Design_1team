@@ -108,36 +108,4 @@ public class EmployeeController extends CController {
 		return modelAndView;
 	}
 
-	@RequestMapping(value = "/employeeController/putEmp", method = RequestMethod.GET)
-	public ModelAndView putEmpview(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, ModelAndView modelAndView, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
-		modelAndView = new ModelAndView();
-		String pid = request.getParameter("pid");
-		UserList uList = employeeService.getFreeMembers();
-		if(uList.getErrorCode().equals(ErrorCodes.Success.getCodeName())){
-			session.setAttribute("freeList", uList.getReqList());
-			ProjectHistoryList enteredList = employeeService.getEnteredMembers(pid);
-			if(enteredList.getErrorCode().equals(ErrorCodes.Success.getCodeName())){
-				session.setAttribute("enteredList", enteredList);
-			} else {
-				String errorCode = ErrorCodes.ER9999.getCodeName();
-				modelAndView.addObject("errorCode", errorCode);
-				modelAndView.setViewName("error/500");
-				return modelAndView;
-			}
-			session.setAttribute("userInfo", userInfo);
-			//modelAndView.addObject("url", "employee/putEmp.jsp");
-			modelAndView.setViewName("employee/putEmp");
-			return modelAndView;
-		} else {
-			String errorCode = ErrorCodes.ER9999.getCodeName();
-			modelAndView.addObject("errorCode", errorCode);
-			modelAndView.setViewName("error/500");
-			return modelAndView;
-		}
-	}
-	@RequestMapping(value = "/employeeController/putEmp.do", method = RequestMethod.POST)
-	public ModelAndView putEmp(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, ModelAndView modelAndView, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
-		modelAndView = new ModelAndView();
-		return modelAndView;
-	}
 }

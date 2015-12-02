@@ -3,14 +3,27 @@ package kr.co.pms.control;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import kr.co.pms.conf.Configuration.ErrorCodes;
+import kr.co.pms.conf.Configuration;
 import kr.co.pms.conf.Sha512Encrypter;
-import kr.co.pms.model.*;
+import kr.co.pms.model.Department;
+import kr.co.pms.model.DepartmentList;
+import kr.co.pms.model.Pagination;
+import kr.co.pms.model.Project;
+import kr.co.pms.model.ProjectHistory;
+import kr.co.pms.model.ProjectHistoryList;
+import kr.co.pms.model.ProjectList;
+import kr.co.pms.model.Section;
+import kr.co.pms.model.SectionList;
+import kr.co.pms.model.UserInfo;
+import kr.co.pms.model.UserList;
 import kr.co.pms.service.ExecutiveService;
 import kr.co.pms.service.LoginService;
 
@@ -223,6 +236,59 @@ public class ExecutiveController extends CController {
 		session.setAttribute("userInfo", userInfo);
 		modelAndView.addObject("url", "projectHis.jsp");
 		modelAndView.setViewName("template");
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/executiveController/putEmp", method = RequestMethod.GET)
+	public ModelAndView putEmpview(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, ModelAndView modelAndView, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
+		modelAndView = new ModelAndView();
+		String pid = request.getParameter("pid");
+		UserList uList = executiveService.getFreeMembers();
+		if(uList.getErrorCode().equals(ErrorCodes.Success.getCodeName())){
+			session.setAttribute("freeList", uList.getReqList());
+			ProjectHistoryList enteredList = executiveService.getEnteredMembers(pid);
+			if(enteredList.getErrorCode().equals(ErrorCodes.Success.getCodeName())){
+				session.setAttribute("enteredList", enteredList);
+			} else {
+				String errorCode = ErrorCodes.ER9999.getCodeName();
+				modelAndView.addObject("errorCode", errorCode);
+				modelAndView.setViewName("error/500");
+				return modelAndView;
+			}
+			session.setAttribute("userInfo", userInfo);
+			modelAndView.addObject("pid", pid);
+			modelAndView.setViewName("executive/putEmp");
+			return modelAndView;
+		} else {
+			String errorCode = ErrorCodes.ER9999.getCodeName();
+			modelAndView.addObject("errorCode", errorCode);
+			modelAndView.setViewName("error/500");
+			return modelAndView;
+		}
+	}
+	@RequestMapping(value = "/executiveController/putEmp.do", method = RequestMethod.POST)
+	public ModelAndView putEmp(@ModelAttribute("userInfo") UserInfo userInfo, HttpSession session, ModelAndView modelAndView, HttpServletRequest request)  throws UnsupportedEncodingException, SQLException {
+		modelAndView = new ModelAndView();
+		List<ProjectHistory> listPH = new Vector<ProjectHistory>();
+		String empList = request.getParameter("putEmp");
+		String[] putEmp = empList.split(", ");
+		for(String uidx : putEmp){
+			ProjectHistory pHistory = new ProjectHistory(Integer.parseInt(uidx),request.getParameter("pid"),"PG");
+			pHistory.setUidx(Integer.parseInt(uidx));
+			listPH.add(pHistory);
+		}
+		for(ProjectHistory pHistory : listPH){
+			if(executiveService.putEmp(pHistory) == false){
+				String errorCode = ErrorCodes.ER9999.getCodeName();
+				modelAndView.addObject("errorCode", errorCode);
+				modelAndView.setViewName("error/500");
+				return modelAndView;
+			}
+		}
+		userInfo.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+		userInfo.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+		modelAndView.addObject("status", "Success");
+		modelAndView.setViewName("executive/putEmp");
 		return modelAndView;
 	}
 }

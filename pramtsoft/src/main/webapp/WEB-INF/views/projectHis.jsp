@@ -25,7 +25,7 @@
 	  		$('#'+name+"Info").removeClass("hidden");
 	    }
 		function putEmp_win(pid) { // 상태표시바 있는 팝업
-			window.open("${pageContext.request.contextPath}/employeeController/putEmp?pid="+pid, "", "width=500, height=420");
+			window.open("${pageContext.request.contextPath}/executiveController/putEmp?pid="+pid, "", "width=500, height=450");
 		}
 	</script>
 	<div class="col-md-8 col-md-offset-2">
@@ -44,12 +44,12 @@
 					     	</ul>
 					      	<ul id="progInfo" class="nav nav-pills nav-stacked">
 						        <c:forEach var="project" items="${ sessionScope.progressList.getProList() }" varStatus="status">
-						        	 <li><a href="javascript:;"><c:out value="${ project.getName() }"/></a></li>
+						        	 <li><a href="${pageContext.request.contextPath}/executiveController/project?pid=${ project.getPid() }"><c:out value="${ project.getName() }"/></a></li>
 						        </c:forEach>
 					      	</ul>
 					     	<ul id="endInfo" class="nav nav-pills nav-stacked hidden">
 						      	<c:forEach var="project" items="${ sessionScope.endList.getProList() }" varStatus="status">
-						        	 <li><a href="javascript:;"><c:out value="${ project.getName() }"/></a></li>
+						        	 <li><a href="${pageContext.request.contextPath}/executiveController/project?pid=${ project.getPid() }"><c:out value="${ project.getName() }"/></a></li>
 						        </c:forEach>
 					      	</ul>
 					      	<ul id="allInfo" class="nav nav-pills nav-stacked hidden">

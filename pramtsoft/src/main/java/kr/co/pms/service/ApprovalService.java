@@ -12,6 +12,7 @@ import kr.co.pms.model.CompanyList;
 import kr.co.pms.model.Document;
 import kr.co.pms.model.DocumentList;
 import kr.co.pms.model.Project;
+import kr.co.pms.model.ProjectHistory;
 import kr.co.pms.model.ProjectList;
 import kr.co.pms.model.UserInfo2;
 import kr.co.pms.model.UserList;
@@ -73,5 +74,8 @@ public class ApprovalService {
 	}
 	public Boolean setStatusProject(Project project) throws SQLException {
 		return projectDao.setStatusProject(project);
+	}
+	public Boolean putEmp(ProjectHistory pHistory) throws SQLException {
+		return projectDao.putEmp(pHistory);
 	}
 }

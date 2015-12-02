@@ -250,7 +250,7 @@
     <select id="getEnteredMembers" parameterType="String" resultType="kr.co.pms.model.ProjectHistory">
         
         with setUname as (
-		  select p.*, m.name as memberName
+		  select p.*, m.name as uname
 			from Project_history p, Member m
 			where p.uidx = m.uidx
 			AND p.pid = #{ pid }
@@ -275,7 +275,7 @@
        		< 
        		]]>
        		SYSDATE
-       		and out_date = null
+       		and out_date is null
         ) and levels = 'EMPLOYEE'
         
     </select>
@@ -301,4 +301,12 @@
         where pid = #{ pid }
         
     </update>
+    
+    <insert id="putEmp" parameterType="kr.co.pms.model.ProjectHistory">
+        
+        INSERT INTO project_history (PID, UIDX, POSITION, IN_DATE, REG_DATE, UP_DATE)
+        VALUES (#{pid}, #{ uidx }, #{ position }, SYSDATE, SYSDATE, SYSDATE)
+        
+    </insert>
+    
 </mapper>

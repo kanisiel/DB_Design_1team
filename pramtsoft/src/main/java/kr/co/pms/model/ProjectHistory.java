@@ -95,6 +95,13 @@ public class ProjectHistory implements CEntity {
 	}
 	
 	
+	
+	public ProjectHistory(int uidx, String pid, String position) {
+		super();
+		this.uidx = uidx;
+		this.pid = pid;
+		this.position = position;
+	}
 	public ProjectHistory() {
 		super();
 		// TODO Auto-generated constructor stub

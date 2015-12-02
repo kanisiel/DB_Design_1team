@@ -470,4 +470,18 @@ public class ProjectDao implements Dao {
 		}
 		return false;
 	}
+	public boolean putEmp(ProjectHistory pHistory) {
+		
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper!=null){
+			try{
+				projectMapper.putEmp(pHistory);
+				return true;
+			}catch(Exception e){
+				return false;
+			}
+		}
+		return false;
+	}
+	
 }

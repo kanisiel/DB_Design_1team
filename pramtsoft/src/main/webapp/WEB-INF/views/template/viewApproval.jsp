@@ -53,7 +53,7 @@
 		    	}
 		    }
 		</script>
-		<c:if test="${ sessionScope.status == 'Success' }">
+		<c:if test="${ status == 'Success' }">
 			<script>
 				window.opener.location.reload();
 				window.close();
@@ -146,6 +146,7 @@
 								<input type="text" id="atype" name="atype" value=""/>
 								<input type="text" id="did" name="did" value="${ sessionScope.did }"/>
 								<input type="text" id="pid" name="pid" value="${ sessionScope.projectInfo.getPid() }"/>
+								<input type="text" id="manager" name="manager" value="${ sessionScope.projectInfo.getManager() }"/>
 							</div>
 						</div>
 					</div>

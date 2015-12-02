@@ -59,4 +59,10 @@ public class ExecutiveService {
 	public ProjectHistoryList getEnteredMembers(String pid) throws SQLException {
 		return projectDao.getEnteredMembers(pid);
 	}
+	public UserList getFreeMembers() throws SQLException {
+		return projectDao.getFreeMembers();
+	}
+	public Boolean putEmp(ProjectHistory pHistory) throws SQLException {
+		return projectDao.putEmp(pHistory);
+	}
 }

@@ -139,9 +139,15 @@
 			}
 		}
 		</script>
+		<c:if test="${ status == 'Success' }">
+			<script>
+				window.opener.location.reload();
+				window.close();
+			</script>
+		</c:if>
 	</head>
 	<body>
-	<form id="putForm" method="POST" action="${pageContext.request.contextPath}/employeeController/putEmp.do">
+	<form id="putForm" method="POST" action="${pageContext.request.contextPath}/executiveController/putEmp.do">
 	<div class="container">
 		<div class="row">
 			<div id = "employeeInfo" class="col-xs-12">
@@ -185,7 +191,7 @@
 				<!-- inputs for Send data -->
 		        <div class="form-group hidden">
 					<select id="puts" name="puts" multiple class="form-control" onchange="changeSelect(this.id)">
-						<c:forEach var="employee" items="${ sessionScope.empList }" varStatus="status">
+						<c:forEach var="employee" items="${ sessionScope.freeList }" varStatus="status">
 							<option id="emp${ status.count }option" value="${ employee.getUidx() }"><c:out value="${ employee.getUidx() }"/></option>
 						</c:forEach>
 					</select>
@@ -193,7 +199,16 @@
 		        <div class="form-group hidden">
 		        	<textarea class="form-control" id="putEmp" name="putEmp" rows="5"></textarea>
 		        </div>
+		        <div class="form-group hidden">
+		        	<input type="text" id="pid" name="pid" value="${ pid }"/>
+		        </div>
 			</div>
+		</div>
+		<div class="row">
+			<p id="buttonrow" class="text-center">
+				<button type="button" class="btn btn-success" onclick="$('#putForm').submit()">적용</button>
+				<button type="button" class="btn btn-warning" onclick="javascript:;">닫기</button>
+			</p>
 		</div>
 	</div>
 	</form>

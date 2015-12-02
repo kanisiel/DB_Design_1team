@@ -60,6 +60,7 @@ h1 {
 						<div class="well">
 							<div>
 								<ul class="nav nav-list">
+								<c:if test="${ sessionScope.pmList != null }">
 									<li><label class="tree-toggle nav-header">PM평가</label>
 										<ul class="nav nav-list tree">
 											<li><label class="tree-toggle nav-header">직원1</label>
@@ -92,6 +93,7 @@ h1 {
 												</ul></li>
 												
 										</ul></li>
+									</c:if>
 									<li><label class="tree-toggle nav-header">동료평가</label>
 										<ul class="nav nav-list tree">
 											<li><label class="tree-toggle nav-header">직원1</label>
