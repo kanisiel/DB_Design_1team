@@ -155,6 +155,9 @@ public class EmployeeController extends CController {
 					modelAndView.addObject("errorCode", errorCode);
 					modelAndView.setViewName("error/500");
 					return modelAndView;
+				} else {
+					String parameters = "?pid="+pid+"&uid="+uidxs+"&type1="+type1s+"&type2="+type2;
+					modelAndView.setViewName("redirect://employeeController/rating"+parameters);
 				}
 			} else {
 				if(employeeService.addEvaluation(eval) == false){
