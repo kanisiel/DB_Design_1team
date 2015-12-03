@@ -254,6 +254,7 @@
 			from Project_history p, Member m
 			where p.uidx = m.uidx
 			AND p.pid = #{ pid }
+			and out_date is null
 		)
 		 select m.*, p.name as pName
 		 from (select n.*, c.MeaningKor as positionName
@@ -308,5 +309,63 @@
         VALUES (#{pid}, #{ uidx }, #{ position }, SYSDATE, SYSDATE, SYSDATE)
         
     </insert>
+    
+    <select id="getEval" parameterType="kr.co.pms.model.Evaluation" resultType="kr.co.pms.model.Evaluation">
+        
+        select ep.*, m.name as uName
+        from (
+	        select e.*, p.name as pName
+	        from evaluation e, project p
+	        where e.pid = #{ pid }
+	        and e.uidx = #{ uidx }
+	        and e.type1 = #{ type1 }
+	        and e.type2 = #{ type2 }
+	        and e.pid = p.pid 
+        ) ep, Member m
+        where ep.uidx = m.uidx
+        
+    </select>
+    
+    <select id="getEnteredHistory" parameterType="String" resultType="kr.co.pms.model.ProjectHistory">
+        
+        with setUname as (
+		  select p.*, m.name as uname
+			from Project_history p, Member m
+			where p.uidx = m.uidx
+			AND p.pid = #{ pid }
+		)
+		 select m.*, p.name as pName
+		 from (select n.*, c.MeaningKor as positionName
+		  from setUname n, codes c
+		  where n.position = c.codename) m, project p
+		  where m.pid = p.pid
+        
+    </select>
+    
+    <select id="getUserInfo" parameterType="int" resultType="kr.co.pms.model.UserInfo">
+        
+        select *
+        from member
+        where uidx = #{ uidx }
+        
+    </select>
+    
+    <insert id="addEvaluation" parameterType="kr.co.pms.model.Evaluation">
+        
+        INSERT INTO evaluation ( PID, UIDX, TYPE1, TYPE2, VALUER, DESCRIPTION, RATING, REG_DATE, UP_DATE)
+        VALUES (#{ pid }, #{ uidx }, #{ type1 }, #{ type2 }, #{ valuer }, #{ description }, #{ rating }, SYSDATE, SYSDATE)
+        
+    </insert>
+    
+    <update id="updateEvaluation" parameterType="kr.co.pms.model.Evaluation">
+        
+        update evaluation
+        set rating = #{ rating }, description = #{ description }, up_date = SYSDATE
+        where pid = #{ pid }
+	    and uidx = #{ uidx }
+	    and type1 = #{ type1 }
+	    and type2 = #{ type2 }
+        
+    </update>
     
 </mapper>

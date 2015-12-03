@@ -9,6 +9,7 @@ import kr.co.pms.model.Company;
 import kr.co.pms.model.CompanyList;
 import kr.co.pms.model.Document;
 import kr.co.pms.model.DocumentList;
+import kr.co.pms.model.Evaluation;
 import kr.co.pms.model.Project;
 import kr.co.pms.model.ProjectHistory;
 import kr.co.pms.model.ProjectHistoryList;
@@ -398,6 +399,30 @@ public class ProjectDao implements Dao {
 			return projectHistoryList;
 		}
 	}
+	public ProjectHistoryList getEnteredHistory(String pid) throws SQLException{
+		ProjectHistoryList projectHistoryList;
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper != null){
+			List<ProjectHistory> phList = projectMapper.getEnteredHistory(pid);
+			if(phList == null){
+				projectHistoryList = new ProjectHistoryList();
+				projectHistoryList.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				projectHistoryList.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return projectHistoryList;
+			} else {
+				projectHistoryList = new ProjectHistoryList();
+				projectHistoryList.setPhList(phList);
+				projectHistoryList.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				projectHistoryList.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return projectHistoryList;
+			}
+		} else {
+			projectHistoryList = new ProjectHistoryList();
+			projectHistoryList.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			projectHistoryList.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return projectHistoryList;
+		}
+	}
 	public UserList getFreeMembers() throws SQLException{
 		UserList uList;
 		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
@@ -483,5 +508,76 @@ public class ProjectDao implements Dao {
 		}
 		return false;
 	}
-	
+	public Evaluation getEval(Evaluation evalInfo) throws SQLException {
+		Evaluation eval = new Evaluation();
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper!=null){
+			eval = projectMapper.getEval(evalInfo);
+			if(eval == null){
+				eval = new Evaluation();
+				eval.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				eval.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return eval;
+			} else {
+				eval.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				eval.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return eval;
+			}
+		} else {
+			eval = new Evaluation();
+			eval.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			eval.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return eval;
+		}
+	}
+	public UserInfo getUserInfo(int uidx) throws SQLException{
+		UserInfo userInfo;
+		
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper!=null){
+			userInfo = projectMapper.getUserInfo(uidx);
+			if(userInfo == null){
+				userInfo = new UserInfo();
+				userInfo.setErrorCode(Configuration.ErrorCodes.ER1001.getCodeName());
+				userInfo.setSubscribe_kor(Configuration.ErrorCodes.ER1001.getSubtitleKor());
+				return userInfo;
+			} else {
+				userInfo.setErrorCode(Configuration.ErrorCodes.Success.getCodeName());
+				userInfo.setSubscribe_kor(Configuration.ErrorCodes.Success.getSubtitleKor());
+				return userInfo;
+			}
+		} else {
+			userInfo = new UserInfo();
+			userInfo.setErrorCode(Configuration.ErrorCodes.ER0000.getCodeName());
+			userInfo.setSubscribe_kor(Configuration.ErrorCodes.ER0000.getSubtitleKor());
+			return userInfo;
+		}
+		
+	}
+	public boolean addEvaluation(Evaluation eval) {
+		
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper!=null){
+			try{
+				projectMapper.addEvaluation(eval);
+				return true;
+			}catch(Exception e){
+				return false;
+			}
+		}
+		return false;
+	}
+	public boolean updateEvaluation(Evaluation eval) {
+		
+		ProjectMapper projectMapper = sqlSession.getMapper(ProjectMapper.class);
+		if(projectMapper!=null){
+			try{
+				projectMapper.updateEvaluation(eval);
+				return true;
+			}catch(Exception e){
+				return false;
+			}
+		}
+		return false;
+	}
 }

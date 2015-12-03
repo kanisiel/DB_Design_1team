@@ -6,6 +6,7 @@ import java.util.List;
 import kr.co.pms.model.ApprovalHistory;
 import kr.co.pms.model.Company;
 import kr.co.pms.model.Document;
+import kr.co.pms.model.Evaluation;
 import kr.co.pms.model.Project;
 import kr.co.pms.model.ProjectHistory;
 import kr.co.pms.model.UserInfo;
@@ -34,5 +35,10 @@ public interface ProjectMapper {
 	 public List<Project> getProgressProjectsPM(int uidx) throws SQLException;
 	 public List<Project> getEndProjectPM(int uidx) throws SQLException;
 	 public List<ProjectHistory> getEnteredMembers(String pid) throws SQLException;
+	 public List<ProjectHistory> getEnteredHistory(String pid) throws SQLException;
 	 public List<UserInfo> getfreeMembers() throws SQLException;
+	 public Evaluation getEval(Evaluation eval) throws SQLException;
+	 public UserInfo getUserInfo(int uidx) throws SQLException;
+	 public Boolean addEvaluation(Evaluation eval) throws SQLException;
+	 public Boolean updateEvaluation(Evaluation eval) throws SQLException;
 }

@@ -81,13 +81,13 @@
 							      	</div>
 							      	<div class="row">
 							        	<div class="col-md-3">
-							        		<p>프로젝트 코드</p>
+							        		<p><strong>프로젝트 코드</strong></p>
 							        	</div>
 							        	<div class="col-md-3">
 							        		<p><c:out value="${ sessionScope.projectInfo.getPid() }"/></p>
 							        	</div>
 							        	<div class="col-md-2">
-							        		<p>상태</p>
+							        		<p><strong>상태</strong></p>
 							        	</div>
 							        	<div class="col-md-4">
 							        		<p><c:out value="${ sessionScope.projectInfo.getMeaning() }"/></p>
@@ -95,13 +95,13 @@
 							      	</div>
 							      	<div class="row">
 							        	<div class="col-md-3">
-							        		<p>프로젝트명</p>
+							        		<p><strong>프로젝트명</strong></p>
 							        	</div>
 							        	<div class="col-md-3">
 							        		<p><c:out value="${ sessionScope.projectInfo.getName() }"/></p>
 							        	</div>
 							        	<div class="col-md-2">
-							        		<p>시작일</p>
+							        		<p><strong>시작일</strong></p>
 							        	</div>
 							        	<div class="col-md-4">
 							        		<p><fmt:parseDate value="${ fn:substring(sessionScope.projectInfo.getStartDate(),0,10) }" pattern="yyyy-mm-dd" var="entrydate" />
@@ -110,13 +110,13 @@
 							      	</div>
 							      	<div class="row">
 							        	<div class="col-md-3">
-							        		<p>필요인원</p>
+							        		<p><strong>필요인원</strong></p>
 							        	</div>
 							        	<div class="col-md-3">
 							        		<p><c:out value="${ sessionScope.projectInfo.getRequireMan() }"/></p>
 							        	</div>
 							        	<div class="col-md-2">
-							        		<p>종료일</p>
+							        		<p><strong>종료일</strong></p>
 							        	</div>
 							        	<div class="col-md-4">
 							        		<p><fmt:parseDate value="${ fn:substring(sessionScope.projectInfo.getEndDate(),0,10) }" pattern="yyyy-mm-dd" var="entrydate" />
@@ -125,13 +125,13 @@
 							      	</div>
 							      	<div class="row">
 							        	<div class="col-md-3">
-							        		<p>프로젝트 매니저</p>
+							        		<p><strong>프로젝트 매니저</strong></p>
 							        	</div>
 							        	<div class="col-md-3">
 							        		<p><c:out value="${ sessionScope.projectInfo.getManagerName() }"/></p>
 							        	</div>
 							        	<div class="col-md-2">
-							        		<p>발주처</p>
+							        		<p><strong>발주처</strong></p>
 							        	</div>
 							        	<div class="col-md-4">
 							        		<p><c:out value="${ sessionScope.projectInfo.getOrdererName() }"/></p>

@@ -6,9 +6,11 @@ import javax.annotation.Resource;
 
 import kr.co.pms.dao.ProjectDao;
 import kr.co.pms.dao.UserDao;
+import kr.co.pms.model.Evaluation;
 import kr.co.pms.model.Project;
 import kr.co.pms.model.ProjectHistoryList;
 import kr.co.pms.model.ProjectList;
+import kr.co.pms.model.UserInfo;
 
 import org.springframework.stereotype.Service;
 
@@ -33,5 +35,20 @@ public class EmployeeService {
 	}
 	public ProjectHistoryList getEnteredMembers(String pid) throws SQLException {
 		return projectDao.getEnteredMembers(pid);
+	}
+	public ProjectHistoryList getEnteredHistory(String pid) throws SQLException {
+		return projectDao.getEnteredHistory(pid);
+	}
+	public UserInfo getUserInfo(int uidx) throws SQLException {
+		return projectDao.getUserInfo(uidx);
+	}
+	public Boolean addEvaluation(Evaluation eval) throws SQLException {
+		return projectDao.addEvaluation(eval);
+	}
+	public Evaluation getEval(Evaluation eval) throws SQLException {
+		return projectDao.getEval(eval);
+	}
+	public Boolean updateEvaluation(Evaluation eval) throws SQLException {
+		return projectDao.updateEvaluation(eval);
 	}
 }
